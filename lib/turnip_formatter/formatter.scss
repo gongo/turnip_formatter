@@ -1,0 +1,183 @@
+@mixin step_span {
+    &:hover { border-width: 3px; }
+    ~ * { margin-left: 2em; }
+}
+
+@mixin noop_step_span {
+    @include step_span;
+
+    background-color: #cccccc;
+    border: 1px solid #444444;
+    color: #333333;
+}
+
+body {
+    background-color: #586e75;
+}
+
+div#report {
+    width: 90%;
+    margin: 0 auto;
+    padding: 2em;
+    background: black;
+    color: #aaffaa;
+
+}
+
+div#main {
+    width: 90%;
+    margin: 0 auto;
+    padding: 2em;
+    background-color: #fff9f9;
+}
+
+section.scenario {
+    > h1 {
+        font-size: 14px;
+        text-decoration: underline;
+        font-style: weight;
+    }
+
+    > h2 {
+        font-size: 13px;
+    }
+
+    > h3 {
+        font-size: 11px;
+    }
+
+    margin-bottom: 2em;
+    padding-left: 1em;
+
+    &.passed {
+        border: 2px solid green;
+        > h1 {
+            color: #859900;
+            &:before { content: "\2713\20"; }
+        }
+    }
+
+    &.failed {
+        border: 2px solid #dc322f;
+        > h1 {
+            color: #dc322f;
+            &:before { content: "\2717\20"; }
+        }
+    }
+
+    &.pending {
+        border: 2px solid #b58900;
+        > h1 {
+            color: #b58900;
+            &:before { content: "\d8\20"; }
+        }
+    }
+
+    ul.steps {
+        font-size: 12px;
+        list-style-type: none;
+
+        li.step {
+            padding: 0.5em;
+            font-weight: bold;
+
+            > span {
+                padding: 0.5em;
+                background-color: #eeffee;
+                border: 1px solid #00aa00;
+                color: #00aa00;
+
+                @include step_span;
+            }
+
+            div.args {
+                font-size: 11px;
+            }
+
+            &.failure {
+                > span {
+                    background-color: #ffdddd;
+                    border: 1px solid #dd0000;
+                    color: #dd0000;
+
+                    @include step_span;
+                }
+
+                > div.args {
+                    padding: 1em;
+                    background-color: #ffeeee;
+                    border: 1px solid #cc8888;
+                }
+
+                ~ li > span { @include noop_step_span; }
+            }
+
+            &.pending {
+                > span {
+                    background-color: #ffffbb;
+                    border: 1px solid #666600;
+                    color: #666600;
+
+                    @include step_span;
+                }
+
+                > div.args {
+                    padding: 1em;
+                    background-color: #ffffaa;
+                    border: 1px solid #999944;
+                }
+
+                ~ li > span { @include noop_step_span; }
+            }
+        }
+
+        table.step_outline {
+            margin-top: 0.5em;
+
+            tr:nth-child(odd) { 
+                background-color: #ddddcc;
+            }
+
+            tr:nth-child(even) {
+                background-color: #ccccdd;
+            }
+
+            td {
+                border: 2px solid black;
+                padding: 0.3em 1em;
+            }
+        }
+
+        div.step_exception {
+            margin: 1em 0em 1em 0em;
+            padding: 1em 0em 1em 1em;
+            border: 1px solid #999999;
+            background-color: #eee8d5;
+            color: #586e75;
+
+            > pre {
+                margin-left: 1em;
+            }
+        }
+
+        pre.source {
+            font-size: 12px;
+            font-family: monospace;
+            background-color: #073642;
+            color: #dddddd;
+
+            code.ruby {
+                padding: 0.1em 0 0.2em 0;
+
+                .linenum {
+                    width: 75px;
+                    color: #fffbd3;
+                    padding-right: 1em;
+                }
+
+                .offending { background-color: gray; }
+            }
+        }
+
+    }
+}
