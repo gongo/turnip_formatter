@@ -31,30 +31,26 @@ module RSpec
           super(example)
           scenario = ::TurnipFormatter::Scenario::Pass.new(example)
           output_scenario(scenario)
-        rescue => e
-          output_runtime_error(e)
         end
 
         def example_pending(example)
           super(example)
           scenario = ::TurnipFormatter::Scenario::Pending.new(example)
           output_scenario(scenario)
-        rescue => e
-          output_runtime_error(e)
         end
 
         def example_failed(example)
           super(example)
           scenario = ::TurnipFormatter::Scenario::Failure.new(example)
           output_scenario(scenario)
-        rescue => e
-          output_runtime_error(e)
         end
 
         private
 
         def output_scenario(scenario)
           output.puts @template.print_scenario(scenario)
+        rescue => e
+          output_runtime_error(e)
         end
 
         def output_runtime_error(exception)

@@ -32,42 +32,61 @@ div#main {
 }
 
 section.scenario {
-    > h1 {
-        font-size: 14px;
-        text-decoration: underline;
-        font-style: weight;
-    }
-
-    > h2 {
-        font-size: 13px;
-    }
-
-    > h3 {
-        font-size: 11px;
-    }
-
-    margin-bottom: 2em;
+    margin: 1em 0em;
     padding-left: 1em;
+    border: 2px solid green;
+
+    > header {
+        margin: 1em 0em;
+
+        span.scenario_name {
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        span.feature_name {
+            font-size: 13px;
+            color: #839496;
+        }
+
+        span.permalink {
+            margin-right: 1em;
+            font-size: 15px;
+            a { color: #268bd2; }
+        }
+    }
+
+    > ul.tags {
+        font-size: 12px;
+
+        li {
+            color: #839496;
+            display: inline;
+        }
+    }
 
     &.passed {
-        border: 2px solid green;
-        > h1 {
+        border-color: green;
+
+        > header .scenario_name {
             color: #859900;
             &:before { content: "\2713\20"; }
         }
     }
 
     &.failed {
-        border: 2px solid #dc322f;
-        > h1 {
+        border-color: #dc322f;
+
+        > header .scenario_name {
             color: #dc322f;
             &:before { content: "\2717\20"; }
         }
     }
 
     &.pending {
-        border: 2px solid #b58900;
-        > h1 {
+        border-color: #b58900;
+
+        > header .scenario_name {
             color: #b58900;
             &:before { content: "\d8\20"; }
         }

@@ -15,33 +15,44 @@ div#main {
   background-color: #fff9f9; }
 
 section.scenario {
-  margin-bottom: 2em;
-  padding-left: 1em; }
-  section.scenario > h1 {
-    font-size: 14px;
-    text-decoration: underline;
-    font-style: weight; }
-  section.scenario > h2 {
-    font-size: 13px; }
-  section.scenario > h3 {
-    font-size: 11px; }
+  margin: 1em 0em;
+  padding-left: 1em;
+  border: 2px solid green; }
+  section.scenario > header {
+    margin: 1em 0em; }
+    section.scenario > header span.scenario_name {
+      font-weight: bold;
+      font-size: 14px; }
+    section.scenario > header span.feature_name {
+      font-size: 13px;
+      color: #839496; }
+    section.scenario > header span.permalink {
+      margin-right: 1em;
+      font-size: 15px; }
+      section.scenario > header span.permalink a {
+        color: #268bd2; }
+  section.scenario > ul.tags {
+    font-size: 12px; }
+    section.scenario > ul.tags li {
+      color: #839496;
+      display: inline; }
   section.scenario.passed {
-    border: 2px solid green; }
-    section.scenario.passed > h1 {
+    border-color: green; }
+    section.scenario.passed > header .scenario_name {
       color: #859900; }
-      section.scenario.passed > h1:before {
+      section.scenario.passed > header .scenario_name:before {
         content: "\2713\20"; }
   section.scenario.failed {
-    border: 2px solid #dc322f; }
-    section.scenario.failed > h1 {
+    border-color: #dc322f; }
+    section.scenario.failed > header .scenario_name {
       color: #dc322f; }
-      section.scenario.failed > h1:before {
+      section.scenario.failed > header .scenario_name:before {
         content: "\2717\20"; }
   section.scenario.pending {
-    border: 2px solid #b58900; }
-    section.scenario.pending > h1 {
+    border-color: #b58900; }
+    section.scenario.pending > header .scenario_name {
       color: #b58900; }
-      section.scenario.pending > h1:before {
+      section.scenario.pending > header .scenario_name:before {
         content: "\d8\20"; }
   section.scenario ul.steps {
     font-size: 12px;

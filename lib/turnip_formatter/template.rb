@@ -52,12 +52,14 @@ module TurnipFormatter
     private
 
     def feature_name(scenario)
-      '<a href="file://' + scenario.feature_file_path + '">' + h(scenario.feature_name) + '</a>'
+      path = RSpec::Core::Metadata::relative_path(scenario.feature_file_path)
+      name = scenario.feature_name
+      "\"#{name}\" in #{path}"
     end
 
     def scenario_tags(scenario)
       return '' if scenario.tags.empty?
-      '<h3>Tags:' + scenario.tags.map {|tag| '@' + h(tag) }.join(" ") + '</h3>'
+      template_scenario_tags.result(binding)
     end
 
     def step_attr(step)
@@ -104,8 +106,15 @@ module TurnipFormatter
     def template_scenario
       @template_scenario ||= ERB.new(<<-EOS)
         <section class="scenario <%= h(scenario.status) %>">
-          <h1>Scenario: <%= h(scenario.name) %></h1>
-          <h2>Feature: <%= feature_name(scenario) %></h2>
+          <header>
+            <span class="permalink">
+              <a href="#<%= scenario.object_id %>">&para;</a>
+            </span>
+            <span class="scenario_name" id="<%= scenario.object_id %>">
+              Scenario: <%= h(scenario.name) %>
+            </span>
+            <span class="feature_name">(Feature: <%= h(feature_name(scenario)) %>)</span>
+          </header>
           <%= scenario_tags(scenario) %>
           <ul class="steps">
             <% scenario.steps.each do |step| %>
@@ -115,6 +124,16 @@ module TurnipFormatter
             <% end %>
           </ul>
         </section>
+      EOS
+    end
+
+    def template_scenario_tags
+      @template_scenario_tags ||= ERB.new(<<-EOS)
+        <ul class="tags">
+          <% scenario.tags.each do |tag| %>
+          <li>@<%= h(tag) %></li>
+          <% end %>
+       </ul>
       EOS
     end
 
