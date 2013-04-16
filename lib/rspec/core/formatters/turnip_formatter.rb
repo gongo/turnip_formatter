@@ -21,10 +21,7 @@ module RSpec
         end
 
         def dump_summary(duration, example_count, failure_count, pending_count)
-          output.puts @template.print_footer(example_count, failure_count, pending_count)
-        end
-
-        def stop
+          output.puts @template.print_footer(example_count, failure_count, pending_count, duration)
         end
 
         def example_passed(example)

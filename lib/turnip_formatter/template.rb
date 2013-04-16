@@ -15,22 +15,34 @@ module TurnipFormatter
             <style>
             #{File.read(File.dirname(__FILE__) + '/formatter.css')}
             </style>
+            <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+            <script>
+              $(function() {
+                  ["passed", "failed", "pending"].forEach(function(status) {
+                      $('#' + status + '_check').click(function() {
+                          if (this.checked) {
+                              $('.scenario.' + status).show();
+                          } else {
+                              $('.scenario.' + status).hide();
+                          }
+                      });
+                  });
+              });
+            </script>
           </head>
           <body>
-            <div id="report">
-              <h1>Turnip Reports</h1>
-              <span id="total_count"></span> Scenario (<span id="failed_count"></span> failed <span id="pending_count"></span> pending).
-            </div>
+            #{report_area}
             <div id="main" role="main">
       EOS
     end
 
-    def print_footer(total_count, failed_count, pending_count)
+    def print_footer(total_count, failed_count, pending_count, total_time)
       update_report_js_tmp = '<script type="text/javascript">document.getElementById("%s").innerHTML = "%s";</script>'
       update_report_js = ''
 
-      { total_count: total_count, failed_count: failed_count, pending_count: pending_count }.each do |key, count|
-        update_report_js += update_report_js_tmp % [key.to_s, count]
+      
+      %w{ total_count failed_count pending_count total_time }.each do |key|
+        update_report_js += update_report_js_tmp % [key, eval(key)]
       end
 
       <<-EOS
@@ -101,6 +113,26 @@ module TurnipFormatter
 
     def step_exception(exception)
       template_step_exception.result(binding)
+    end
+
+    def report_area
+      <<-EOS
+        <div id="report">
+          <h1>Turnip Report</h1>
+          <section class="checkbox">
+            <label for="passed_check">Passed</label><input type="checkbox" checked id="passed_check">
+            <label for="failed_check">Failed</label><input type="checkbox" checked id="failed_check">
+            <label for="pending_check">Pending</label><input type="checkbox" checked id="pending_check">
+          </section>
+           
+          <section class="result">
+            <p>
+              <span id="total_count"></span> Scenario (<span id="failed_count"></span> failed <span id="pending_count"></span> pending).
+            </p>
+            <p>Finished in <span id="total_time"></span></p>
+          </section>
+        </div>
+      EOS
     end
 
     def template_scenario

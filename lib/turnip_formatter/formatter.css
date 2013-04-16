@@ -59,7 +59,8 @@ section.scenario {
     list-style-type: none; }
     section.scenario ul.steps li.step {
       padding: 0.5em;
-      font-weight: bold; }
+      font-weight: bold;
+      margin: 0.5em 0em; }
       section.scenario ul.steps li.step > span {
         padding: 0.5em;
         background-color: #eeffee;
