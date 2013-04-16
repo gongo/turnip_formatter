@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 require 'erb'
 require 'rspec/core/formatters/snippet_extractor'
 

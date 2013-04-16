@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 require 'turnip_formatter/scenario'
 require 'turnip_formatter/step/failure'
 require 'rspec/core/formatters/helpers'

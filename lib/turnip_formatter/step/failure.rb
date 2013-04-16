@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 module TurnipFormatter
   class Step
     module Failure
