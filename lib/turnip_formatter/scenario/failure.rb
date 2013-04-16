@@ -6,7 +6,8 @@ require 'rspec/core/formatters/helpers'
 
 module TurnipFormatter
   module Scenario
-    class NotFailureScenarioError < ::StandardError; end
+    class NotFailedScenarioError < ::StandardError; end
+    class NoExistFailedStepInformationError < ::StandardError; end
 
     class Failure
       include TurnipFormatter::Scenario
@@ -21,15 +22,23 @@ module TurnipFormatter
         steps
       end
 
+      def validation
+        raise NotFailedScenarioError if (status != 'failed')
+        offending_line
+        super
+      end
+
       private
 
       def offending_line
-        raise NotFailureScenarioError unless backtrace.last =~ /:in step:(?<stepno>\d+) `/
+        unless backtrace.last =~ /:in step:(?<stepno>\d+) `/
+          raise NoExistFailedStepInformationError
+        end
         $~[:stepno].to_i
       end
 
       def backtrace
-        format_backtrace(exception.backtrace, scenario.metadata).map do |b|
+        @backtrace ||= format_backtrace(exception.backtrace, scenario.metadata).map do |b|
           backtrace_line(b)
         end.compact
       end

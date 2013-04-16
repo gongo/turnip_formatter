@@ -4,11 +4,19 @@ require 'turnip_formatter/step'
 
 module TurnipFormatter
   module Scenario
+    class NotExistStepsInformationError < ::StandardError; end
+    class NoFeatureFileError < ::StandardError; end
+
     #
     # @param  [RSpec::Core::Example]  example
     #
     def initialize(example)
       @scenario = example
+    end
+
+    def validation
+      raise NotExistStepsInformationError unless scenario.metadata.member?(:steps)
+      raise NoFeatureFileError unless feature_file_path.end_with?('.feature')
     end
 
     def steps

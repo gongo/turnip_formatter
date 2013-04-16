@@ -4,6 +4,7 @@ require 'rspec/core/formatters/base_formatter'
 require 'turnip_formatter/scenario/pass'
 require 'turnip_formatter/scenario/failure'
 require 'turnip_formatter/scenario/pending'
+require 'turnip_formatter/template'
 
 module RSpec
   module Core
@@ -45,6 +46,7 @@ module RSpec
         private
 
         def output_scenario(scenario)
+          scenario.validation
           output.puts @template.print_scenario(scenario)
         rescue => e
           output_runtime_error(e)
