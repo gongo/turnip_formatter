@@ -9,3 +9,6 @@ module TurnipFormatter
   require 'turnip_formatter/ext/turnip/rspec'
   require 'turnip_formatter/ext/turnip/builder'
 end
+
+RSpecTurnipFormatter = RSpec::Core::Formatters::TurnipFormatter
+
