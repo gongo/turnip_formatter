@@ -60,7 +60,9 @@ Scenario: strong monster
       And Fanfare
 ```
 
-![Pending step](https://github.com/gongo/turnip_formatter/raw/master/spec/examples/images/pending_and_tagged_step.png)
+![Pending step](https://github.com/gongo/turnip_formatter/raw/master/spec/examples/images/pending_step.png)
+
+![Tag step](https://github.com/gongo/turnip_formatter/raw/master/spec/examples/images/tag_step.png)
 
 ### Background
 
