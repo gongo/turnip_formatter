@@ -4,11 +4,8 @@ RSpec::Core::Formatters::TurnipFormatter
 TurnipFormatter is a pretty custom formatter for [Turnip](https://github.com/jnicklas/turnip).
 
 [![Build Status](https://travis-ci.org/gongo/turnip_formatter.png?branch=master)](https://travis-ci.org/gongo/turnip_formatter)
-
 [![Coverage Status](https://coveralls.io/repos/gongo/turnip_formatter/badge.png?branch=master)](https://coveralls.io/r/gongo/turnip_formatter)
-
 [![Code Climate](https://codeclimate.com/github/gongo/turnip_formatter.png)](https://codeclimate.com/github/gongo/turnip_formatter)
-
 [![Dependency Status](https://gemnasium.com/gongo/turnip_formatter.png)](https://gemnasium.com/gongo/turnip_formatter)
 
 Requirements
