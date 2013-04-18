@@ -152,7 +152,7 @@ section.scenario {
         }
 
         table.step_outline {
-            margin-top: 0.5em;
+            margin-top: 2em;
 
             tr:nth-child(odd) { 
                 background-color: #ddddcc;
@@ -166,6 +166,12 @@ section.scenario {
                 border: 2px solid black;
                 padding: 0.3em 1em;
             }
+        }
+
+        pre.multiline {
+            margin-top: 2em;
+            font-size: 13px;
+            color: #586e75;
         }
 
         div.step_exception {
@@ -199,5 +205,21 @@ section.scenario {
             }
         }
 
+    }
+}
+
+section.exception {
+    margin: 1em 0em;
+    border: 2px solid #268bd2;
+    padding: 2em;
+
+    dt {
+        line-height: 2em;
+        font-size: 15px;
+    }
+
+    dd {
+        line-height: 2em;
+        font-size: 14px;
     }
 }

@@ -6,6 +6,7 @@ require 'rspec/core/formatters/snippet_extractor'
 module TurnipFormatter
   class Template
     include ERB::Util
+    include RSpec::Core::BacktraceFormatter
 
     def print_header
       <<-EOS
@@ -57,7 +58,14 @@ module TurnipFormatter
       template_scenario.result(binding)
     end
 
-    def print_runtime_error(exception)
+    def print_runtime_error(example, exception)
+      
+      if example.exception
+        example_backtrace = format_backtrace(example.exception.backtrace[0..14], example.metadata).map do |l|
+          RSpec::Core::Metadata::relative_path(l)
+        end
+      end
+
       template_exception.result(binding)
     end
 
@@ -103,7 +111,7 @@ module TurnipFormatter
     end
 
     def step_multiline(lines)
-      '<pre>' + h(lines) + '</pre>'
+      '<pre class="multiline">' + h(lines) + '</pre>'
     end
 
     def step_source(location)
@@ -200,16 +208,35 @@ module TurnipFormatter
 
     def template_exception
       @template_exception ||= ERB.new(<<-EOS)
-        <div class="exception">
-          <span>TurnipFormatter Error:</span>
-          <pre><%= h(exception.to_s) %></pre>
-          <span>Backtrace:</span>
-          <ol>
-            <% exception.backtrace.each do |line| %>
-            <li><%= h(line) %></li>
+        <section class="exception">
+          <h1>TurnipFormatter RuntimeError</h1>
+          <dl>
+            <dt>Exception</dt>
+            <dd><%= h(exception.to_s) %></dd>
+
+            <dt>Example Full Description</dt>
+            <dd><%= h(example.metadata[:full_description]) %></dd>
+
+            <% if example.exception %>
+              <dt>Example Exception</dt>
+              <dd><%= h(example.exception.to_s) %></dd>
+   
+              <dt>Backtrace:</dt>
+              <dd>
+                <ol>
+                  <% example_backtrace.each do |line| %>
+                  <li><%= h(line) %></li>
+                  <% end %>
+                </ol>
+              </dd>
             <% end %>
-          </ol>
-        </div>
+
+            <% if example.pending %>
+              <dt>Example Pending description</dt>
+              <dd><%= h(example.metadata[:description]) %></dd>
+            <% end %>
+          </dl>
+        </section>
       EOS
     end
   end

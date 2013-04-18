@@ -139,7 +139,7 @@ module TurnipFormatter
     describe '#step_multiline' do
       it 'should get escaped string enclosed in <pre>' do
         html = template.send(:step_multiline, 'a<a>a')
-        expect(html).to eq('<pre>a&lt;a&gt;a</pre>')
+        expect(html).to eq('<pre class="multiline">a&lt;a&gt;a</pre>')
       end
     end
 

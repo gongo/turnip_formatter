@@ -113,7 +113,7 @@ section.scenario {
         section.scenario ul.steps li.step.pending ~ li > span ~ * {
           margin-left: 2em; }
     section.scenario ul.steps table.step_outline {
-      margin-top: 0.5em; }
+      margin-top: 2em; }
       section.scenario ul.steps table.step_outline tr:nth-child(odd) {
         background-color: #ddddcc; }
       section.scenario ul.steps table.step_outline tr:nth-child(even) {
@@ -121,6 +121,10 @@ section.scenario {
       section.scenario ul.steps table.step_outline td {
         border: 2px solid black;
         padding: 0.3em 1em; }
+    section.scenario ul.steps pre.multiline {
+      margin-top: 2em;
+      font-size: 13px;
+      color: #586e75; }
     section.scenario ul.steps div.step_exception {
       margin: 1em 0em 1em 0em;
       padding: 1em 0em 1em 1em;
@@ -142,3 +146,14 @@ section.scenario {
           padding-right: 1em; }
         section.scenario ul.steps pre.source code.ruby .offending {
           background-color: gray; }
+
+section.exception {
+  margin: 1em 0em;
+  border: 2px solid #268bd2;
+  padding: 2em; }
+  section.exception dt {
+    line-height: 2em;
+    font-size: 15px; }
+  section.exception dd {
+    line-height: 2em;
+    font-size: 14px; }

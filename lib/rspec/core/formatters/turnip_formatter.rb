@@ -53,7 +53,7 @@ module RSpec
         end
 
         def output_runtime_error(exception)
-          output.puts @template.print_runtime_error(exception)
+          output.puts @template.print_runtime_error(examples.last, exception)
         end
       end
     end
