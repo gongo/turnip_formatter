@@ -8,9 +8,9 @@ Gem::Specification.new do |spec|
   spec.version       = TurnipFormatter::VERSION
   spec.authors       = ["Wataru MIYAGUNI"]
   spec.email         = ["gonngo@gmail.com"]
-  spec.description   = %q{aa}
-  spec.summary       = %q{aa}
-  spec.homepage      = ""
+  spec.description   = %q{RSpec custom formatter for Turnip}
+  spec.summary       = %q{RSpec custom formatter for Turnip}
+  spec.homepage      = "https://github.com/gongo/turnip_formatter"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
