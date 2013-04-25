@@ -4,6 +4,8 @@ require 'turnip_formatter/step'
 
 module TurnipFormatter
   module Scenario
+    include RSpec::Core::BacktraceFormatter
+
     class NotExistStepsInformationError < ::StandardError; end
     class NoFeatureFileError < ::StandardError; end
 
@@ -11,53 +13,62 @@ module TurnipFormatter
     # @param  [RSpec::Core::Example]  example
     #
     def initialize(example)
-      @scenario = example
+      @example = example
+      clean_backtrace
     end
 
     def validation
-      raise NotExistStepsInformationError unless scenario.metadata.member?(:steps)
+      raise NotExistStepsInformationError unless example.metadata.member?(:turnip)
       raise NoFeatureFileError unless feature_file_path.end_with?('.feature')
     end
 
     def steps
-      descriptions.map { |desc| TurnipFormatter::Step.new(desc) }
-    end
-
-    def method_missing(name, *args, &block)
-      if scenario.execution_result.member?(name.to_sym)
-        scenario.execution_result[name.to_sym]
-      else
-        super
+      @steps ||= descriptions.map do |desc|
+        TurnipFormatter::Step.new(example, desc)
       end
     end
-
+    
+    #
+    # @return  [String] scenario name
+    #
     def name
-      scenario.example_group.description
+      example.example_group.description
+    end
+
+    #
+    # @return  [String] scenario status ('passed', 'failed' or 'pending')
+    #
+    def status
+      example.execution_result[:status]
     end
 
     def feature_name
-      @scenario.example_group.metadata[:example_group][:example_group][:description]
+      example.example_group.metadata[:example_group][:example_group][:description]
     end
 
     def feature_file_path
-      scenario.metadata[:file_path]
+      example.metadata[:file_path]
     end
 
     def tags
-      scenario.metadata[:steps][:tags]
+      example.metadata[:turnip][:tags]
+    end
+
+    def example
+      @example
     end
 
     private
 
-    def scenario
-      @scenario
+    def descriptions
+      example.metadata[:turnip][:steps]
     end
 
-    def descriptions
-      descriptions = scenario.metadata[:steps][:descriptions]
-      keywords = scenario.metadata[:steps][:keywords]
-      docstrings = scenario.metadata[:steps][:docstrings]
-      descriptions.zip(keywords, docstrings)
+    def clean_backtrace
+      return if example.exception.nil?
+      formatted = format_backtrace(example.exception.backtrace, example.metadata)
+      new_backtrace = formatted.map { |b| backtrace_line(b) }.compact
+      example.exception.set_backtrace(new_backtrace)
     end
   end
 end

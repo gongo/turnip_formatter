@@ -8,6 +8,11 @@ module TurnipFormatter
     include ERB::Util
     include RSpec::Core::BacktraceFormatter
 
+    autoload :StepOutline,   'turnip_formatter/template/step_outline'
+    autoload :StepMultiline, 'turnip_formatter/template/step_multiline'
+    autoload :StepSource,    'turnip_formatter/template/step_source'
+    autoload :StepException, 'turnip_formatter/template/step_exception'
+
     def print_header
       <<-EOS
         <!DOCTYPE html>
@@ -59,7 +64,6 @@ module TurnipFormatter
     end
 
     def print_runtime_error(example, exception)
-      
       if example.exception
         example_backtrace = format_backtrace(example.exception.backtrace[0..14], example.metadata).map do |l|
           RSpec::Core::Metadata::relative_path(l)
@@ -89,38 +93,26 @@ module TurnipFormatter
     end
 
     def step_args(step)
-      args = []
-      [:extra_args, :source, :exception].each do |k|
-        args << send("step_#{k}", step.docs[k]) unless step.docs[k].nil?
+      output = []
+
+      step.docs.each do |style, value|
+        if style == :extra_args
+          output << step_extra_args(value)
+        else
+          # call StepException, StepSource, etc...
+          klass = ['step', style.to_s].map(&:capitalize).join
+          output << self.class.const_get(klass).build(value)
+        end
       end
-      args.join("\n")
+
+      output.join("\n")
     end
 
     def step_extra_args(extra_args)
       extra_args.map do |arg|
-        if arg.instance_of?(Turnip::Table)
-          step_outline(arg)
-        else
-          step_multiline(arg)
-        end
+        klass = arg.instance_of?(Turnip::Table) ? StepOutline : StepMultiline
+        klass.build(arg)
       end.join("\n")
-    end
-
-    def step_outline(table)
-      template_step_outline.result(binding)
-    end
-
-    def step_multiline(lines)
-      '<pre class="multiline">' + h(lines) + '</pre>'
-    end
-
-    def step_source(location)
-      @snippet_extractor ||= ::RSpec::Core::Formatters::SnippetExtractor.new
-      '<pre class="source"><code class="ruby">' + @snippet_extractor.snippet([location]) + '</code></pre>'
-    end
-
-    def step_exception(exception)
-      template_step_exception.result(binding)
     end
 
     def report_area
@@ -174,35 +166,6 @@ module TurnipFormatter
           <li>@<%= h(tag) %></li>
           <% end %>
        </ul>
-      EOS
-    end
-
-    def template_step_outline
-      @template_step_outline ||= ERB.new(<<-EOS)
-        <table class="step_outline">
-          <% table.each do |tr| %>
-          <tr>
-            <% tr.each do |td| %>
-            <td><%= h(td) %></td>
-            <% end %>
-          </tr>
-          <% end %>
-        </table>
-      EOS
-    end
-
-    def template_step_exception
-      @template_step_exception ||= ERB.new(<<-EOS)
-        <div class="step_exception">
-          <span>Failure:</span>
-          <pre><%= h(exception.to_s) %></pre>
-          <span>Backtrace:</span>
-          <ol>
-            <% exception.backtrace.each do |line| %>
-            <li><%= h(line) %></li>
-            <% end %>
-          </ol>
-        </div>
       EOS
     end
 

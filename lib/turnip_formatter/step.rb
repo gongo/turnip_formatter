@@ -2,17 +2,39 @@
 
 module TurnipFormatter
   class Step
-    attr_reader :name, :docs
+    attr_reader :name, :docs, :example
 
-    def initialize(description)
-      step_name, keyword, docstring = description
-      @name = keyword + step_name
-      @docs = {}
-      @docs[:extra_args] = docstring unless docstring.empty?
+    class << self
+      def templates
+        @templates ||= {}
+      end
+
+      def add_template(status, style, &block)
+        templates[status] ||= {}
+        templates[status][style] = block
+      end
+
+      def status
+        ''
+      end
+    end
+
+    #
+    # @param  [RSpec::Core::Example]  example
+    # @param  [Hash]  description
+    #
+    def initialize(example, description)
+      @example = example
+      @name = description[:keyword] + description[:name]
+      @docs = { extra_args: description[:extra_args] }
     end
 
     def attention?
-      false
+      !status.empty?
+    end
+
+    def status
+      self.class.status
     end
   end
 end

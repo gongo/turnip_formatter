@@ -10,8 +10,17 @@ end
 shared_context 'turnip_formatter passed scenario metadata' do
   let(:metadata) do
     {
-      steps: { descriptions: ['Step 1'], docstrings: [[]], keywords: ['When'], tags: [] },
+      turnip: {
+        steps: [ { name: 'Step 1', extra_args: [], keyword: 'When' } ],
+        tags: []
+      },
       file_path: '/path/to/hoge.feature'
     }
+  end
+end
+
+shared_context 'turnip_formatter standard step parameters' do
+  let(:description) do
+    { name: 'StepName', keyword: 'Keyword', extra_args: ['Docstring'] }
   end
 end

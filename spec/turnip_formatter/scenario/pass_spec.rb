@@ -8,31 +8,18 @@ module TurnipFormatter::Scenario
       expect(true).to be_true
     }
 
-    context 'Turnip example' do
-      let(:metadata) do
-        {
-          steps: { descriptions: ['Step 1'], docstrings: [[]], keywords: ['When'], tags: [] },
-          file_path: '/path/to/hoge.feature'
-        }
-      end
+    include_context 'turnip_formatter passed scenario metadata'
 
+    context 'Turnip example' do
       describe '#validation' do
         it 'should not raise exception' do
           expect { scenario.validation }.not_to raise_error
         end
       end
-
     end
 
     context 'Not Turnip example' do
       context 'Not passed example' do
-        let(:metadata) do
-          {
-            steps: { descriptions: ['Step 1'], docstrings: [[]], keywords: ['When'], tags: [] },
-            file_path: '/path/to/hoge.feature'
-          }
-        end
-
         include_context 'turnip_formatter scenario setup', proc {
           expect(true).to be_false
         }
@@ -46,10 +33,9 @@ module TurnipFormatter::Scenario
 
       context 'not exist feature file' do
         let(:metadata) do
-          {
-            steps: { descriptions: ['Step 1'], docstrings: [[]], keywords: ['When'], tags: [] },
-            file_path: '/path/to/hoge.rb'
-          }
+          metadata = super()
+          metadata[:file_path] = '/path/to/hoge.rb'
+          metadata
         end
 
         describe '#validation' do

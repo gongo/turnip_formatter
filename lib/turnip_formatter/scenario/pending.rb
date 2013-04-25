@@ -13,10 +13,7 @@ module TurnipFormatter
 
       def steps
         steps = super
-        steps[offending_line].tap do |step|
-          step.extend TurnipFormatter::Step::Pending
-          step.attention(pending_message, scenario.location)
-        end
+        steps[offending_line].extend TurnipFormatter::Step::Pending
         steps
       end
 
@@ -29,8 +26,14 @@ module TurnipFormatter
       private
 
       def offending_line
-        raise NoExistPendingStepInformationError unless pending_message =~ /^No such step\((?<stepno>\d+)\): /
+        unless pending_message =~ /^No such step\((?<stepno>\d+)\): /
+          raise NoExistPendingStepInformationError
+        end
         $~[:stepno].to_i
+      end
+
+      def pending_message
+        example.execution_result[:pending_message]
       end
     end
   end

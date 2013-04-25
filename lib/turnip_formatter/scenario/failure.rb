@@ -11,19 +11,15 @@ module TurnipFormatter
 
     class Failure
       include TurnipFormatter::Scenario
-      include RSpec::Core::BacktraceFormatter
 
       def steps
         steps = super
-        steps[offending_line].tap do |step|
-          step.extend TurnipFormatter::Step::Failure
-          step.attention(exception, backtrace)
-        end
+        steps[offending_line].extend TurnipFormatter::Step::Failure
         steps
       end
 
       def validation
-        raise NotFailedScenarioError if (status != 'failed')
+        raise NotFailedScenarioError if status != 'failed'
         offending_line
         super
       end
@@ -31,16 +27,10 @@ module TurnipFormatter
       private
 
       def offending_line
-        unless backtrace.last =~ /:in step:(?<stepno>\d+) `/
+        unless example.exception.backtrace.last =~ /:in step:(?<stepno>\d+) `/
           raise NoExistFailedStepInformationError
         end
         $~[:stepno].to_i
-      end
-
-      def backtrace
-        @backtrace ||= format_backtrace(exception.backtrace, scenario.metadata).map do |b|
-          backtrace_line(b)
-        end.compact
       end
     end
   end

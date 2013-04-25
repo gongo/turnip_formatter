@@ -17,21 +17,20 @@ module Turnip
       end
 
       def initialize_scenario_metadata
-        example.metadata[:steps] = {
-          descriptions: [],
-          docstrings: [],
-          keywords: [],
-          tags: [],
-        }
+        example.metadata[:turnip] = { steps: [] }
       end
 
       def push_scenario_metadata(scenario)
         steps = scenario.steps
-        example.metadata[:steps].tap do |meta|
-          meta[:descriptions] += steps.map(&:description)
-          meta[:docstrings]   += steps.map(&:extra_args)
-          meta[:keywords]     += steps.map(&:keyword)
-          meta[:tags]          = scenario.tags if scenario.respond_to?(:tags)
+        example.metadata[:turnip].tap do |turnip|
+          steps.each do |step|
+            turnip[:steps] << {
+              name: step.description,
+              extra_args: step.extra_args,
+              keyword: step.keyword
+            }
+          end
+          turnip[:tags] = scenario.tags if scenario.respond_to?(:tags)
         end
       end
     end

@@ -3,16 +3,10 @@ require 'stringio'
 
 module RSpec::Core::Formatters
   describe TurnipFormatter do
+    include_context 'turnip_formatter passed scenario metadata'
+
     let(:feature) { RSpec::Core::ExampleGroup.describe('Feature') }
     let(:scenario) { feature.describe('Scenario') }
-
-    let(:scenario_metadata) do
-      {
-        steps: { descriptions: [], docstrings: [[]], keywords: ['When'], tags: [] },
-        file_path: '/path/to/hoge.feature'
-      }
-    end
-
     let(:output) { StringIO.new }
     let(:formatter) { TurnipFormatter.new(output) }
 
@@ -26,7 +20,7 @@ module RSpec::Core::Formatters
 
     describe '#example_passed' do
       it 'should be output passed scenario section' do
-        scenario.example('passed', scenario_metadata) { expect(true).to be_true }
+        scenario.example('passed', metadata) { expect(true).to be_true }
         feature.run(formatter)
 
         string = output.string
@@ -36,11 +30,14 @@ module RSpec::Core::Formatters
 
     describe '#example_failed' do
       let(:failed_metadata) do
-        scenario_metadata.dup.tap do |metadata|
-          metadata[:steps][:descriptions] << 'this step is error'
-          metadata[:steps][:docstrings] << []
-          metadata[:steps][:keywords] << 'Given'
+        metadata[:turnip][:steps].tap do |steps|
+          steps << {
+            name: 'this step is error',
+            extra_args: [],
+            keyword: 'Given'
+          }
         end
+        metadata
       end
 
       it 'should be output failed scenario section' do
@@ -52,6 +49,7 @@ module RSpec::Core::Formatters
             raise e
           end
         end
+
         feature.run(formatter)
         expect(output.string).to match 'class="scenario failed"'
       end
@@ -59,11 +57,14 @@ module RSpec::Core::Formatters
 
     describe '#example_pending' do
       let(:pending_metadata) do
-        scenario_metadata.dup.tap do |metadata|
-          metadata[:steps][:descriptions] << 'this step is unimplement'
-          metadata[:steps][:docstrings] << []
-          metadata[:steps][:keywords] << 'Given'
+        metadata[:turnip][:steps].tap do |steps|
+          steps << {
+            name: 'this step is unimplement',
+            extra_args: [],
+            keyword: 'Given'
+          }
         end
+        metadata
       end
 
       it 'should be output pending scenario section' do

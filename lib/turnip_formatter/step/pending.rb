@@ -1,21 +1,26 @@
 # -*- coding: utf-8 -*-
+require 'turnip_formatter/step'
+require 'turnip_formatter/step/dsl'
 
 module TurnipFormatter
   class Step
     module Pending
-      def attention?
-        true
-      end
+      extend DSL
 
-      def attention(message, location)
-        exception = RSpec::Core::Pending::PendingDeclaredInExample.new(message)
-        exception.set_backtrace(location)
-        docs[:exception] = exception
+      def self.status
+        :pending
       end
 
       def status
-        'pending'
+        Pending.status
       end
     end
   end
+end
+
+TurnipFormatter::Step::Pending.add_template :exception do
+  message = example.execution_result[:pending_message]
+  exception = RSpec::Core::Pending::PendingDeclaredInExample.new(message)
+  exception.set_backtrace(example.location)
+  exception
 end
