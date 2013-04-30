@@ -1,3 +1,5 @@
+require 'turnip_formatter/step'
+
 module TurnipFormatter
   class Step
     module DSL

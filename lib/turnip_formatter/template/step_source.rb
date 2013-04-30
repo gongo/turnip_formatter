@@ -1,4 +1,5 @@
 require 'erb'
+require 'rspec/core/formatters/snippet_extractor'
 
 module TurnipFormatter
   class Template

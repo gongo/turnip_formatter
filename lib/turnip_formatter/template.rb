@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 require 'erb'
-require 'rspec/core/formatters/snippet_extractor'
+require 'rspec/core/formatters/helpers'
 
 module TurnipFormatter
   class Template
