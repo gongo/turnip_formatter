@@ -8,6 +8,10 @@ step "there is a strong monster" do
   @monster = 2
 end
 
+step "there is a boss monster" do
+  @monster = 3
+end
+
 step "I attack it" do
   @attack ||= 1 # no weapon
   @monster -= @attack

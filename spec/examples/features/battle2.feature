@@ -15,3 +15,12 @@ Feature: Battle a monster with weapon
      Then it should die
       And Fanfare
  
+  Scenario: boss monster
+
+    This scenario will error
+    So, fanfare is not...oh...
+
+    Given there is a boss monster
+     When I attack it
+     Then it should die
+      And Fanfare
