@@ -95,13 +95,11 @@ module TurnipFormatter
     def step_args(step)
       output = []
 
-      step.docs.each do |style, value|
+      step.docs.each do |style, template|
         if style == :extra_args
-          output << step_extra_args(value)
+          output << step_extra_args(template[:value])
         else
-          # call StepException, StepSource, etc...
-          klass = ['step', style.to_s].map(&:capitalize).join
-          output << self.class.const_get(klass).build(value)
+          output << step_template(style, template[:klass]).build(template[:value])
         end
       end
 
@@ -113,6 +111,14 @@ module TurnipFormatter
         klass = arg.instance_of?(Turnip::Table) ? StepOutline : StepMultiline
         klass.build(arg)
       end.join("\n")
+    end
+
+    def step_template(style, klass)
+      return klass if !!klass
+
+      # call Built-in template (StepException, StepSource, etc...)
+      klass = ['step', style.to_s].map(&:capitalize).join
+      self.class.const_get(klass)
     end
 
     def report_area
