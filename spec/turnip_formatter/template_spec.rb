@@ -56,24 +56,61 @@ module TurnipFormatter
     end
     
     context 'Step has arguments' do
-      describe '#step_args' do
-        let(:table) { Turnip::Table.new [] }
+      let(:table) { Turnip::Table.new [] }
 
-        let(:step) do
-          step = double
-          step.stub(:docs).and_return(
-            extra_args: ['a', table], source: 'b', exception: 'c'
-          )
-          step
+      context 'original template' do
+        describe '#step_args' do
+          let(:step) do
+            step = double
+            step.stub(:docs).and_return(
+              extra_args: { klass: nil, value: ['a', table] },
+              source: { klass: nil, value: 'b' },
+              exception: { klass: nil, value: 'c' }
+              )
+            step
+          end
+          
+          it 'should call corresponding method in step' do
+            Template::StepMultiline.should_receive(:build).with('a').and_return('extra_args1')
+            Template::StepOutline.should_receive(:build).with(table).and_return('extra_args2')
+            Template::StepSource.should_receive(:build).with('b').and_return('source')
+            Template::StepException.should_receive(:build).with('c').and_return('exception')
+
+            expect(template.send(:step_args, step)).to eq("extra_args1\nextra_args2\nsource\nexception")
+          end
         end
-        
-        it 'should call corresponding method in step' do
-          Template::StepMultiline.should_receive(:build).with('a').and_return('extra_args1')
-          Template::StepOutline.should_receive(:build).with(table).and_return('extra_args2')
-          Template::StepSource.should_receive(:build).with('b').and_return('source')
-          Template::StepException.should_receive(:build).with('c').and_return('exception')
+      end
 
-          expect(template.send(:step_args, step)).to eq("extra_args1\nextra_args2\nsource\nexception")
+      context 'custom template' do
+        describe '#step_args' do
+          let(:custom_template_1) do
+            Module.new do
+              def self.build(value)
+                "<html>#{value}</html>"
+              end
+            end
+          end
+
+          let(:custom_template_2) do
+            Module.new do
+              def self.build(value)
+                "<strong>#{value}</strong>"
+              end
+            end
+          end
+
+          let(:step) do
+            step = double
+            step.stub(:docs).and_return(
+              source: { klass: custom_template_1, value: 'aiueo' },
+              exception: { klass: custom_template_2, value: '12345' }
+              )
+            step
+          end
+          
+          it 'should call corresponding method in step' do
+            expect(template.send(:step_args, step)).to eq("<html>aiueo</html>\n<strong>12345</strong>")
+          end
         end
       end
     end
