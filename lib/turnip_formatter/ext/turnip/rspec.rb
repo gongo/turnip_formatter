@@ -39,6 +39,10 @@ module Turnip
       def run(feature_file)
         Turnip::Builder.build(feature_file).features.each do |feature|
           describe feature.name, feature.metadata_hash do
+            let :background_steps do
+              feature.backgrounds.map(&:steps).flatten
+            end
+
             before do
               example.metadata[:file_path] = feature_file
               initialize_scenario_metadata
@@ -46,8 +50,8 @@ module Turnip
               feature.backgrounds.each do |background|
                 push_scenario_metadata(background)
               end
-
-              feature.backgrounds.map(&:steps).flatten.each.with_index do |step, index|
+              
+              background_steps.each.with_index do |step, index|
                 run_step(feature_file, step, index)
               end
             end
@@ -58,7 +62,7 @@ module Turnip
                 end
 
                 it scenario.steps.map(&:description).join(' -> ') do
-                  scenario.steps.each.with_index do |step, index|
+                  scenario.steps.each.with_index(background_steps.size) do |step, index|
                     run_step(feature_file, step, index)
                   end
                 end
