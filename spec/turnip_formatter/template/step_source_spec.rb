@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 require 'spec_helper'
 require 'turnip_formatter/template/step_source'
 
@@ -5,7 +7,7 @@ module TurnipFormatter
   class Template
     describe StepSource do
       let(:template) { ::TurnipFormatter::Template::StepSource }
-      let(:source) { __FILE__ + ':1' }
+      let(:source) { __FILE__ + ':3' }
 
       describe '.build' do
         subject { template.build(source) }

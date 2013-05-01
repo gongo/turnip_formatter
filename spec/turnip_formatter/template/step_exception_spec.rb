@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 require 'spec_helper'
 require 'turnip_formatter/template/step_exception'
 
