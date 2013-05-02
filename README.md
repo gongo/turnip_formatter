@@ -48,6 +48,13 @@ Example
 
 see https://github.com/gongo/turnip_formatter/tree/master/spec/examples
 
+Add-on
+--------------------
+
+* Gnawrnip
+    * Gnawrnip is a TurnipFormatter Add-on that provides put a screen shot to report use Capybara
+    * https://github.com/gongo/gnawrnip
+
 License
 --------------------
 
