@@ -180,7 +180,10 @@ module TurnipFormatter
             <span class="scenario_name" id="<%= scenario.object_id %>">
               Scenario: <%= h(scenario.name) %>
             </span>
-            <span class="feature_name">(Feature: <%= h(feature_name(scenario)) %>)</span>
+            <span class="feature_name">
+              (Feature: <%= h(feature_name(scenario)) %>)
+              at <%= h(scenario.run_time) %> sec
+            </span>
           </header>
           <%= scenario_tags(scenario) %>
           <ul class="steps">
