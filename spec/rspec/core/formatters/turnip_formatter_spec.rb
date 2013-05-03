@@ -3,7 +3,7 @@ require 'stringio'
 
 module RSpec::Core::Formatters
   describe TurnipFormatter do
-    include_context 'turnip_formatter passed scenario metadata'
+    include_context 'turnip_formatter standard scenario metadata'
 
     let(:feature) { RSpec::Core::ExampleGroup.describe('Feature') }
     let(:scenario) { feature.describe('Scenario') }
@@ -29,19 +29,8 @@ module RSpec::Core::Formatters
     end
 
     describe '#example_failed' do
-      let(:failed_metadata) do
-        metadata[:turnip][:steps].tap do |steps|
-          steps << {
-            name: 'this step is error',
-            extra_args: [],
-            keyword: 'Given'
-          }
-        end
-        metadata
-      end
-
       it 'should be output failed scenario section' do
-        scenario.example('failed', failed_metadata) do
+        scenario.example('failed', metadata) do
           begin
             expect(true).to be_false
           rescue => e
@@ -56,19 +45,8 @@ module RSpec::Core::Formatters
     end
 
     describe '#example_pending' do
-      let(:pending_metadata) do
-        metadata[:turnip][:steps].tap do |steps|
-          steps << {
-            name: 'this step is unimplement',
-            extra_args: [],
-            keyword: 'Given'
-          }
-        end
-        metadata
-      end
-
       it 'should be output pending scenario section' do
-        scenario.example('pending', pending_metadata) do
+        scenario.example('pending', metadata) do
           pending("No such step(0): 'this step is unimplement'")
         end
         feature.run(formatter)
@@ -77,7 +55,7 @@ module RSpec::Core::Formatters
       end
 
       it 'should be output runtime exception section' do
-        scenario.example('pending', pending_metadata) do
+        scenario.example('pending', metadata) do
           pending("Pending")
         end
         feature.run(formatter)

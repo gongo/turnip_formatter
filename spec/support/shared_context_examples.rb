@@ -1,13 +1,26 @@
-shared_context "turnip_formatter scenario setup" do |proc|
+shared_context "turnip_formatter scenario setup" do |assertion|
   let(:example) do
+    assertion ||= proc { expect(true).to be_true }
     group = ::RSpec::Core::ExampleGroup.describe('Feature').describe('Scenario')
-    _example = group.example('example', metadata, &proc)
+    example = group.example('example', metadata, &assertion)
     group.run(NoopObject.new)
-    _example
+    example
   end
 end
 
-shared_context 'turnip_formatter passed scenario metadata' do
+shared_context "turnip_formatter failure scenario setup" do |assertion|
+  include_context 'turnip_formatter scenario setup', proc {
+    expect(true).to be_false
+  }
+end
+
+shared_context "turnip_formatter pending scenario setup" do |assertion|
+  include_context 'turnip_formatter scenario setup', proc {
+    pending('Pending')
+  }
+end
+
+shared_context 'turnip_formatter standard scenario metadata' do
   let(:metadata) do
     {
       turnip: {

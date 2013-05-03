@@ -4,11 +4,8 @@ module TurnipFormatter::Scenario
   describe Pass do
     let(:scenario) { ::TurnipFormatter::Scenario::Pass.new(example) }
 
-    include_context 'turnip_formatter scenario setup', proc {
-      expect(true).to be_true
-    }
-
-    include_context 'turnip_formatter passed scenario metadata'
+    include_context 'turnip_formatter scenario setup'
+    include_context 'turnip_formatter standard scenario metadata'
 
     context 'Turnip example' do
       describe '#validation' do
@@ -20,9 +17,7 @@ module TurnipFormatter::Scenario
 
     context 'Not Turnip example' do
       context 'Not passed example' do
-        include_context 'turnip_formatter scenario setup', proc {
-          expect(true).to be_false
-        }
+        include_context 'turnip_formatter failure scenario setup'
 
         describe '#validation' do
           it 'should raise exception' do

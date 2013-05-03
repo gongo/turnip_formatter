@@ -4,8 +4,8 @@ module TurnipFormatter
   class Step
     describe Failure do
       include_context 'turnip_formatter standard step parameters'
-      include_context 'turnip_formatter scenario setup'
-      include_context 'turnip_formatter passed scenario metadata'
+      include_context 'turnip_formatter pending scenario setup'
+      include_context 'turnip_formatter standard scenario metadata'
 
       let(:step) do
         step = ::TurnipFormatter::Step.new(example, description)
