@@ -8,6 +8,14 @@ div#report {
   background: black;
   color: #aaffaa; }
 
+footer {
+  width: 90%;
+  margin: 0 auto;
+  padding: 2em;
+  background: black;
+  color: #aaffaa;
+  text-align: right; }
+
 div#main {
   width: 90%;
   margin: 0 auto;
@@ -20,6 +28,9 @@ section.scenario {
   border: 2px solid green; }
   section.scenario > header {
     margin: 1em 0em; }
+    section.scenario > header:hover {
+      text-decoration: underline;
+      cursor: pointer; }
     section.scenario > header span.scenario_name {
       font-weight: bold;
       font-size: 14px; }

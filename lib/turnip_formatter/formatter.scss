@@ -21,7 +21,15 @@ div#report {
     padding: 2em;
     background: black;
     color: #aaffaa;
+}
 
+footer {
+    width: 90%;
+    margin: 0 auto;
+    padding: 2em;
+    background: black;
+    color: #aaffaa;
+    text-align: right;
 }
 
 div#main {
@@ -38,6 +46,11 @@ section.scenario {
 
     > header {
         margin: 1em 0em;
+
+        &:hover {
+            text-decoration: underline;
+            cursor: pointer;
+        }
 
         span.scenario_name {
             font-weight: bold;
