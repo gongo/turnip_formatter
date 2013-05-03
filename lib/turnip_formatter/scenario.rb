@@ -42,6 +42,13 @@ module TurnipFormatter
       example.execution_result[:status]
     end
 
+    #
+    # @return  [String] scenario run time
+    #
+    def run_time
+      example.execution_result[:run_time]
+    end
+
     def feature_name
       example.example_group.metadata[:example_group][:example_group][:description]
     end
