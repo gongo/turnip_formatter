@@ -6,14 +6,14 @@ div#report {
   margin: 0 auto;
   padding: 2em;
   background: black;
-  color: #aaffaa; }
+  color: #509b49; }
 
 footer {
   width: 90%;
   margin: 0 auto;
   padding: 2em;
   background: black;
-  color: #aaffaa;
+  color: #509b49;
   text-align: right; }
 
 div#main {
@@ -48,21 +48,21 @@ section.scenario {
       color: #839496;
       display: inline; }
   section.scenario.passed {
-    border-color: green; }
+    border-color: #509b49; }
     section.scenario.passed > header .scenario_name {
-      color: #859900; }
+      color: #509b49; }
       section.scenario.passed > header .scenario_name:before {
         content: "\2713\20"; }
   section.scenario.failed {
-    border-color: #dc322f; }
+    border-color: #ed1c24; }
     section.scenario.failed > header .scenario_name {
-      color: #dc322f; }
+      color: #ed1c24; }
       section.scenario.failed > header .scenario_name:before {
         content: "\2717\20"; }
   section.scenario.pending {
-    border-color: #b58900; }
+    border-color: #d6a921; }
     section.scenario.pending > header .scenario_name {
-      color: #b58900; }
+      color: #d6a921; }
       section.scenario.pending > header .scenario_name:before {
         content: "\d8\20"; }
   section.scenario ul.steps {
@@ -73,56 +73,54 @@ section.scenario {
       font-weight: bold;
       margin: 0.5em 0em; }
       section.scenario ul.steps li.step > span {
+        border: 1px solid #509b49;
         padding: 0.5em;
         background-color: #eeffee;
-        border: 1px solid #00aa00;
-        color: #00aa00; }
+        color: #509b49; }
         section.scenario ul.steps li.step > span:hover {
           border-width: 3px; }
         section.scenario ul.steps li.step > span ~ * {
           margin-left: 2em; }
-      section.scenario ul.steps li.step div.args {
-        font-size: 11px; }
-      section.scenario ul.steps li.step.failure > span {
-        background-color: #ffdddd;
-        border: 1px solid #dd0000;
-        color: #dd0000; }
-        section.scenario ul.steps li.step.failure > span:hover {
-          border-width: 3px; }
-        section.scenario ul.steps li.step.failure > span ~ * {
-          margin-left: 2em; }
-      section.scenario ul.steps li.step.failure > div.args {
-        padding: 1em;
-        background-color: #ffeeee;
-        border: 1px solid #cc8888; }
-      section.scenario ul.steps li.step.failure ~ li > span {
-        background-color: #cccccc;
-        border: 1px solid #444444;
-        color: #333333; }
-        section.scenario ul.steps li.step.failure ~ li > span:hover {
-          border-width: 3px; }
-        section.scenario ul.steps li.step.failure ~ li > span ~ * {
-          margin-left: 2em; }
-      section.scenario ul.steps li.step.pending > span {
-        background-color: #ffffbb;
-        border: 1px solid #666600;
-        color: #666600; }
-        section.scenario ul.steps li.step.pending > span:hover {
-          border-width: 3px; }
-        section.scenario ul.steps li.step.pending > span ~ * {
-          margin-left: 2em; }
-      section.scenario ul.steps li.step.pending > div.args {
-        padding: 1em;
-        background-color: #ffffaa;
-        border: 1px solid #999944; }
-      section.scenario ul.steps li.step.pending ~ li > span {
-        background-color: #cccccc;
-        border: 1px solid #444444;
-        color: #333333; }
-        section.scenario ul.steps li.step.pending ~ li > span:hover {
-          border-width: 3px; }
-        section.scenario ul.steps li.step.pending ~ li > span ~ * {
-          margin-left: 2em; }
+      section.scenario ul.steps li.step.failure {
+        /* skip/pending step style */ }
+        section.scenario ul.steps li.step.failure > span {
+          border: 1px solid #ed1c24;
+          padding: 0.5em;
+          background-color: #ffdddd;
+          color: #ed1c24; }
+          section.scenario ul.steps li.step.failure > span:hover {
+            border-width: 3px; }
+          section.scenario ul.steps li.step.failure > span ~ * {
+            margin-left: 2em; }
+        section.scenario ul.steps li.step.failure > div.args {
+          font-size: 11px;
+          padding: 1em;
+          background-color: #ffdddd;
+          border: 1px solid #ed1c24; }
+        section.scenario ul.steps li.step.failure ~ li > span {
+          background-color: #dddddd;
+          border-color: #7a7b7d;
+          color: #7a7b7d; }
+      section.scenario ul.steps li.step.pending {
+        /* skip/pending step style */ }
+        section.scenario ul.steps li.step.pending > span {
+          border: 1px solid #d6a921;
+          padding: 0.5em;
+          background-color: #ffffdd;
+          color: #d6a921; }
+          section.scenario ul.steps li.step.pending > span:hover {
+            border-width: 3px; }
+          section.scenario ul.steps li.step.pending > span ~ * {
+            margin-left: 2em; }
+        section.scenario ul.steps li.step.pending > div.args {
+          font-size: 11px;
+          padding: 1em;
+          background-color: #ffffdd;
+          border: 1px solid #d6a921; }
+        section.scenario ul.steps li.step.pending ~ li > span {
+          background-color: #dddddd;
+          border-color: #7a7b7d;
+          color: #7a7b7d; }
     section.scenario ul.steps table.step_outline {
       margin-top: 2em; }
       section.scenario ul.steps table.step_outline tr:nth-child(odd) {
@@ -137,7 +135,7 @@ section.scenario {
       font-size: 13px;
       color: #586e75; }
     section.scenario ul.steps div.step_exception {
-      margin: 1em 0em 1em 0em;
+      margin: 1em 0em;
       padding: 1em 0em 1em 1em;
       border: 1px solid #999999;
       background-color: #eee8d5;

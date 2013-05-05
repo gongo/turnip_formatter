@@ -1,14 +1,45 @@
-@mixin step_span {
-    &:hover { border-width: 3px; }
-    ~ * { margin-left: 2em; }
+$red-front: #ED1C24;
+$green-front: #509B49;
+$yellow-front: #D6A921;
+$red-background: #FFDDDD;
+$green-background: #EEFFEE;
+$yellow-background: #FFFFDD;
+$gray-front: #7A7B7D;
+$gray-background: #DDDDDD;
+
+@mixin step_span($front, $back, $with_args: false) {
+    > span {
+        border: 1px solid $front;
+        padding: 0.5em;
+        background-color: $back;
+        color: $front;
+
+        &:hover { border-width: 3px; }
+        ~ * { margin-left: 2em; }
+    }
+
+    @if $with_args {
+
+        > div.args {
+            font-size: 11px;
+            padding: 1em;
+            background-color: $back;
+            border: 1px solid $front;
+        }
+
+        /* skip/pending step style */
+        ~ li > span {
+            background-color: $gray-background;
+            border-color: $gray-front;
+            color: $gray-front;
+        }
+    }
 }
 
-@mixin noop_step_span {
-    @include step_span;
-
-    background-color: #cccccc;
-    border: 1px solid #444444;
-    color: #333333;
+@mixin content_centering {
+    width: 90%;
+    margin: 0 auto;
+    padding: 2em;
 }
 
 body {
@@ -16,26 +47,20 @@ body {
 }
 
 div#report {
-    width: 90%;
-    margin: 0 auto;
-    padding: 2em;
+    @include content_centering;
     background: black;
-    color: #aaffaa;
+    color: $green-front;
 }
 
 footer {
-    width: 90%;
-    margin: 0 auto;
-    padding: 2em;
+    @include content_centering;
     background: black;
-    color: #aaffaa;
+    color: $green-front;
     text-align: right;
 }
 
 div#main {
-    width: 90%;
-    margin: 0 auto;
-    padding: 2em;
+    @include content_centering;
     background-color: #fff9f9;
 }
 
@@ -79,28 +104,28 @@ section.scenario {
     }
 
     &.passed {
-        border-color: green;
+        border-color: $green-front;
 
         > header .scenario_name {
-            color: #859900;
+            color: $green-front;
             &:before { content: "\2713\20"; }
         }
     }
 
     &.failed {
-        border-color: #dc322f;
+        border-color: $red-front;
 
         > header .scenario_name {
-            color: #dc322f;
+            color: $red-front;
             &:before { content: "\2717\20"; }
         }
     }
 
     &.pending {
-        border-color: #b58900;
+        border-color: $yellow-front;
 
         > header .scenario_name {
-            color: #b58900;
+            color: $yellow-front;
             &:before { content: "\d8\20"; }
         }
     }
@@ -114,53 +139,14 @@ section.scenario {
             font-weight: bold;
             margin: 0.5em 0em;
 
-            > span {
-                padding: 0.5em;
-                background-color: #eeffee;
-                border: 1px solid #00aa00;
-                color: #00aa00;
-
-                @include step_span;
-            }
-
-            div.args {
-                font-size: 11px;
-            }
+            @include step_span($green-front, $green-background);
 
             &.failure {
-                > span {
-                    background-color: #ffdddd;
-                    border: 1px solid #dd0000;
-                    color: #dd0000;
-
-                    @include step_span;
-                }
-
-                > div.args {
-                    padding: 1em;
-                    background-color: #ffeeee;
-                    border: 1px solid #cc8888;
-                }
-
-                ~ li > span { @include noop_step_span; }
+                @include step_span($red-front, $red-background, true);
             }
 
             &.pending {
-                > span {
-                    background-color: #ffffbb;
-                    border: 1px solid #666600;
-                    color: #666600;
-
-                    @include step_span;
-                }
-
-                > div.args {
-                    padding: 1em;
-                    background-color: #ffffaa;
-                    border: 1px solid #999944;
-                }
-
-                ~ li > span { @include noop_step_span; }
+                @include step_span($yellow-front, $yellow-background, true);
             }
         }
 
@@ -188,7 +174,7 @@ section.scenario {
         }
 
         div.step_exception {
-            margin: 1em 0em 1em 0em;
+            margin: 1em 0em;
             padding: 1em 0em 1em 1em;
             border: 1px solid #999999;
             background-color: #eee8d5;
