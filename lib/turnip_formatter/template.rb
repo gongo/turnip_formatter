@@ -26,6 +26,7 @@ module TurnipFormatter
             <script>
               $(function() {
                   var scenarioHeader = 'section.scenario header';
+                  $(scenarioHeader).siblings().hide();
                    
                   /**
                    * Step folding/expanding
@@ -63,7 +64,7 @@ module TurnipFormatter
           <body>
             #{report_area}
             <div id="main" role="main">
-              <label><input type="checkbox" id="scenario_display_check">step folding</label>
+              <label><input type="checkbox" id="scenario_display_check" checked>step folding</label>
       EOS
     end
 
