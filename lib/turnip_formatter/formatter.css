@@ -2,14 +2,12 @@ body {
   background-color: #586e75; }
 
 div#report {
-  width: 90%;
   margin: 0 auto;
   padding: 2em;
   background: black;
   color: #509b49; }
 
 footer {
-  width: 90%;
   margin: 0 auto;
   padding: 2em;
   background: black;
@@ -17,144 +15,178 @@ footer {
   text-align: right; }
 
 div#main {
-  width: 90%;
   margin: 0 auto;
   padding: 2em;
   background-color: #fff9f9; }
+  div#main .ui-tabs-nav {
+    border-width: 0;
+    padding: 0; }
+  div#main .ui-tabs-panel {
+    border: 1px solid #7a7b7d; }
 
-section.scenario {
+div#steps-statistics section.scenario {
   margin: 1em 0em;
   padding-left: 1em;
   border: 2px solid green; }
-  section.scenario > header {
+  div#steps-statistics section.scenario > header {
     margin: 1em 0em; }
-    section.scenario > header:hover {
+    div#steps-statistics section.scenario > header:hover {
       text-decoration: underline;
       cursor: pointer; }
-    section.scenario > header span.scenario_name {
+    div#steps-statistics section.scenario > header span.scenario_name {
       font-weight: bold;
       font-size: 14px; }
-    section.scenario > header span.feature_name {
+    div#steps-statistics section.scenario > header span.feature_name {
       font-size: 13px;
       color: #839496; }
-    section.scenario > header span.permalink {
+    div#steps-statistics section.scenario > header span.permalink {
       margin-right: 1em;
       font-size: 15px; }
-      section.scenario > header span.permalink a {
+      div#steps-statistics section.scenario > header span.permalink a {
         color: #268bd2; }
-  section.scenario > ul.tags {
+  div#steps-statistics section.scenario > ul.tags {
     font-size: 12px; }
-    section.scenario > ul.tags li {
+    div#steps-statistics section.scenario > ul.tags li {
       color: #839496;
       display: inline; }
-  section.scenario.passed {
+  div#steps-statistics section.scenario.passed {
     border-color: #509b49; }
-    section.scenario.passed > header .scenario_name {
+    div#steps-statistics section.scenario.passed > header .scenario_name {
       color: #509b49; }
-      section.scenario.passed > header .scenario_name:before {
+      div#steps-statistics section.scenario.passed > header .scenario_name:before {
         content: "\2713\20"; }
-  section.scenario.failed {
+  div#steps-statistics section.scenario.failed {
     border-color: #ed1c24; }
-    section.scenario.failed > header .scenario_name {
+    div#steps-statistics section.scenario.failed > header .scenario_name {
       color: #ed1c24; }
-      section.scenario.failed > header .scenario_name:before {
+      div#steps-statistics section.scenario.failed > header .scenario_name:before {
         content: "\2717\20"; }
-  section.scenario.pending {
+  div#steps-statistics section.scenario.pending {
     border-color: #d6a921; }
-    section.scenario.pending > header .scenario_name {
+    div#steps-statistics section.scenario.pending > header .scenario_name {
       color: #d6a921; }
-      section.scenario.pending > header .scenario_name:before {
+      div#steps-statistics section.scenario.pending > header .scenario_name:before {
         content: "\d8\20"; }
-  section.scenario ul.steps {
+  div#steps-statistics section.scenario ul.steps {
     font-size: 12px;
     list-style-type: none; }
-    section.scenario ul.steps li.step {
+    div#steps-statistics section.scenario ul.steps li.step {
       padding: 0.5em;
       font-weight: bold;
       margin: 0.5em 0em; }
-      section.scenario ul.steps li.step > span {
+      div#steps-statistics section.scenario ul.steps li.step > span {
         border: 1px solid #509b49;
         padding: 0.5em;
         background-color: #eeffee;
         color: #509b49; }
-        section.scenario ul.steps li.step > span:hover {
+        div#steps-statistics section.scenario ul.steps li.step > span:hover {
           border-width: 3px; }
-        section.scenario ul.steps li.step > span ~ * {
+        div#steps-statistics section.scenario ul.steps li.step > span ~ * {
           margin-left: 2em; }
-      section.scenario ul.steps li.step.failure {
+      div#steps-statistics section.scenario ul.steps li.step.failure {
         /* skip/pending step style */ }
-        section.scenario ul.steps li.step.failure > span {
+        div#steps-statistics section.scenario ul.steps li.step.failure > span {
           border: 1px solid #ed1c24;
           padding: 0.5em;
           background-color: #ffdddd;
           color: #ed1c24; }
-          section.scenario ul.steps li.step.failure > span:hover {
+          div#steps-statistics section.scenario ul.steps li.step.failure > span:hover {
             border-width: 3px; }
-          section.scenario ul.steps li.step.failure > span ~ * {
+          div#steps-statistics section.scenario ul.steps li.step.failure > span ~ * {
             margin-left: 2em; }
-        section.scenario ul.steps li.step.failure > div.args {
+        div#steps-statistics section.scenario ul.steps li.step.failure > div.args {
           font-size: 11px;
           padding: 1em;
           background-color: #ffdddd;
           border: 1px solid #ed1c24; }
-        section.scenario ul.steps li.step.failure ~ li > span {
+        div#steps-statistics section.scenario ul.steps li.step.failure ~ li > span {
           background-color: #dddddd;
           border-color: #7a7b7d;
           color: #7a7b7d; }
-      section.scenario ul.steps li.step.pending {
+      div#steps-statistics section.scenario ul.steps li.step.pending {
         /* skip/pending step style */ }
-        section.scenario ul.steps li.step.pending > span {
+        div#steps-statistics section.scenario ul.steps li.step.pending > span {
           border: 1px solid #d6a921;
           padding: 0.5em;
           background-color: #ffffdd;
           color: #d6a921; }
-          section.scenario ul.steps li.step.pending > span:hover {
+          div#steps-statistics section.scenario ul.steps li.step.pending > span:hover {
             border-width: 3px; }
-          section.scenario ul.steps li.step.pending > span ~ * {
+          div#steps-statistics section.scenario ul.steps li.step.pending > span ~ * {
             margin-left: 2em; }
-        section.scenario ul.steps li.step.pending > div.args {
+        div#steps-statistics section.scenario ul.steps li.step.pending > div.args {
           font-size: 11px;
           padding: 1em;
           background-color: #ffffdd;
           border: 1px solid #d6a921; }
-        section.scenario ul.steps li.step.pending ~ li > span {
+        div#steps-statistics section.scenario ul.steps li.step.pending ~ li > span {
           background-color: #dddddd;
           border-color: #7a7b7d;
           color: #7a7b7d; }
-    section.scenario ul.steps table.step_outline {
+    div#steps-statistics section.scenario ul.steps table.step_outline {
       margin-top: 2em; }
-      section.scenario ul.steps table.step_outline tr:nth-child(odd) {
+      div#steps-statistics section.scenario ul.steps table.step_outline tr:nth-child(odd) {
         background-color: #ddddcc; }
-      section.scenario ul.steps table.step_outline tr:nth-child(even) {
+      div#steps-statistics section.scenario ul.steps table.step_outline tr:nth-child(even) {
         background-color: #ccccdd; }
-      section.scenario ul.steps table.step_outline td {
+      div#steps-statistics section.scenario ul.steps table.step_outline td {
         border: 2px solid black;
         padding: 0.3em 1em; }
-    section.scenario ul.steps pre.multiline {
+    div#steps-statistics section.scenario ul.steps pre.multiline {
       margin-top: 2em;
       font-size: 13px;
       color: #586e75; }
-    section.scenario ul.steps div.step_exception {
+    div#steps-statistics section.scenario ul.steps div.step_exception {
       margin: 1em 0em;
       padding: 1em 0em 1em 1em;
       border: 1px solid #999999;
       background-color: #eee8d5;
       color: #586e75; }
-      section.scenario ul.steps div.step_exception > pre {
+      div#steps-statistics section.scenario ul.steps div.step_exception > pre {
         margin-left: 1em; }
-    section.scenario ul.steps pre.source {
+    div#steps-statistics section.scenario ul.steps pre.source {
       font-size: 12px;
       font-family: monospace;
       background-color: #073642;
       color: #dddddd; }
-      section.scenario ul.steps pre.source code.ruby {
+      div#steps-statistics section.scenario ul.steps pre.source code.ruby {
         padding: 0.1em 0 0.2em 0; }
-        section.scenario ul.steps pre.source code.ruby .linenum {
+        div#steps-statistics section.scenario ul.steps pre.source code.ruby .linenum {
           width: 75px;
           color: #fffbd3;
           padding-right: 1em; }
-        section.scenario ul.steps pre.source code.ruby .offending {
+        div#steps-statistics section.scenario ul.steps pre.source code.ruby .offending {
           background-color: gray; }
+
+div#speed-statistics .tablesorter-header {
+  background-position: center right;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  background-image: url("data:image/gif;base64,R0lGODlhFQAJAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAkAAAIXjI+AywnaYnhUMoqt3gZXPmVg94yJVQAAOw=="); }
+  div#speed-statistics .tablesorter-header.sorter-false {
+    background: none; }
+div#speed-statistics .tablesorter-headerAsc {
+  background-position: center right;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  background-image: url("data:image/gif;base64,R0lGODlhFQAEAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAQAAAINjI8Bya2wnINUMopZAQA7"); }
+div#speed-statistics .tablesorter-headerDesc {
+  background-position: center right;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  background-image: url("data:image/gif;base64,R0lGODlhFQAEAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAQAAAINjB+gC+jP2ptn0WskLQA7"); }
+div#speed-statistics table {
+  width: 100%;
+  margin: 1em 0em; }
+  div#speed-statistics table thead th {
+    border-bottom: 1px solid #7a7b7d; }
+  div#speed-statistics table tbody tr:nth-child(odd) {
+    background-color: #FFFFFF; }
+  div#speed-statistics table tbody tr:nth-child(even) {
+    background-color: #dddddd; }
+  div#speed-statistics table tbody td {
+    border: 1px solid #7a7b7d;
+    padding: 0.3em 1em; }
 
 section.exception {
   margin: 1em 0em;

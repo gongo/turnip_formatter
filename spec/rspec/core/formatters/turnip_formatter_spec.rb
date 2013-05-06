@@ -19,17 +19,25 @@ module RSpec::Core::Formatters
     end
 
     describe '#example_passed' do
-      it 'should be output passed scenario section' do
+      before do
         scenario.example('passed', metadata) { expect(true).to be_true }
         feature.run(formatter)
+      end
 
+      it 'should be output passed scenario section' do
         string = output.string
         expect(string).to match 'class="scenario passed"'
+      end
+
+      it 'should get passed scenario count' do
+        expect(formatter.passed_scenarios).to have(1).elements
+        expect(formatter.failed_scenarios).to have(0).elements
+        expect(formatter.pending_scenarios).to have(0).elements
       end
     end
 
     describe '#example_failed' do
-      it 'should be output failed scenario section' do
+      before do
         scenario.example('failed', metadata) do
           begin
             expect(true).to be_false
@@ -38,29 +46,36 @@ module RSpec::Core::Formatters
             raise e
           end
         end
-
         feature.run(formatter)
+      end
+
+      it 'should be output failed scenario section' do
         expect(output.string).to match 'class="scenario failed"'
+      end
+
+      it 'should get failed scenario count' do
+        expect(formatter.passed_scenarios).to have(0).elements
+        expect(formatter.failed_scenarios).to have(1).elements
+        expect(formatter.pending_scenarios).to have(0).elements
       end
     end
 
     describe '#example_pending' do
-      it 'should be output pending scenario section' do
+      before do
         scenario.example('pending', metadata) do
           pending("No such step(0): 'this step is unimplement'")
         end
         feature.run(formatter)
+      end
 
+      it 'should be output pending scenario section' do
         expect(output.string).to match 'class="scenario pending"'
       end
 
-      it 'should be output runtime exception section' do
-        scenario.example('pending', metadata) do
-          pending("Pending")
-        end
-        feature.run(formatter)
-
-        expect(output.string).to match 'class="exception"'
+      it 'should get pending scenario count' do
+        expect(formatter.passed_scenarios).to have(0).elements
+        expect(formatter.failed_scenarios).to have(0).elements
+        expect(formatter.pending_scenarios).to have(1).elements
       end
     end
 

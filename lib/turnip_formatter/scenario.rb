@@ -27,6 +27,10 @@ module TurnipFormatter
         TurnipFormatter::Step.new(example, desc)
       end
     end
+
+    def id
+      "step_" + object_id.to_s
+    end
     
     #
     # @return  [String] scenario name

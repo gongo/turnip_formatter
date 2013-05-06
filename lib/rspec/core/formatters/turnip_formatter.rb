@@ -10,36 +10,52 @@ module RSpec
   module Core
     module Formatters
       class TurnipFormatter < BaseFormatter
+        attr_reader :passed_scenarios, :failed_scenarios, :pending_scenarios
 
         def initialize(output)
           super(output)
           @template = ::TurnipFormatter::Template.new
+          @passed_scenarios = []
+          @failed_scenarios = []
+          @pending_scenarios = []
         end
 
         def start(example_count)
           super(example_count)
           output.puts @template.print_header
+          output.puts @template.print_main_header
         end
 
         def dump_summary(duration, example_count, failure_count, pending_count)
-          output.puts @template.print_footer(example_count, failure_count, pending_count, duration)
+          output.puts @template.print_main_footer(example_count, failure_count, pending_count, duration)
+          output.puts @template.print_tag_speed_statsitics(passed_scenarios)
+          output.puts @template.print_footer
         end
 
         def example_passed(example)
           super(example)
+
           scenario = ::TurnipFormatter::Scenario::Pass.new(example)
+          @passed_scenarios << scenario
+
           output_scenario(scenario)
         end
 
         def example_pending(example)
           super(example)
+
           scenario = ::TurnipFormatter::Scenario::Pending.new(example)
+          @pending_scenarios << scenario
+
           output_scenario(scenario)
         end
 
         def example_failed(example)
           super(example)
+
           scenario = ::TurnipFormatter::Scenario::Failure.new(example)
+          @failed_scenarios << scenario
+
           output_scenario(scenario)
         end
 
