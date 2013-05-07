@@ -30,8 +30,9 @@ module RSpec
 
         def dump_summary(duration, example_count, failure_count, pending_count)
           output.puts @template.print_main_footer(example_count, failure_count, pending_count, duration)
-          output.puts @template.print_tag_speed_statsitics(passed_scenarios)
-          output.puts @template.print_tag_feature_statsitics(scenarios)
+          output.puts @template.print_tab_speed_statsitics(passed_scenarios)
+          output.puts @template.print_tab_feature_statsitics(scenarios)
+          output.puts @template.print_tab_tag_statsitics(scenarios)
           output.puts @template.print_footer
         end
 

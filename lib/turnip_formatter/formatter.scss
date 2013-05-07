@@ -221,54 +221,9 @@ div#steps-statistics section.scenario {
     cursor: pointer;
 }
 
-div#speed-statistics {
-    .tablesorter-header {
-        @include tablesorter-header;
-        background-image: url("data:image/gif;base64,R0lGODlhFQAJAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAkAAAIXjI+AywnaYnhUMoqt3gZXPmVg94yJVQAAOw==");
-
-        &.sorter-false {
-            background: none;
-        }
-    }
-
-    .tablesorter-headerAsc {
-        @include tablesorter-header;
-        background-image: url("data:image/gif;base64,R0lGODlhFQAEAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAQAAAINjI8Bya2wnINUMopZAQA7");
-    }
-
-    .tablesorter-headerDesc {
-        @include tablesorter-header;
-        background-image: url("data:image/gif;base64,R0lGODlhFQAEAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAQAAAINjB+gC+jP2ptn0WskLQA7");
-    }
-
-    table {
-        width: 100%;
-        margin: 1em 0em;
-        
-        thead {
-            th {
-                border-bottom: 1px solid $gray-front;
-            }
-        }
-
-        tbody {
-            tr:nth-child(odd) { 
-                background-color: #FFFFFF;
-            }
-
-            tr:nth-child(even) {
-                background-color: $gray-background;
-            }
-
-            td {
-                border: 1px solid $gray-front;
-                padding: 0.3em 1em;
-            }
-        }
-    }
-}
-
-div#feature-statistics {
+div#speed-statistics,
+div#feature-statistics,
+div#tag-statistics {
     table {
         width: 100%;
         margin: 1em 0em;
@@ -306,6 +261,27 @@ div#feature-statistics {
                 }
             }
         }
+    }
+}
+
+div#speed-statistics {
+    .tablesorter-header {
+        @include tablesorter-header;
+        background-image: url("data:image/gif;base64,R0lGODlhFQAJAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAkAAAIXjI+AywnaYnhUMoqt3gZXPmVg94yJVQAAOw==");
+
+        &.sorter-false {
+            background: none;
+        }
+    }
+
+    .tablesorter-headerAsc {
+        @include tablesorter-header;
+        background-image: url("data:image/gif;base64,R0lGODlhFQAEAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAQAAAINjI8Bya2wnINUMopZAQA7");
+    }
+
+    .tablesorter-headerDesc {
+        @include tablesorter-header;
+        background-image: url("data:image/gif;base64,R0lGODlhFQAEAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAQAAAINjB+gC+jP2ptn0WskLQA7");
     }
 }
 

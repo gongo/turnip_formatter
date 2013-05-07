@@ -1,5 +1,6 @@
 Feature: Battle monsters
 
+  @watch
   Scenario: Escape
     Given there are monsters:
       | gargoyle   |
