@@ -3,6 +3,7 @@
 require 'erb'
 require 'rspec/core/formatters/helpers'
 require 'turnip_formatter/template/tab/speed_statistics'
+require 'turnip_formatter/template/tab/feature_statistics'
 
 module TurnipFormatter
   class Template
@@ -90,6 +91,7 @@ module TurnipFormatter
               <ul>
                 <li><a href="#steps-statistics">Steps</a></li>
                 <li><a href="#speed-statistics">Speed Statistics</a></li>
+                <li><a href="#feature-statistics">Feature Statistics</a></li>
               </ul>
       EOS
     end
@@ -116,10 +118,21 @@ module TurnipFormatter
       statistics = TurnipFormatter::Template::Tab::SpeedStatistics.new(passed_scenarios)
       <<-EOS
         <div id="speed-statistics">
-          <em>Ranking of running time of each <strong>successfully</strong> scenario.</em>
+          <em>Ranking of running time of each <strong>successfully</strong> scenario:</em>
           #{statistics.build}
         </div>
       EOS
+    end
+
+    def print_tag_feature_statsitics(scenarios)
+      statistics = TurnipFormatter::Template::Tab::FeatureStatistics.new(scenarios)
+      <<-EOS
+        <div id="feature-statistics">
+          <em>The results for the feature:</em>
+          #{statistics.build}
+        </div>
+      EOS
+      
     end
 
     def print_footer

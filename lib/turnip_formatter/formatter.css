@@ -188,6 +188,28 @@ div#speed-statistics table {
     border: 1px solid #7a7b7d;
     padding: 0.3em 1em; }
 
+div#feature-statistics table {
+  width: 100%;
+  margin: 1em 0em; }
+  div#feature-statistics table thead th {
+    border-bottom: 1px solid #7a7b7d; }
+  div#feature-statistics table tbody tr:nth-child(odd) {
+    background-color: #FFFFFF; }
+  div#feature-statistics table tbody tr:nth-child(even) {
+    background-color: #dddddd; }
+  div#feature-statistics table tbody td {
+    border: 1px solid #7a7b7d;
+    padding: 0.3em 1em; }
+    div#feature-statistics table tbody td.passed {
+      background-color: #eeffee;
+      color: #509b49; }
+    div#feature-statistics table tbody td.failed {
+      background-color: #ffdddd;
+      color: #ed1c24; }
+    div#feature-statistics table tbody td.pending {
+      background-color: #ffffdd;
+      color: #d6a921; }
+
 section.exception {
   margin: 1em 0em;
   border: 2px solid #268bd2;

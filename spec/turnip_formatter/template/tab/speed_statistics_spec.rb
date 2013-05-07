@@ -18,7 +18,7 @@ module TurnipFormatter
           SpeedStatistics.new(passed_scenarios)
         end
 
-        describe '.build' do
+        describe '#build' do
           it 'should get string as HTML table' do
             scenarios = statistics.scenarios
             html = statistics.build

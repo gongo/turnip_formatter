@@ -11,6 +11,7 @@ module RSpec
     module Formatters
       class TurnipFormatter < BaseFormatter
         attr_reader :passed_scenarios, :failed_scenarios, :pending_scenarios
+        attr_reader :scenarios
 
         def initialize(output)
           super(output)
@@ -18,6 +19,7 @@ module RSpec
           @passed_scenarios = []
           @failed_scenarios = []
           @pending_scenarios = []
+          @scenarios = []
         end
 
         def start(example_count)
@@ -29,6 +31,7 @@ module RSpec
         def dump_summary(duration, example_count, failure_count, pending_count)
           output.puts @template.print_main_footer(example_count, failure_count, pending_count, duration)
           output.puts @template.print_tag_speed_statsitics(passed_scenarios)
+          output.puts @template.print_tag_feature_statsitics(scenarios)
           output.puts @template.print_footer
         end
 
@@ -63,6 +66,7 @@ module RSpec
 
         def output_scenario(scenario)
           scenario.validation
+          @scenarios << scenario
           output.puts @template.print_scenario(scenario)
         rescue => e
           output_runtime_error(e)
