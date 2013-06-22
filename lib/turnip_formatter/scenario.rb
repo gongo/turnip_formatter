@@ -31,7 +31,7 @@ module TurnipFormatter
     def id
       "step_" + object_id.to_s
     end
-    
+
     #
     # @return  [String] scenario name
     #
@@ -78,8 +78,7 @@ module TurnipFormatter
     def clean_backtrace
       return if example.exception.nil?
       formatted = format_backtrace(example.exception.backtrace, example.metadata)
-      new_backtrace = formatted.map { |b| backtrace_line(b) }.compact
-      example.exception.set_backtrace(new_backtrace)
+      example.exception.set_backtrace(formatted)
     end
   end
 end

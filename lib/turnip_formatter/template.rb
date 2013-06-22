@@ -36,7 +36,7 @@ module TurnipFormatter
               $(function() {
                   var scenarioHeader = 'section.scenario header';
                   $(scenarioHeader).siblings().hide();
-                   
+
                   /**
                    * Step folding/expanding
                    */
@@ -44,13 +44,13 @@ module TurnipFormatter
                       var steps = $(this).siblings();
                       steps.slideToggle();
                   });
-                   
+
                   /**
                    * All step folding/expanding action
                    */
                   $('#scenario_display_check').change(function() {
                       var steps = $(scenarioHeader).siblings();
-                   
+
                       if (this.checked) {
                           steps.slideUp();
                       } else {
@@ -73,7 +73,7 @@ module TurnipFormatter
                    */
                    var tab_area = 'div#main';
                    $(tab_area).tabs();
-                    
+
                    $('div#speed-statistics a').click(function() {
                        $(tab_area).tabs("option", "active", 0);
                    });
@@ -108,7 +108,7 @@ module TurnipFormatter
     def print_main_footer(total_count, failed_count, pending_count, total_time)
       update_report_js_tmp = '<script type="text/javascript">document.getElementById("%s").innerHTML = "%s";</script>'
       update_report_js = ''
-      
+
       %w{ total_count failed_count pending_count total_time }.each do |key|
         update_report_js += update_report_js_tmp % [key, eval(key)]
       end
@@ -163,12 +163,7 @@ module TurnipFormatter
     end
 
     def print_runtime_error(example, exception)
-      if example.exception
-        example_backtrace = format_backtrace(example.exception.backtrace[0..14], example.metadata).map do |l|
-          RSpec::Core::Metadata::relative_path(l)
-        end
-      end
-
+      exception.set_backtrace(format_backtrace(exception.backtrace))
       template_exception.result(binding)
     end
 
@@ -229,7 +224,7 @@ module TurnipFormatter
             <label for="failed_check">Failed</label><input type="checkbox" checked id="failed_check">
             <label for="pending_check">Pending</label><input type="checkbox" checked id="pending_check">
           </section>
-           
+
           <section class="result">
             <p>
               <span id="total_count"></span> Scenario (<span id="failed_count"></span> failed <span id="pending_count"></span> pending).
@@ -282,8 +277,11 @@ module TurnipFormatter
         <section class="exception">
           <h1>TurnipFormatter RuntimeError</h1>
           <dl>
-            <dt>Exception</dt>
+            <dt>Runtime Exception</dt>
             <dd><%= h(exception.to_s) %></dd>
+
+            <dt>Runtime Exception Backtrace</dt>
+            <%= template_exception_backtrace(exception) %>
 
             <dt>Example Full Description</dt>
             <dd><%= h(example.metadata[:full_description]) %></dd>
@@ -291,15 +289,9 @@ module TurnipFormatter
             <% if example.exception %>
               <dt>Example Exception</dt>
               <dd><%= h(example.exception.to_s) %></dd>
-   
-              <dt>Backtrace:</dt>
-              <dd>
-                <ol>
-                  <% example_backtrace.each do |line| %>
-                  <li><%= h(line) %></li>
-                  <% end %>
-                </ol>
-              </dd>
+
+              <dt>Example Backtrace</dt>
+              <%= template_exception_backtrace(example.exception) %>
             <% end %>
 
             <% if example.pending %>
@@ -309,6 +301,19 @@ module TurnipFormatter
           </dl>
         </section>
       EOS
+    end
+
+    def template_exception_backtrace(exception)
+      @template_exception_backtrace ||= ERB.new(<<-EOS)
+        <dd>
+          <ol>
+            <% exception.backtrace.each do |line| %>
+            <li><%= h(line) %></li>
+            <% end %>
+          </ol>
+        </dd>
+      EOS
+      @template_exception_backtrace.result(binding)
     end
   end
 end

@@ -6,7 +6,7 @@ module TurnipFormatter
   class Step
     module Failure
       extend DSL
-      
+
       def self.status
         :failure
       end
@@ -14,14 +14,14 @@ module TurnipFormatter
       def status
         Failure.status
       end
+
+      add_template :source do
+        example.exception.backtrace.first
+      end
+
+      add_template :exception do
+        example.exception
+      end
     end
   end
-end
-
-TurnipFormatter::Step::Failure.add_template :source do
-  example.exception.backtrace.first
-end
-
-TurnipFormatter::Step::Failure.add_template :exception do
-  example.exception
 end

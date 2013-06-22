@@ -50,7 +50,7 @@ module Turnip
               feature.backgrounds.each do |background|
                 push_scenario_metadata(background)
               end
-              
+
               background_steps.each.with_index do |step, index|
                 run_step(feature_file, step, index)
               end

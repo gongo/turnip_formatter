@@ -42,7 +42,7 @@ $gray-background: #DDDDDD;
 }
 
 body {
-    background-color: #586e75;
+    background-color: #ffffff;
 }
 
 div#report {
@@ -60,7 +60,7 @@ footer {
 
 div#main {
     @include content_centering;
-    background-color: #fff9f9;
+    background-color: #ffffff;
 
     .ui-tabs-nav {
         border-width: 0;
