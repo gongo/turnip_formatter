@@ -18,7 +18,7 @@ module Turnip
 
       def push_scenario_metadata(scenario)
         steps = scenario.steps
-        example.metadata[:turnip].tap do |turnip|
+        example.metadata[:turnip_formatter].tap do |turnip|
           steps.each do |step|
             turnip[:steps] << {
               name: step.description,
@@ -41,7 +41,7 @@ module Turnip
 
             before do
               example.metadata[:file_path] = feature_file
-              example.metadata[:turnip] = { steps: [], tags: [] }
+              example.metadata[:turnip_formatter] = { steps: [], tags: [] }
 
               feature.backgrounds.each do |background|
                 push_scenario_metadata(background)

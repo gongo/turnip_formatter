@@ -18,7 +18,7 @@ module TurnipFormatter
     end
 
     def validation
-      raise NotExistStepsInformationError unless example.metadata.member?(:turnip)
+      raise NotExistStepsInformationError unless example.metadata.member?(:turnip_formatter)
       raise NoFeatureFileError unless feature_file_path.end_with?('.feature')
     end
 
@@ -62,7 +62,7 @@ module TurnipFormatter
     end
 
     def tags
-      example.metadata[:turnip][:tags]
+      example.metadata[:turnip_formatter][:tags]
     end
 
     def example
@@ -72,7 +72,7 @@ module TurnipFormatter
     private
 
     def descriptions
-      example.metadata[:turnip][:steps]
+      example.metadata[:turnip_formatter][:steps]
     end
 
     def clean_backtrace

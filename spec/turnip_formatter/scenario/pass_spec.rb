@@ -23,7 +23,7 @@ module TurnipFormatter::Scenario
           it 'should raise exception' do
             expect { scenario.validation }.to raise_error NotPassedScenarioError
           end
-        end        
+        end
       end
 
       context 'not exist feature file' do

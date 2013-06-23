@@ -23,7 +23,7 @@ end
 shared_context 'turnip_formatter standard scenario metadata' do
   let(:metadata) do
     {
-      turnip: {
+      turnip_formatter: {
         steps: [ { name: 'Step 1', extra_args: [], keyword: 'When' } ],
         tags: []
       },
