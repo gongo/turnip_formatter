@@ -17,4 +17,4 @@ test/version_tmp
 tmp
 vendor/bundle
 .sass-cache
-
+report.html
