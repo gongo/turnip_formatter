@@ -13,12 +13,24 @@ module TurnipFormatter
     include RSpec::Core::BacktraceFormatter
 
     class << self
+      def add_js(js_string)
+        js_list << js_string
+      end
+
+      def js_render
+        js_list.join("\n")
+      end
+
       def css_render
         css_list.join("\n")
       end
 
       def add_scss(scss_string)
         css_list << scss_compile(scss_string)
+      end
+
+      def js_list
+        @js_list ||= []
       end
 
       def css_list
@@ -98,6 +110,8 @@ module TurnipFormatter
                            1: { sorter: false }
                        }
                    });
+
+                   #{self.class.js_render}
               });
             </script>
           </head>
