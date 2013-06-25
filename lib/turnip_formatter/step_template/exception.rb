@@ -1,15 +1,17 @@
 # -*- coding: utf-8 -*-
 
+require 'turnip_formatter/step/failure'
+require 'turnip_formatter/step/pending'
 require 'erb'
 
 module TurnipFormatter
-  class Template
-    module StepException
+  module StepTemplate
+    module Exception
       def self.build(exception)
         template_step_exception.result(binding)
       end
 
-    private
+      private
 
       def self.template_step_exception
         @template_step_exception ||= ERB.new(<<-EOS)
@@ -26,5 +28,16 @@ module TurnipFormatter
         EOS
       end
     end
+  end
+
+  Step::Failure.add_template StepTemplate::Exception do
+    example.exception
+  end
+
+  Step::Pending.add_template StepTemplate::Exception do
+    message = example.execution_result[:pending_message]
+    exception = RSpec::Core::Pending::PendingDeclaredInExample.new(message)
+    exception.set_backtrace(example.location)
+    exception
   end
 end

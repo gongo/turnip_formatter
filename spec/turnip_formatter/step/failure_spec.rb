@@ -13,25 +13,40 @@ module TurnipFormatter
         step
       end
 
+      let(:klasses) do
+        builtin_klass1 = ::TurnipFormatter::StepTemplate::Source
+        builtin_klass2 = ::TurnipFormatter::StepTemplate::Exception
+        [builtin_klass1, builtin_klass2]
+      end
+
       it 'exists built-in step template' do
         templates = TurnipFormatter::Step::Failure.templates
-        expect(templates.keys).to eq([:source, :exception])
+        expect(templates.keys).to include(*klasses)
       end
 
       context 'add custom step template' do
+        let :custom_template do
+          Module.new do
+            def self.build(message)
+              '[error] ' + message
+            end
+          end
+        end
+
         before do
-          TurnipFormatter::Step::Failure.add_template :custom do
+          TurnipFormatter::Step::Failure.add_template(custom_template) do
             example.example_group.description
           end
         end
 
         after do
-          TurnipFormatter::Step::Failure.remove_template :custom
+          TurnipFormatter::Step::Failure.remove_template(custom_template)
         end
 
         it 'should get custom step template' do
           templates = TurnipFormatter::Step::Failure.templates
-          expect(templates.keys).to eq([:source, :exception, :custom])
+          klasses << custom_template
+          expect(templates.keys).to include(*klasses)
         end
       end
 

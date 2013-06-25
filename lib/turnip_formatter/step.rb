@@ -9,13 +9,13 @@ module TurnipFormatter
         @templates ||= {}
       end
 
-      def add_template(status, style, klass = nil, &block)
+      def add_template(status, klass = nil, &block)
         templates[status] ||= {}
-        templates[status][style] = { klass: klass, block: block }
+        templates[status][klass] = { klass: klass, block: block }
       end
 
-      def remove_template(status, style)
-        templates[status].delete(style)
+      def remove_template(status, klass)
+        templates[status].delete(klass)
         templates.delete(status.to_sym) if templates[status.to_sym].empty?
       end
 

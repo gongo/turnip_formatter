@@ -14,14 +14,6 @@ module TurnipFormatter
       def status
         Failure.status
       end
-
-      add_template :source do
-        example.exception.backtrace.first
-      end
-
-      add_template :exception do
-        example.exception
-      end
     end
   end
 end

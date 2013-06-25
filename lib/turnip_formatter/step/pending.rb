@@ -14,13 +14,6 @@ module TurnipFormatter
       def status
         Pending.status
       end
-
-      add_template :exception do
-        message = example.execution_result[:pending_message]
-        exception = RSpec::Core::Pending::PendingDeclaredInExample.new(message)
-        exception.set_backtrace(example.location)
-        exception
-      end
     end
   end
 end

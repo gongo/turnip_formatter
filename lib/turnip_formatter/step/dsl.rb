@@ -17,16 +17,16 @@ module TurnipFormatter
         end
       end
 
-      def add_template(style, template = nil, &block)
-        ::TurnipFormatter::Step.add_template(status, style, template, &block)
+      def add_template(klass, &block)
+        ::TurnipFormatter::Step.add_template(status, klass, &block)
       end
 
-      def remove_template(style)
-        ::TurnipFormatter::Step.remove_template(status, style)
+      def remove_template(klass)
+        ::TurnipFormatter::Step.remove_template(status, klass)
       end
 
       def templates
-        ::TurnipFormatter::Step.templates[status]
+        ::TurnipFormatter::Step.templates[status] || []
       end
     end
   end

@@ -11,11 +11,6 @@ module TurnipFormatter
     include ERB::Util
     include RSpec::Core::BacktraceFormatter
 
-    autoload :StepOutline,   'turnip_formatter/template/step_outline'
-    autoload :StepMultiline, 'turnip_formatter/template/step_multiline'
-    autoload :StepSource,    'turnip_formatter/template/step_source'
-    autoload :StepException, 'turnip_formatter/template/step_exception'
-
     def print_header
       <<-EOS
         <!DOCTYPE html>
@@ -193,7 +188,7 @@ module TurnipFormatter
         if style == :extra_args
           output << step_extra_args(template[:value])
         else
-          output << step_template(style, template[:klass]).build(template[:value])
+          output << template[:klass].build(template[:value])
         end
       end
 
@@ -202,17 +197,16 @@ module TurnipFormatter
 
     def step_extra_args(extra_args)
       extra_args.map do |arg|
-        klass = arg.instance_of?(Turnip::Table) ? StepOutline : StepMultiline
-        klass.build(arg)
+        arg.instance_of?(Turnip::Table) ? step_outline(arg) : step_multiline(arg)
       end.join("\n")
     end
 
-    def step_template(style, klass)
-      return klass if !!klass
+    def step_outline(table)
+      template_step_outline.result(binding)
+    end
 
-      # call Built-in template (StepException, StepSource, etc...)
-      klass = ['step', style.to_s].map(&:capitalize).join
-      self.class.const_get(klass)
+    def step_multiline(lines)
+      '<pre class="multiline">' + h(lines) + '</pre>'
     end
 
     def report_area
@@ -314,6 +308,20 @@ module TurnipFormatter
         </dd>
       EOS
       @template_exception_backtrace.result(binding)
+    end
+
+    def template_step_outline
+      @template_step_outline ||= ERB.new(<<-EOS)
+        <table class="step_outline">
+        <% table.each do |tr| %>
+          <tr>
+            <% tr.each do |td| %>
+            <td><%= ERB::Util.h(td) %></td>
+            <% end %>
+          </tr>
+        <% end %>
+        </table>
+      EOS
     end
   end
 end

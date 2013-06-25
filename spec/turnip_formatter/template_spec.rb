@@ -3,6 +3,8 @@ require 'spec_helper'
 module TurnipFormatter
   describe Template do
     let(:template) { ::TurnipFormatter::Template.new }
+    let(:exception_style) { ::TurnipFormatter::StepTemplate::Exception }
+    let(:source_style) { ::TurnipFormatter::StepTemplate::Source }
 
     context 'Step has no tag' do
       describe '#scenario_tags' do
@@ -11,7 +13,7 @@ module TurnipFormatter
           scenario.stub(:tags).and_return([])
           scenario
         end
-        
+
         it 'should get null string' do
           expect(template.send(:scenario_tags, scenario)).to be_empty
         end
@@ -25,7 +27,7 @@ module TurnipFormatter
           scenario.stub(:tags).and_return(['hoge', 'fuga'])
           scenario
         end
-        
+
         it 'should get null string' do
           html = template.send(:scenario_tags, scenario)
           expect(html).to match %r{ul class="tags"}
@@ -54,28 +56,28 @@ module TurnipFormatter
         expect(template.send(:step_attr, failed_step)).to eq('class="step failed"')
       end
     end
-    
+
     context 'Step has arguments' do
       let(:table) { Turnip::Table.new [] }
 
       context 'original template' do
         describe '#step_args' do
           let(:step) do
+            docs = {}
+            docs[:extra_args] = { klass: nil, value: ['a', table] }
+            docs[source_style] = { klass: source_style, value: 'b' }
+            docs[exception_style] = { klass: exception_style, value: 'c' }
+
             step = double
-            step.stub(:docs).and_return(
-              extra_args: { klass: nil, value: ['a', table] },
-              source: { klass: nil, value: 'b' },
-              exception: { klass: nil, value: 'c' }
-              )
+            step.stub(:docs).and_return(docs)
             step
           end
-          
-          it 'should call corresponding method in step' do
-            Template::StepMultiline.should_receive(:build).with('a').and_return('extra_args1')
-            Template::StepOutline.should_receive(:build).with(table).and_return('extra_args2')
-            Template::StepSource.should_receive(:build).with('b').and_return('source')
-            Template::StepException.should_receive(:build).with('c').and_return('exception')
 
+          it 'should call corresponding method in step' do
+            template.should_receive(:step_multiline).with('a').and_return('extra_args1')
+            template.should_receive(:step_outline).with(table).and_return('extra_args2')
+            source_style.should_receive(:build).with('b').and_return('source')
+            exception_style.should_receive(:build).with('c').and_return('exception')
             expect(template.send(:step_args, step)).to eq("extra_args1\nextra_args2\nsource\nexception")
           end
         end
@@ -107,7 +109,7 @@ module TurnipFormatter
               )
             step
           end
-          
+
           it 'should call corresponding method in step' do
             expect(template.send(:step_args, step)).to eq("<html>aiueo</html>\n<strong>12345</strong>")
           end
@@ -124,11 +126,10 @@ module TurnipFormatter
         end
 
         it 'should get null string' do
-          Template::StepOutline.should_not_receive(:build)
-          Template::StepMultiline.should_not_receive(:build)
-          Template::StepSource.should_not_receive(:build)
-          Template::StepException.should_not_receive(:build)
-
+          template.should_not_receive(:step_multiline)
+          template.should_not_receive(:step_outline)
+          source_style.should_not_receive(:build)
+          exception_style.should_not_receive(:build)
           expect(template.send(:step_args, step)).to be_empty
         end
       end
@@ -147,13 +148,34 @@ module TurnipFormatter
       end
 
       before do
-        Template::StepOutline.should_receive(:build).and_return('outline')
-        Template::StepMultiline.should_receive(:build).and_return('multiline')
+        template.should_receive(:step_outline).and_return('outline')
+        template.should_receive(:step_multiline).and_return('multiline')
       end
 
       it 'should get string converted from extra_args' do
         expect(template_stub.send(:step_extra_args, extra_args)).to eq("outline\nmultiline")
       end
+    end
+
+    describe '#step_multiline' do
+      let(:string) { 'a<a>a' }
+      subject { template.send(:step_multiline, string) }
+      it { should eq '<pre class="multiline">a&lt;a&gt;a</pre>' }
+    end
+
+    describe '#step_outline' do
+      let(:string) do
+        ::Turnip::Table.new([
+            ["State", "Money"],
+            ["<Tokushima>", "555"],
+            ["<Okinawa>", "368"]
+          ])
+      end
+      subject { template.send(:step_outline, string) }
+
+      it { should match %r{<td>State</td>[[:space:]]+<td>Money</td>} }
+      it { should match %r{<td>&lt;Tokushima&gt;</td>[[:space:]]+<td>555</td>} }
+      it { should match %r{<td>&lt;Okinawa&gt;</td>[[:space:]]+<td>368</td>} }
     end
   end
 end

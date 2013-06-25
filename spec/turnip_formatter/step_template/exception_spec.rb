@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 
 require 'spec_helper'
-require 'turnip_formatter/template/step_exception'
+require 'turnip_formatter/step_template/exception'
 
 module TurnipFormatter
-  class Template
-    describe StepException do
-      let(:template) { ::TurnipFormatter::Template::StepException }
+  module StepTemplate
+    describe Exception do
+      let(:template) { ::TurnipFormatter::StepTemplate::Exception }
       let(:exception) do
         StandardError.new('StepExceptionError').tap do |e|
           e.set_backtrace('/path/to/error.rb: 10')

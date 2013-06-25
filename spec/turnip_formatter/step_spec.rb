@@ -22,8 +22,8 @@ module TurnipFormatter
       it { should include :extra_args }
     end
 
-    describe '#add_template' do
-      let :custom_template do
+    context 'using template' do
+      let :custom_template1 do
         Module.new do
           def self.build(hoge)
             hoge * 3
@@ -31,42 +31,55 @@ module TurnipFormatter
         end
       end
 
+      let :custom_template2 do
+        Module.new do
+          def self.build(hoge)
+            'aiueo' + hoge
+          end
+        end
+      end
+
       before do
-        TurnipFormatter::Step.add_template :hoge, :source1 do
-          'aiueo'
+        TurnipFormatter::Step.add_template :hoge, custom_template1 do
+          '12345'
         end
 
-        TurnipFormatter::Step.add_template :hoge, :source2, custom_template do
-          '12345'
+        TurnipFormatter::Step.add_template :hoge, custom_template2 do
+          'abcde'
         end
       end
 
       after do
-        TurnipFormatter::Step.remove_template(:hoge, :source1)
-        TurnipFormatter::Step.remove_template(:hoge, :source2)
+        TurnipFormatter::Step.remove_template(:hoge, custom_template1)
+        TurnipFormatter::Step.remove_template(:hoge, custom_template2)
       end
 
-      it 'can add step template' do
-        style = TurnipFormatter::Step.templates[:hoge][:source1]
-        expect(style[:block].call).to eq('aiueo')
+      describe '#add_template' do
+        it 'can add step template' do
+          style1 = TurnipFormatter::Step.templates[:hoge][custom_template1]
+          klass1 = style1[:klass]
+          block1 = style1[:block]
+          expect(klass1.build(block1.call)).to eq('123451234512345')
 
-        style = TurnipFormatter::Step.templates[:hoge][:source2]
-        expect(style[:klass].build(style[:block].call)).to eq('123451234512345')
+          style2 = TurnipFormatter::Step.templates[:hoge][custom_template2]
+          klass2 = style2[:klass]
+          block2 = style2[:block]
+          expect(klass2.build(block2.call)).to eq('aiueoabcde')
+        end
       end
-    end
 
-    describe '#remove_template' do
-      it 'can remove step template' do
-        TurnipFormatter::Step.add_template :hoge, :style1 do ; 'aiueo' end
-        TurnipFormatter::Step.add_template :hoge, :style2 do ; '12345' end
-        expect(TurnipFormatter::Step.templates[:hoge]).to have_key :style1
-        expect(TurnipFormatter::Step.templates[:hoge]).to have_key :style2
+      describe '#remove_template' do
+        it 'can remove step template' do
+          expect(TurnipFormatter::Step.templates[:hoge]).to have_key custom_template1
+          expect(TurnipFormatter::Step.templates[:hoge]).to have_key custom_template2
 
-        TurnipFormatter::Step.remove_template(:hoge, :style1)
-        expect(TurnipFormatter::Step.templates[:hoge]).to have_key :style2
+          TurnipFormatter::Step.remove_template(:hoge, custom_template1)
+          expect(TurnipFormatter::Step.templates[:hoge]).not_to have_key custom_template1
+          expect(TurnipFormatter::Step.templates[:hoge]).to have_key custom_template2
 
-        TurnipFormatter::Step.remove_template(:hoge, :style2)
-        expect(TurnipFormatter::Step.templates).not_to have_key(:hoge)
+          TurnipFormatter::Step.remove_template(:hoge, custom_template2)
+          expect(TurnipFormatter::Step.templates).not_to have_key custom_template2
+        end
       end
     end
   end
