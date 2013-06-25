@@ -19,6 +19,27 @@ module TurnipFormatter
     end
   end
 
+  Template.add_scss(<<-EOS)
+    pre.source {
+        font-size: 12px;
+        font-family: monospace;
+        background-color: #073642;
+        color: #dddddd;
+
+        code.ruby {
+            padding: 0.1em 0 0.2em 0;
+
+            .linenum {
+                width: 75px;
+                color: #fffbd3;
+                padding-right: 1em;
+            }
+
+            .offending { background-color: gray; }
+        }
+    }
+  EOS
+
   Step::Failure.add_template(StepTemplate::Source) do
     example.exception.backtrace.first
   end

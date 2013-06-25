@@ -5,11 +5,30 @@ require 'rspec/core/formatters/helpers'
 require 'turnip_formatter/template/tab/speed_statistics'
 require 'turnip_formatter/template/tab/feature_statistics'
 require 'turnip_formatter/template/tab/tag_statistics'
+require 'sass'
 
 module TurnipFormatter
   class Template
     include ERB::Util
     include RSpec::Core::BacktraceFormatter
+
+    class << self
+      def css_render
+        css_list.join("\n")
+      end
+
+      def add_scss(scss_string)
+        css_list << scss_compile(scss_string)
+      end
+
+      def css_list
+        @css_list ||= []
+      end
+
+      def scss_compile(scss)
+        Sass::Engine.new(scss, syntax: :scss).render
+      end
+    end
 
     def print_header
       <<-EOS
@@ -24,7 +43,8 @@ module TurnipFormatter
 
             <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/themes/smoothness/jquery-ui.css">
             <style>
-            #{File.read(File.dirname(__FILE__) + '/formatter.css')}
+              #{File.read(File.dirname(__FILE__) + '/formatter.css')}
+              #{self.class.css_render}
             </style>
 
             <script>

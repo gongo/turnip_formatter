@@ -136,27 +136,6 @@ div#steps-statistics section.scenario {
       margin-top: 2em;
       font-size: 13px;
       color: #586e75; }
-    div#steps-statistics section.scenario ul.steps div.step_exception {
-      margin: 1em 0em;
-      padding: 1em 0em 1em 1em;
-      border: 1px solid #999999;
-      background-color: #eee8d5;
-      color: #586e75; }
-      div#steps-statistics section.scenario ul.steps div.step_exception > pre {
-        margin-left: 1em; }
-    div#steps-statistics section.scenario ul.steps pre.source {
-      font-size: 12px;
-      font-family: monospace;
-      background-color: #073642;
-      color: #dddddd; }
-      div#steps-statistics section.scenario ul.steps pre.source code.ruby {
-        padding: 0.1em 0 0.2em 0; }
-        div#steps-statistics section.scenario ul.steps pre.source code.ruby .linenum {
-          width: 75px;
-          color: #fffbd3;
-          padding-right: 1em; }
-        div#steps-statistics section.scenario ul.steps pre.source code.ruby .offending {
-          background-color: gray; }
 
 div#speed-statistics table,
 div#feature-statistics table,

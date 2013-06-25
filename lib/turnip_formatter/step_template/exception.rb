@@ -30,6 +30,24 @@ module TurnipFormatter
     end
   end
 
+  Template.add_scss(<<-EOS)
+    div#steps-statistics section.scenario {
+        ul.steps {
+            div.step_exception {
+                margin: 1em 0em;
+                padding: 1em 0em 1em 1em;
+                border: 1px solid #999999;
+                background-color: #eee8d5;
+                color: #586e75;
+
+                > pre {
+                    margin-left: 1em;
+                }
+            }
+        }
+    }
+  EOS
+
   Step::Failure.add_template StepTemplate::Exception do
     example.exception
   end

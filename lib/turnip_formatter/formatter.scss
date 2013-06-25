@@ -180,38 +180,6 @@ div#steps-statistics section.scenario {
             font-size: 13px;
             color: #586e75;
         }
-
-        div.step_exception {
-            margin: 1em 0em;
-            padding: 1em 0em 1em 1em;
-            border: 1px solid #999999;
-            background-color: #eee8d5;
-            color: #586e75;
-
-            > pre {
-                margin-left: 1em;
-            }
-        }
-
-        pre.source {
-            font-size: 12px;
-            font-family: monospace;
-            background-color: #073642;
-            color: #dddddd;
-
-            code.ruby {
-                padding: 0.1em 0 0.2em 0;
-
-                .linenum {
-                    width: 75px;
-                    color: #fffbd3;
-                    padding-right: 1em;
-                }
-
-                .offending { background-color: gray; }
-            }
-        }
-
     }
 }
 
