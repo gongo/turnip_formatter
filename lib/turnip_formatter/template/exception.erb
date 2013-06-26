@@ -1,0 +1,26 @@
+<section class="exception">
+  <h1>TurnipFormatter RuntimeError</h1>
+  <dl>
+    <dt>Runtime Exception</dt>
+    <dd><%= h(exception.to_s) %></dd>
+
+    <dt>Runtime Exception Backtrace</dt>
+    <%= print_exception_backtrace(exception) %>
+
+    <dt>Example Full Description</dt>
+    <dd><%= h(example.metadata[:full_description]) %></dd>
+
+    <% if example.exception %>
+      <dt>Example Exception</dt>
+      <dd><%= h(example.exception.to_s) %></dd>
+
+      <dt>Example Backtrace</dt>
+      <%= print_exception_backtrace(example.exception) %>
+    <% end %>
+
+    <% if example.pending %>
+      <dt>Example Pending description</dt>
+      <dd><%= h(example.metadata[:description]) %></dd>
+    <% end %>
+  </dl>
+</section>

@@ -116,7 +116,7 @@ module TurnipFormatter
             </script>
           </head>
           <body>
-            #{report_area}
+            #{print_section_report}
             <div id="main" role="main">
               <ul>
                 <li><a href="#steps-statistics">Steps</a></li>
@@ -188,26 +188,49 @@ module TurnipFormatter
     end
 
     def print_scenario(scenario)
-      template_scenario.result(binding)
+      render_template(:scenario, { scenario: scenario })
     end
 
     def print_runtime_error(example, exception)
       exception.set_backtrace(format_backtrace(exception.backtrace))
-      template_exception.result(binding)
+      render_template(:exception, { example: example, exception: exception })
+    end
+
+    def print_exception_backtrace(e)
+      render_template(:exception_backtrace, { backtrace: e.backtrace })
+    end
+
+    def print_scenario_tags(scenario)
+      if scenario.tags.empty?
+        ''
+      else
+        render_template(:scenario_tags, { tags: scenario.tags })
+      end
+    end
+
+    def print_step_extra_args(extra_args)
+      extra_args.map do |arg|
+        if arg.instance_of?(Turnip::Table)
+          print_step_outline(arg)
+        else
+          print_step_multiline(arg)
+        end
+      end.join("\n")
+    end
+
+    def print_step_outline(table)
+      render_template(:step_outline, { table: table.to_a })
+    end
+
+    def print_step_multiline(lines)
+      render_template(:step_multiline, { lines: lines })
+    end
+
+    def print_section_report
+      render_template(:section_report)
     end
 
     private
-
-    def feature_name(scenario)
-      path = RSpec::Core::Metadata::relative_path(scenario.feature_file_path)
-      name = scenario.feature_name
-      "\"#{name}\" in #{path}"
-    end
-
-    def scenario_tags(scenario)
-      return '' if scenario.tags.empty?
-      template_scenario_tags.result(binding)
-    end
 
     def step_attr(step)
       attr = 'step'
@@ -220,7 +243,7 @@ module TurnipFormatter
 
       step.docs.each do |style, template|
         if style == :extra_args
-          output << step_extra_args(template[:value])
+          output << print_step_extra_args(template[:value])
         else
           output << template[:klass].build(template[:value])
         end
@@ -229,133 +252,31 @@ module TurnipFormatter
       output.join("\n")
     end
 
-    def step_extra_args(extra_args)
-      extra_args.map do |arg|
-        arg.instance_of?(Turnip::Table) ? step_outline(arg) : step_multiline(arg)
-      end.join("\n")
+    #
+    # @example
+    #   render_template(:main, { name: 'user' })
+    #     # => ERB.new('/path/to/main.erb') render { name: 'user' }
+    #
+    def render_template(name, params = {})
+      render_template_list(name).result(template_params_binding(params))
     end
 
-    def step_outline(table)
-      template_step_outline.result(binding)
+    def render_template_list(name)
+      if templates[name].nil?
+        path = File.dirname(__FILE__) + "/template/#{name.to_s}.erb"
+        templates[name] = ERB.new(File.read(path))
+      end
+
+      templates[name]
     end
 
-    def step_multiline(lines)
-      '<pre class="multiline">' + h(lines) + '</pre>'
+    def template_params_binding(params)
+      code = params.keys.map { |k| "#{k} = params[#{k.inspect}];" }.join
+      eval(code + ";binding")
     end
 
-    def report_area
-      <<-EOS
-        <div id="report">
-          <h1>Turnip Report</h1>
-          <section class="checkbox">
-            <label for="passed_check">Passed</label><input type="checkbox" checked id="passed_check">
-            <label for="failed_check">Failed</label><input type="checkbox" checked id="failed_check">
-            <label for="pending_check">Pending</label><input type="checkbox" checked id="pending_check">
-          </section>
-
-          <section class="result">
-            <p>
-              <span id="total_count"></span> Scenario (<span id="failed_count"></span> failed <span id="pending_count"></span> pending).
-            </p>
-            <p>Finished in <span id="total_time"></span></p>
-          </section>
-        </div>
-      EOS
-    end
-
-    def template_scenario
-      @template_scenario ||= ERB.new(<<-EOS)
-        <section class="scenario <%= h(scenario.status) %>">
-          <header>
-            <span class="permalink">
-              <a href="#<%= scenario.id %>">&para;</a>
-            </span>
-            <span class="scenario_name" id="<%= scenario.id %>">
-              Scenario: <%= h(scenario.name) %>
-            </span>
-            <span class="feature_name">
-              (Feature: <%= h(feature_name(scenario)) %>)
-              at <%= h(scenario.run_time) %> sec
-            </span>
-          </header>
-          <%= scenario_tags(scenario) %>
-          <ul class="steps">
-            <% scenario.steps.each do |step| %>
-            <li <%= step_attr(step) %>><span><%= h(step.name) %></span>
-              <div class="args"><%= step_args(step) %></div>
-            </li>
-            <% end %>
-          </ul>
-        </section>
-      EOS
-    end
-
-    def template_scenario_tags
-      @template_scenario_tags ||= ERB.new(<<-EOS)
-        <ul class="tags">
-          <% scenario.tags.each do |tag| %>
-          <li>@<%= h(tag) %></li>
-          <% end %>
-       </ul>
-      EOS
-    end
-
-    def template_exception
-      @template_exception ||= ERB.new(<<-EOS)
-        <section class="exception">
-          <h1>TurnipFormatter RuntimeError</h1>
-          <dl>
-            <dt>Runtime Exception</dt>
-            <dd><%= h(exception.to_s) %></dd>
-
-            <dt>Runtime Exception Backtrace</dt>
-            <%= template_exception_backtrace(exception) %>
-
-            <dt>Example Full Description</dt>
-            <dd><%= h(example.metadata[:full_description]) %></dd>
-
-            <% if example.exception %>
-              <dt>Example Exception</dt>
-              <dd><%= h(example.exception.to_s) %></dd>
-
-              <dt>Example Backtrace</dt>
-              <%= template_exception_backtrace(example.exception) %>
-            <% end %>
-
-            <% if example.pending %>
-              <dt>Example Pending description</dt>
-              <dd><%= h(example.metadata[:description]) %></dd>
-            <% end %>
-          </dl>
-        </section>
-      EOS
-    end
-
-    def template_exception_backtrace(exception)
-      @template_exception_backtrace ||= ERB.new(<<-EOS)
-        <dd>
-          <ol>
-            <% exception.backtrace.each do |line| %>
-            <li><%= h(line) %></li>
-            <% end %>
-          </ol>
-        </dd>
-      EOS
-      @template_exception_backtrace.result(binding)
-    end
-
-    def template_step_outline
-      @template_step_outline ||= ERB.new(<<-EOS)
-        <table class="step_outline">
-        <% table.each do |tr| %>
-          <tr>
-            <% tr.each do |td| %>
-            <td><%= ERB::Util.h(td) %></td>
-            <% end %>
-          </tr>
-        <% end %>
-        </table>
-      EOS
+    def templates
+      @templates ||= {}
     end
   end
 end

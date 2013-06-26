@@ -53,6 +53,11 @@ module TurnipFormatter
       example.execution_result[:run_time]
     end
 
+    def feature_info
+      path = RSpec::Core::Metadata::relative_path(feature_file_path)
+      "\"#{feature_name}\" in #{path}"
+    end
+
     def feature_name
       example.example_group.metadata[:example_group][:example_group][:description]
     end

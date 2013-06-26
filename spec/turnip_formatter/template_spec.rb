@@ -6,33 +6,30 @@ module TurnipFormatter
     let(:exception_style) { ::TurnipFormatter::StepTemplate::Exception }
     let(:source_style) { ::TurnipFormatter::StepTemplate::Source }
 
-    context 'Step has no tag' do
-      describe '#scenario_tags' do
+    describe '#print_scenario_tags' do
+      subject { template.print_scenario_tags(scenario) }
+
+      context 'Step has no tag' do
         let(:scenario) do
           scenario = double('scenario')
           scenario.stub(:tags).and_return([])
           scenario
         end
 
-        it 'should get null string' do
-          expect(template.send(:scenario_tags, scenario)).to be_empty
-        end
+        it { should eq '' }
       end
-    end
 
-    context 'Step has tags' do
-      describe '#scenario_tags' do
+      context 'Step has tags' do
         let(:scenario) do
           scenario = double('scenario')
-          scenario.stub(:tags).and_return(['hoge', 'fuga'])
+          scenario.stub(:tags).and_return(['hoge', '<b>fuga</b>'])
           scenario
         end
 
-        it 'should get null string' do
-          html = template.send(:scenario_tags, scenario)
-          expect(html).to match %r{ul class="tags"}
-          expect(html).to match %r{<li>@hoge</li>[[:space:]]+<li>@fuga</li>}
-        end
+        it {
+          should match %r{ul class="tags"}
+          should match %r{<li>@hoge</li>[[:space:]]+<li>@&lt;b&gt;fuga&lt;/b&gt;</li>}
+        }
       end
     end
 
@@ -74,8 +71,8 @@ module TurnipFormatter
           end
 
           it 'should call corresponding method in step' do
-            template.should_receive(:step_multiline).with('a').and_return('extra_args1')
-            template.should_receive(:step_outline).with(table).and_return('extra_args2')
+            template.should_receive(:print_step_multiline).with('a').and_return('extra_args1')
+            template.should_receive(:print_step_outline).with(table).and_return('extra_args2')
             source_style.should_receive(:build).with('b').and_return('source')
             exception_style.should_receive(:build).with('c').and_return('exception')
             expect(template.send(:step_args, step)).to eq("extra_args1\nextra_args2\nsource\nexception")
@@ -126,8 +123,8 @@ module TurnipFormatter
         end
 
         it 'should get null string' do
-          template.should_not_receive(:step_multiline)
-          template.should_not_receive(:step_outline)
+          template.should_not_receive(:print_step_multiline)
+          template.should_not_receive(:print_step_outline)
           source_style.should_not_receive(:build)
           exception_style.should_not_receive(:build)
           expect(template.send(:step_args, step)).to be_empty
@@ -135,11 +132,11 @@ module TurnipFormatter
       end
     end
 
-    describe '#step_extra_args' do
+    describe '#print_step_extra_args' do
       let(:template_stub) do
         template.tap do |t|
-          template.stub(:step_outline).and_return('outline')
-          template.stub(:step_multiline).and_return('multiline')
+          template.stub(:print_step_outline).and_return('outline')
+          template.stub(:print_step_multiline).and_return('multiline')
         end
       end
 
@@ -148,22 +145,22 @@ module TurnipFormatter
       end
 
       before do
-        template.should_receive(:step_outline).and_return('outline')
-        template.should_receive(:step_multiline).and_return('multiline')
+        template.should_receive(:print_step_outline).and_return('outline')
+        template.should_receive(:print_step_multiline).and_return('multiline')
       end
 
       it 'should get string converted from extra_args' do
-        expect(template_stub.send(:step_extra_args, extra_args)).to eq("outline\nmultiline")
+        expect(template_stub.send(:print_step_extra_args, extra_args)).to eq("outline\nmultiline")
       end
     end
 
-    describe '#step_multiline' do
+    describe '#print_step_multiline' do
       let(:string) { 'a<a>a' }
-      subject { template.send(:step_multiline, string) }
-      it { should eq '<pre class="multiline">a&lt;a&gt;a</pre>' }
+      subject { template.print_step_multiline(string) }
+      it { should include '<pre class="multiline">a&lt;a&gt;a</pre>' }
     end
 
-    describe '#step_outline' do
+    describe '#print_step_outline' do
       let(:string) do
         ::Turnip::Table.new([
             ["State", "Money"],
@@ -171,7 +168,8 @@ module TurnipFormatter
             ["<Okinawa>", "368"]
           ])
       end
-      subject { template.send(:step_outline, string) }
+
+      subject { template.print_step_outline(string) }
 
       it { should match %r{<td>State</td>[[:space:]]+<td>Money</td>} }
       it { should match %r{<td>&lt;Tokushima&gt;</td>[[:space:]]+<td>555</td>} }

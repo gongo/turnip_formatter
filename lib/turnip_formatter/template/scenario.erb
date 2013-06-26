@@ -1,0 +1,24 @@
+<section class="scenario <%= h(scenario.status) %>">
+  <header>
+    <span class="permalink">
+      <a href="#<%= scenario.id %>">&para;</a>
+    </span>
+    <span class="scenario_name" id="<%= scenario.id %>">
+      Scenario: <%= h(scenario.name) %>
+    </span>
+    <span class="feature_name">
+      (Feature: <%= h(scenario.feature_info) %>)
+      at <%= h(scenario.run_time) %> sec
+    </span>
+  </header>
+  <%= print_scenario_tags(scenario) %>
+  <ul class="steps">
+    <% scenario.steps.each do |step| %>
+      <li <%= step_attr(step) %>><span><%= h(step.name) %></span>
+        <div class="args">
+          <%= step_args(step) %>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+</section>
