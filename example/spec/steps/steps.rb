@@ -32,18 +32,6 @@ step "there are monsters:" do |monsters|
   @monsters = monsters.map { |row| row[0] }
 end
 
-step "I escape" do
-  @escape_result = (@monsters.count <= 2)
-end
-
-step "I was able to escape" do
-  expect(@escape_result).to be_true
-end
-
-step "I could not escape" do
-  expect(@escape_result).to be_false
-end
-
 step "the monster sings the following song" do |song|
   @song = song
 end
