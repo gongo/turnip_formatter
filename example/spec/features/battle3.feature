@@ -1,6 +1,6 @@
+@escape
 Feature: Battle monsters
 
-  @watch
   Scenario: Escape
     Given there are monsters:
       | gargoyle   |
@@ -15,3 +15,12 @@ Feature: Battle monsters
       | basilisk   |
      When I escape
      Then I could not escape
+
+  @master_of_escape
+  Scenario: Escape because he is master
+    Given there are monsters:
+      | gargoyle   |
+      | Cockatrice |
+      | basilisk   |
+     When I escape
+     Then I was able to escape
