@@ -95,6 +95,9 @@ module TurnipFormatter
                       });
                   });
 
+                  $(".scenario.passed").hide();
+                  $(".scenario.pending").hide();
+
                   /**
                    * Tabs
                    */
