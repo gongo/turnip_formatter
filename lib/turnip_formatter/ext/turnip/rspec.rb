@@ -26,7 +26,7 @@ module Turnip
               keyword: step.keyword
             }
           end
-          turnip[:tags] = scenario.tags if scenario.respond_to?(:tags)
+          turnip[:tags] += scenario.tags if scenario.respond_to?(:tags)
         end
       end
     end
@@ -35,15 +35,19 @@ module Turnip
       def run(feature_file)
         Turnip::Builder.build(feature_file).features.each do |feature|
           describe feature.name, feature.metadata_hash do
-            let :background_steps do
-              feature.backgrounds.map(&:steps).flatten
+            let(:backgrounds) do
+              feature.backgrounds
+            end
+
+            let(:background_steps) do
+              backgrounds.map(&:steps).flatten
             end
 
             before do
               example.metadata[:file_path] = feature_file
-              example.metadata[:turnip_formatter] = { steps: [], tags: [] }
+              example.metadata[:turnip_formatter] = { steps: [], tags: feature.tags }
 
-              feature.backgrounds.each do |background|
+              backgrounds.each do |background|
                 push_scenario_metadata(background)
               end
 
@@ -51,6 +55,7 @@ module Turnip
                 run_step(feature_file, step, index)
               end
             end
+
             feature.scenarios.each do |scenario|
               describe scenario.name, scenario.metadata_hash do
                 before do
