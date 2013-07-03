@@ -1,4 +1,3 @@
-require 'turnip/rspec'
 require 'turnip_formatter'
 
 RSpec.configure do |config|

@@ -4,7 +4,8 @@
 
     $ cd /path/to/turnip_formatter
     $ bundle install --path vendor/bundle
-    $ bundle exec rspec -r ./example/spec_helper example
+    $ cd example
+    $ bundle exec rspec
     $ open report.html
 
 ## Screenshot

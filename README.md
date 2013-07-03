@@ -71,7 +71,7 @@ expand:
 Example
 --------------------
 
-see https://github.com/gongo/turnip_formatter/tree/master/spec/examples
+see https://github.com/gongo/turnip_formatter/tree/master/example
 
 Add-on
 --------------------
