@@ -1,0 +1,41 @@
+require 'turnip_formatter/printer'
+require 'turnip_formatter/printer/step_extra_args'
+
+module TurnipFormatter
+  module Printer
+    class RuntimeError
+      class << self
+        include TurnipFormatter::Printer
+        include RSpec::Core::BacktraceFormatter
+
+        def print_out(example, exception)
+          exception.set_backtrace(format_backtrace(exception.backtrace))
+          render_template(:runtime_exception, {
+              example: example,
+              runtime_exception: runtime_exception(exception),
+              example_exception: example_exception(example),
+            }
+          )
+        end
+
+        private
+
+        def runtime_exception(exception)
+          render_template(:exception, { title: 'Runtime', exception: exception })
+        end
+
+        def example_exception(example)
+          unless example.exception
+            ''
+          else
+            render_template(:exception, {
+                title: 'Example',
+                exception: example.exception
+              }
+            )
+          end
+        end
+      end
+    end
+  end
+end
