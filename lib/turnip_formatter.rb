@@ -9,7 +9,7 @@ module TurnipFormatter
   require 'turnip_formatter/step_template'
   require 'turnip_formatter/ext/turnip/rspec'
   require 'turnip_formatter/ext/turnip/builder'
+  require 'turnip_formatter/printer/index'
 end
 
 RSpecTurnipFormatter = RSpec::Core::Formatters::TurnipFormatter
-
