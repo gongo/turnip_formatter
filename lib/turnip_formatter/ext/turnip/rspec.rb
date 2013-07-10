@@ -9,8 +9,10 @@ module Turnip
         begin
           step(step)
         rescue Turnip::Pending
+          example.metadata[:line_number] = step.line
           pending("No such step(#{index}): '#{step}'")
         rescue StandardError => e
+          example.metadata[:line_number] = step.line
           e.backtrace.push "#{feature_file}:#{step.line}:in step:#{index} `#{step.description}'"
           raise e
         end
