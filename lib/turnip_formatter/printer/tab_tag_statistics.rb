@@ -23,17 +23,21 @@ module TurnipFormatter
 
         def tag_analysis(name, scenarios)
           status_group = scenarios.group_by { |s| s[:scenario].status }
+          status_group.default = []
 
           info = OpenStruct.new(
             name: name,
-            scenarios: scenarios.count,
-            passed: status_count(status_group["passed"]),
-            failed: status_count(status_group["failed"]),
-            pending: status_count(status_group["pending"]),
+            scenario_count: scenarios.size,
+            passed_count: status_group["passed"].size,
+            failed_count: status_group["failed"].size,
+            pending_count: status_group["pending"].size,
             status: 'failed'
           )
 
-          info.status = (info.pending.zero? ? 'passed' : 'pending') if info.failed.zero?
+          if info.failed_count.zero?
+            info.status = info.pending_count.zero? ? 'passed' : 'pending'
+          end
+
           info
         end
 
@@ -61,10 +65,6 @@ module TurnipFormatter
               end
             end
           end.flatten.group_by { |s| s[:name] }.sort
-        end
-
-        def status_count(scenarios)
-          scenarios.nil? ? 0 : scenarios.count
         end
       end
     end

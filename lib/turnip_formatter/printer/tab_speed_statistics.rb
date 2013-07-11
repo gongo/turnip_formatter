@@ -11,7 +11,7 @@ module TurnipFormatter
 
         def print_out(passed_scenarios)
           results = speed_analysis(passed_scenarios)
-          render_template(:tab_speed_statistics, {analysis_results: results })
+          render_template(:tab_speed_statistics, { analysis_results: results })
         end
 
         private

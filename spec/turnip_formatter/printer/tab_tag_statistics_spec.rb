@@ -63,27 +63,39 @@ module TurnipFormatter::Printer
       it 'should get count of each status' do
         # @bar
         group = groups[0]
-        res = statistics.send(:tag_analysis, group[0], group[1])
-        expect([res.passed, res.failed, res.pending]).to eq [0, 1, 1]
-        expect(res.status).to eq 'failed'
+        statistics.send(:tag_analysis, group[0], group[1]).tap do |result|
+          expect(result.passed_count).to eq 0
+          expect(result.failed_count).to eq 1
+          expect(result.pending_count).to eq 1
+          expect(result.status).to eq 'failed'
+        end
 
         # @foo
         group = groups[1]
-        res = statistics.send(:tag_analysis, group[0], group[1])
-        expect([res.passed, res.failed, res.pending]).to eq [0, 1, 0]
-        expect(res.status).to eq 'failed'
+        statistics.send(:tag_analysis, group[0], group[1]).tap do |result|
+          expect(result.passed_count).to eq 0
+          expect(result.failed_count).to eq 1
+          expect(result.pending_count).to eq 0
+          expect(result.status).to eq 'failed'
+        end
 
         # @hoge
         group = groups[2]
-        res = statistics.send(:tag_analysis, group[0], group[1])
-        expect([res.passed, res.failed, res.pending]).to eq [1, 0, 1]
-        expect(res.status).to eq 'pending'
+        statistics.send(:tag_analysis, group[0], group[1]).tap do |result|
+          expect(result.passed_count).to eq 1
+          expect(result.failed_count).to eq 0
+          expect(result.pending_count).to eq 1
+          expect(result.status).to eq 'pending'
+        end
 
         # no tags (turnip)
         group = groups[3]
-        res = statistics.send(:tag_analysis, group[0], group[1])
-        expect([res.passed, res.failed, res.pending]).to eq [1, 0, 0]
-        expect(res.status).to eq 'passed'
+        statistics.send(:tag_analysis, group[0], group[1]).tap do |result|
+          expect(result.passed_count).to eq 1
+          expect(result.failed_count).to eq 0
+          expect(result.pending_count).to eq 0
+          expect(result.status).to eq 'passed'
+        end
       end
     end
   end

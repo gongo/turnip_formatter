@@ -13,10 +13,10 @@
     <% analysis_results.each do |info| %>
       <tr>
         <td><%= info.name %></td>
-        <td><%= info.scenarios %></td>
-        <td><%= info.passed %></td>
-        <td><%= info.failed %></td>
-        <td><%= info.pending %></td>
+        <td><%= info.scenario_count %></td>
+        <td><%= info.passed_count %></td>
+        <td><%= info.failed_count %></td>
+        <td><%= info.pending_count %></td>
         <td class="<%= info.status %>"><%= info.status %></td>
       </tr>
     <% end %>

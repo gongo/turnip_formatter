@@ -28,9 +28,9 @@ module TurnipFormatter::Printer
         it 'should get passed feature information' do
           info = statistics.send(:feature_analysis, 'Hoge', scenarios)
           expect(info.name).to eq 'Hoge'
-          expect(info.passed).to eq 2
-          expect(info.failed).to be_zero
-          expect(info.pending).to be_zero
+          expect(info.passed_count).to eq 2
+          expect(info.failed_count).to be_zero
+          expect(info.pending_count).to be_zero
           expect(info.status).to eq 'passed'
         end
       end
@@ -50,9 +50,9 @@ module TurnipFormatter::Printer
         it 'should get failed feature information' do
           info = statistics.send(:feature_analysis, 'Fuga', scenarios)
           expect(info.name).to eq 'Fuga'
-          expect(info.passed).to eq 1
-          expect(info.failed).to eq 2
-          expect(info.pending).to be_zero
+          expect(info.passed_count).to eq 1
+          expect(info.failed_count).to eq 2
+          expect(info.pending_count).to be_zero
           expect(info.status).to eq 'failed'
         end
       end
@@ -72,9 +72,9 @@ module TurnipFormatter::Printer
         it 'should get pending feature information' do
           info = statistics.send(:feature_analysis, 'Hago', scenarios)
           expect(info.name).to eq 'Hago'
-          expect(info.passed).to eq 1
-          expect(info.failed).to be_zero
-          expect(info.pending).to eq 1
+          expect(info.passed_count).to eq 1
+          expect(info.failed_count).to be_zero
+          expect(info.pending_count).to eq 1
           expect(info.status).to eq 'pending'
         end
       end
