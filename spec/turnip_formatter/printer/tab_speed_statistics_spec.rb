@@ -20,20 +20,12 @@ module TurnipFormatter::Printer
       it 'should get string as HTML table' do
         html = statistics.print_out(passed_scenarios)
 
-        passed_scenarios.each do |scenario|
-          tag_scenario_name = "<a href=\"\##{scenario.id}\">#{scenario.name}</a>"
-          tag_run_time = "<span>#{scenario.run_time}</span>"
-          tag_feature_name = "<span>#{scenario.feature_name}</span>"
-
-          expect_match = [
-            '<tr>',
-            "<td>#{tag_feature_name}</td>",
-            "<td>#{tag_scenario_name}</td>",
-            "<td>#{tag_run_time} sec</td>",
-            '</tr>'
-          ].join('[[:space:]]+')
-
-          expect(html).to match %r(#{expect_match})
+        passed_scenarios.sort { |a,b| a.run_time <=> b.run_time }.each.with_index(1) do |scenario, index|
+          html.should have_tag "tbody tr:nth-child(#{index})" do
+            with_tag 'td:nth-child(1) span', text: scenario.feature_name
+            with_tag "td:nth-child(2) a[href='\##{scenario.id}']", text: scenario.name
+            with_tag 'td:nth-child(3) span', text: scenario.run_time
+          end
         end
       end
     end
