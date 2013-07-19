@@ -14,8 +14,11 @@ module TurnipFormatter::Printer
       describe '.print_out' do
         subject { Scenario.print_out(scenario) }
 
-        it { should include "<a href=\"##{scenario.id}\">" } # scenario.id
-        it { should include 'Scenario: Scenario' } # h(scenario.name)
+        it { should have_tag 'a', with: { href: '#' + scenario.id } }
+        it { should have_tag 'span.scenario_name', text: /Scenario: Scenario/ }
+        it { should have_tag 'span.feature_name' }
+        it { should have_tag 'ul.tags' }
+        it { should have_tag 'ul.steps' }
       end
     end
 
