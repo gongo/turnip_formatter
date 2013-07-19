@@ -28,7 +28,7 @@ module TurnipFormatter::Printer
             exception_style.should_receive(:build).with('c').and_return('exception')
           end
 
-          it { should include "<div class=\"args\">extra_args\nsource\nexception</div>" }
+          it { should have_tag 'div.args', text: "extra_args\nsource\nexception" }
         end
       end
 
@@ -37,7 +37,7 @@ module TurnipFormatter::Printer
           let(:custom_template_1) do
             Module.new do
               def self.build(value)
-                "<html>#{value}</html>"
+                "<em>#{value}</em>"
               end
             end
           end
@@ -60,7 +60,10 @@ module TurnipFormatter::Printer
           end
 
           it 'should call corresponding method in step' do
-            should include "<div class=\"args\"><html>aiueo</html>\n<strong>12345</strong></div>"
+            subject.should have_tag 'div.args' do
+              with_tag 'em', text: 'aiueo'
+              with_tag 'strong', text: '12345'
+            end
           end
         end
       end
@@ -78,7 +81,7 @@ module TurnipFormatter::Printer
           exception_style.should_not_receive(:build)
         end
 
-        it { should include '<div class="args"></div>' }
+        it { should have_tag 'div.args', text: '' }
       end
     end
   end
