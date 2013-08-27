@@ -23,24 +23,28 @@ module TurnipFormatter::Printer
       # Failed scenario have tags @hoge and @fuga
       scenario = base_scenario.dup
       scenario.stub(:tags).and_return(['foo', 'bar'])
+      scenario.stub(:validation).and_return(true)
       scenario.stub(:status).and_return('failed')
       scenarios << scenario
 
       # Passed scenario no have tags
       scenario = base_scenario.dup
       scenario.stub(:tags).and_return([])
+      scenario.stub(:validation).and_return(true)
       scenario.stub(:status).and_return('passed')
       scenarios << scenario
 
       # Passed scenario have tags @hoge
       scenario = base_scenario.dup
       scenario.stub(:tags).and_return(['hoge'])
+      scenario.stub(:validation).and_return(true)
       scenario.stub(:status).and_return('passed')
       scenarios << scenario
 
       # Pending scenario have tags @fuga and @hago
       scenario = base_scenario.dup
       scenario.stub(:tags).and_return(['bar', 'hoge'])
+      scenario.stub(:validation).and_return(true)
       scenario.stub(:status).and_return('pending')
       scenarios << scenario
     end
