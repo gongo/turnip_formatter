@@ -20,8 +20,6 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'turnip'
   spec.add_dependency 'sass'
-  spec.add_dependency 'uglifier'
-  spec.add_dependency 'therubyracer'
   spec.add_development_dependency "bundler", "~> 1.3"
   spec.add_development_dependency "rake"
   spec.add_development_dependency 'rspec-html-matchers'
