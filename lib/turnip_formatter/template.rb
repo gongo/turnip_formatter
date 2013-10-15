@@ -2,7 +2,6 @@
 
 require 'turnip_formatter/template'
 require 'sass'
-require 'uglifier'
 
 module TurnipFormatter
   class Template
@@ -12,7 +11,7 @@ module TurnipFormatter
       end
 
       def add_js_file(file)
-        js_list << Uglifier.compile(File.read(file))
+        js_list << File.read(file)
       end
 
       def add_scss(scss_string)
