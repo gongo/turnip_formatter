@@ -1,7 +1,7 @@
 require 'turnip_formatter'
 
 RSpec.configure do |config|
-  config.add_setting :project_name, :default => "My project"
+  config.project_name = "My project"
   config.add_formatter RSpecTurnipFormatter, 'report.html'
 end
 
