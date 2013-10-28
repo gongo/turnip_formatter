@@ -13,3 +13,7 @@ module TurnipFormatter
 end
 
 RSpecTurnipFormatter = RSpec::Core::Formatters::TurnipFormatter
+
+RSpec.configure do |config|
+  config.add_setting :project_name, :default => "Turnip"
+end
