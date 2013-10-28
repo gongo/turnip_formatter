@@ -42,6 +42,7 @@ $gray-background: #DDDDDD;
 }
 
 body {
+    margin: 0;
     background-color: #ffffff;
 }
 
@@ -161,7 +162,7 @@ div#steps-statistics section.scenario {
         table.step_outline {
             margin-top: 2em;
 
-            tr:nth-child(odd) { 
+            tr:nth-child(odd) {
                 background-color: #ddddcc;
             }
 
@@ -195,7 +196,7 @@ div#tag-statistics {
     table {
         width: 100%;
         margin: 1em 0em;
-        
+
         thead {
             th {
                 border-bottom: 1px solid $gray-front;
@@ -203,7 +204,7 @@ div#tag-statistics {
         }
 
         tbody {
-            tr:nth-child(odd) { 
+            tr:nth-child(odd) {
                 background-color: #FFFFFF;
             }
 
