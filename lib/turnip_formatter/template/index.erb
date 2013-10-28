@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>turnip formatter report</title>
+    <title><%= TurnipFormatter::Template.project_name %> report</title>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.9.1/jquery.tablesorter.min.js"></script>
@@ -13,7 +13,7 @@
   </head>
   <body>
     <div id="report">
-      <h1>Turnip Report</h1>
+      <h1><%= TurnipFormatter::Template.project_name %> Report</h1>
       <section class="checkbox">
         <label for="passed_check">Passed</label><input type="checkbox" id="passed_check">
         <label for="failed_check">Failed</label><input type="checkbox" checked id="failed_check">

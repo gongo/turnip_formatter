@@ -6,6 +6,10 @@ require 'sass'
 module TurnipFormatter
   class Template
     class << self
+      def project_name
+        RSpec.configuration.project_name || 'Turnip'
+      end
+
       def add_js(js_string)
         js_list << js_string
       end
