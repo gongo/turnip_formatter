@@ -15,7 +15,11 @@ module TurnipFormatter
       end
 
       def add_js_file(file)
-        js_list << File.read(file)
+        if URI(file).scheme
+          js_file_list << file
+        else
+          js_list << File.read(file)
+        end
       end
 
       def add_scss(scss_string)
@@ -30,12 +34,22 @@ module TurnipFormatter
         js_list.join("\n")
       end
 
+      def js_file_render
+        js_file_list.map do |file|
+          "<script src=\"#{file}\" type=\"text/javascript\"></script>"
+        end.join("\n")
+      end
+
       def css_render
         css_list.join("\n")
       end
 
       def js_list
         @js_list ||= []
+      end
+
+      def js_file_list
+        @js_file_list ||= []
       end
 
       def css_list
