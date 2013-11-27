@@ -26,6 +26,14 @@ module TurnipFormatter
         css_list << Sass::Engine.new(scss_string, scss_option).render
       end
 
+      def add_css_file(file)
+        if URI(file).scheme
+          css_file_list << file
+        else
+          add_scss_file(file)
+        end
+      end
+
       def add_scss_file(path)
         css_list << Sass::Engine.for_file(path, scss_option).render
       end
@@ -44,6 +52,12 @@ module TurnipFormatter
         css_list.join("\n")
       end
 
+      def css_file_render
+        css_file_list.map do |file|
+          "<link rel=\"stylesheet\" href=\"#{file}\">"
+        end.join("\n")
+      end
+
       def js_list
         @js_list ||= []
       end
@@ -56,6 +70,10 @@ module TurnipFormatter
         @css_list ||= []
       end
 
+      def css_file_list
+        @css_file_list ||= []
+      end
+
       def scss_option
         { syntax: :scss, style: :compressed }
       end
@@ -64,6 +82,6 @@ module TurnipFormatter
 end
 
 (File.dirname(__FILE__) + '/template').tap do |dirname|
-  TurnipFormatter::Template.add_scss_file(dirname + '/turnip_formatter.scss')
+  TurnipFormatter::Template.add_css_file(dirname + '/turnip_formatter.scss')
   TurnipFormatter::Template.add_js_file(dirname + '/turnip_formatter.js')
 end
