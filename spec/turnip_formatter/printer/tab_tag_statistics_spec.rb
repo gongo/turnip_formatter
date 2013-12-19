@@ -22,30 +22,30 @@ module TurnipFormatter::Printer
 
       # Failed scenario have tags @hoge and @fuga
       scenario = base_scenario.dup
-      scenario.stub(:tags).and_return(['foo', 'bar'])
-      scenario.stub(:validation).and_return(true)
-      scenario.stub(:status).and_return('failed')
+      allow(scenario).to receive(:tags).and_return(['foo', 'bar'])
+      allow(scenario).to receive(:validation).and_return(true)
+      allow(scenario).to receive(:status).and_return('failed')
       scenarios << scenario
 
       # Passed scenario no have tags
       scenario = base_scenario.dup
-      scenario.stub(:tags).and_return([])
-      scenario.stub(:validation).and_return(true)
-      scenario.stub(:status).and_return('passed')
+      allow(scenario).to receive(:tags).and_return([])
+      allow(scenario).to receive(:validation).and_return(true)
+      allow(scenario).to receive(:status).and_return('passed')
       scenarios << scenario
 
       # Passed scenario have tags @hoge
       scenario = base_scenario.dup
-      scenario.stub(:tags).and_return(['hoge'])
-      scenario.stub(:validation).and_return(true)
-      scenario.stub(:status).and_return('passed')
+      allow(scenario).to receive(:tags).and_return(['hoge'])
+      allow(scenario).to receive(:validation).and_return(true)
+      allow(scenario).to receive(:status).and_return('passed')
       scenarios << scenario
 
       # Pending scenario have tags @fuga and @hago
       scenario = base_scenario.dup
-      scenario.stub(:tags).and_return(['bar', 'hoge'])
-      scenario.stub(:validation).and_return(true)
-      scenario.stub(:status).and_return('pending')
+      allow(scenario).to receive(:tags).and_return(['bar', 'hoge'])
+      allow(scenario).to receive(:validation).and_return(true)
+      allow(scenario).to receive(:status).and_return('pending')
       scenarios << scenario
     end
 
