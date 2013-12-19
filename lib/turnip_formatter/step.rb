@@ -15,8 +15,10 @@ module TurnipFormatter
       end
 
       def remove_template(status, klass)
-        templates[status].delete(klass)
-        templates.delete(status.to_sym) if templates[status.to_sym].empty?
+        key = status.to_sym
+        return unless templates.key?(key)
+        templates[key].delete(klass)
+        templates.delete(key) if templates[key].empty?
       end
 
       def status

@@ -33,7 +33,7 @@ module TurnipFormatter::Printer
     describe '.speed_analysis' do
       it 'should get array of scenario order by run_time' do
         scenarios = statistics.send(:speed_analysis, passed_scenarios)
-        expect(scenarios).to have(3).elements
+        expect(scenarios.size).to eq 3
 
         run_time_list = scenarios.map(&:run_time)
         expect(run_time_list.sort).to eq run_time_list

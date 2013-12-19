@@ -1,6 +1,6 @@
 shared_context "turnip_formatter scenario setup" do |assertion|
   let(:example) do
-    assertion ||= proc { expect(true).to be_true }
+    assertion ||= proc { expect(true).to be true }
     group = ::RSpec::Core::ExampleGroup.describe('Feature').describe('Scenario')
     example = group.example('example', metadata, &assertion)
     group.run(NoopObject.new)
@@ -10,7 +10,7 @@ end
 
 shared_context "turnip_formatter failure scenario setup" do |assertion|
   include_context 'turnip_formatter scenario setup', proc {
-    expect(true).to be_false
+    expect(true).to be false
   }
 end
 

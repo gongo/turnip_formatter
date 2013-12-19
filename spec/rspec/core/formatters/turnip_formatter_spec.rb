@@ -12,15 +12,15 @@ module RSpec::Core::Formatters
 
     describe '#example_passed' do
       before do
-        scenario.example('passed', metadata) { expect(true).to be_true }
+        scenario.example('passed', metadata) { expect(true).to be true }
         feature.run(formatter)
       end
 
       it 'should get passed scenario count' do
-        expect(formatter.passed_scenarios).to have(1).elements
-        expect(formatter.failed_scenarios).to have(0).elements
-        expect(formatter.pending_scenarios).to have(0).elements
-        expect(formatter.scenarios).to have(1).elements
+        expect(formatter.passed_scenarios.size).to eq 1
+        expect(formatter.failed_scenarios.size).to eq 0
+        expect(formatter.pending_scenarios.size).to eq 0
+        expect(formatter.scenarios.size).to eq 1
       end
     end
 
@@ -28,7 +28,7 @@ module RSpec::Core::Formatters
       before do
         scenario.example('failed', metadata) do
           begin
-            expect(true).to be_false
+            expect(true).to be false
           rescue => e
             e.backtrace.push ":in step:0 `"
             raise e
@@ -38,10 +38,10 @@ module RSpec::Core::Formatters
       end
 
       it 'should get failed scenario count' do
-        expect(formatter.passed_scenarios).to have(0).elements
-        expect(formatter.failed_scenarios).to have(1).elements
-        expect(formatter.pending_scenarios).to have(0).elements
-        expect(formatter.scenarios).to have(1).elements
+        expect(formatter.passed_scenarios.size).to eq 0
+        expect(formatter.failed_scenarios.size).to eq 1
+        expect(formatter.pending_scenarios.size).to eq 0
+        expect(formatter.scenarios.size).to eq 1
       end
     end
 
@@ -54,10 +54,10 @@ module RSpec::Core::Formatters
       end
 
       it 'should get pending scenario count' do
-        expect(formatter.passed_scenarios).to have(0).elements
-        expect(formatter.failed_scenarios).to have(0).elements
-        expect(formatter.pending_scenarios).to have(1).elements
-        expect(formatter.scenarios).to have(1).elements
+        expect(formatter.passed_scenarios.size).to eq 0
+        expect(formatter.failed_scenarios.size).to eq 0
+        expect(formatter.pending_scenarios.size).to eq 1
+        expect(formatter.scenarios.size).to eq 1
       end
     end
 
