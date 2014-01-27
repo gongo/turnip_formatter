@@ -6,11 +6,13 @@ module Turnip
   module RSpec
     module Execute
       def run_step(feature_file, step, index)
+        example = Turnip::RSpec.fetch_current_example(self)
+
         begin
           step(step)
-        rescue Turnip::Pending
+        rescue Turnip::Pending => e
           example.metadata[:line_number] = step.line
-          pending("No such step(#{index}): '#{step}'")
+          pending("No such step(#{index}): '#{e}'")
         rescue StandardError => e
           example.metadata[:line_number] = step.line
           e.backtrace.push "#{feature_file}:#{step.line}:in step:#{index} `#{step.description}'"
@@ -19,6 +21,8 @@ module Turnip
       end
 
       def push_scenario_metadata(scenario)
+        example = Turnip::RSpec.fetch_current_example(self)
+
         steps = scenario.steps
         example.metadata[:turnip_formatter].tap do |turnip|
           steps.each do |step|
@@ -46,8 +50,12 @@ module Turnip
             end
 
             before do
+              example = Turnip::RSpec.fetch_current_example(self)
+
               example.metadata[:file_path] = feature_file
-              example.metadata[:turnip_formatter] = { steps: [], tags: feature.tags }
+              example.metadata[:turnip_formatter] = {
+                steps: [], tags: feature.tags
+              }
 
               backgrounds.each do |background|
                 push_scenario_metadata(background)
@@ -59,17 +67,19 @@ module Turnip
             end
 
             feature.scenarios.each do |scenario|
-              describe scenario.name, scenario.metadata_hash do
-                before do
-                  push_scenario_metadata(scenario)
-                end
+              instance_eval <<-EOS, feature_file, scenario.line
+                describe scenario.name, scenario.metadata_hash do
+                  before do
+                    push_scenario_metadata(scenario)
+                  end
 
-                it scenario.steps.map(&:description).join(' -> ') do
-                  scenario.steps.each.with_index(background_steps.size) do |step, index|
-                    run_step(feature_file, step, index)
+                  it scenario.steps.map(&:description).join(' -> ') do
+                    scenario.steps.each.with_index(background_steps.size) do |step, index|
+                      run_step(feature_file, step, index)
+                    end
                   end
                 end
-              end
+              EOS
             end
           end
         end

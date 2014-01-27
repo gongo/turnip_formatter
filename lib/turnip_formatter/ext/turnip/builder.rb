@@ -23,7 +23,7 @@ module Turnip
       end
     end
 
-    class Step1 < Struct.new(:description, :extra_args, :line, :keyword, :tags)
+    class Step1 < Struct.new(:description, :extra_args, :line, :keyword)
       def split(*args)
         self.to_s.split(*args)
       end
@@ -38,7 +38,8 @@ module Turnip
       if step.doc_string
         extra_args.push step.doc_string.value
       elsif step.rows
-        extra_args.push Turnip::Table.new(step.rows.map { |row| row.cells(&:value) })
+        table = Turnip::Table.new(step.rows.map(&:cells).map(&:to_a))
+        extra_args.push(table)
       end
       @current_step_context.steps << Step1.new(step.name, extra_args, step.line, step.keyword)
     end
