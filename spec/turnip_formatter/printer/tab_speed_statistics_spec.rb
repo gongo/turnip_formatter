@@ -13,7 +13,7 @@ module TurnipFormatter::Printer
     let :passed_scenarios do
       ([example] * 3).map do |ex|
         TurnipFormatter::Scenario::Pass.new(ex)
-      end.each { |s| s.stub(:run_time).and_return(rand) }
+      end.each { |s| allow(s).to receive(:run_time).and_return(rand) }
     end
 
     describe '.print_out' do
@@ -21,7 +21,7 @@ module TurnipFormatter::Printer
         html = statistics.print_out(passed_scenarios)
 
         passed_scenarios.sort { |a,b| a.run_time <=> b.run_time }.each.with_index(1) do |scenario, index|
-          html.should have_tag "tbody tr:nth-child(#{index})" do
+          expect(html).to have_tag "tbody tr:nth-child(#{index})" do
             with_tag 'td:nth-child(1) span', text: scenario.feature_name
             with_tag "td:nth-child(2) a[href='\##{scenario.id}']", text: scenario.name
             with_tag 'td:nth-child(3) span', text: scenario.run_time
@@ -33,7 +33,7 @@ module TurnipFormatter::Printer
     describe '.speed_analysis' do
       it 'should get array of scenario order by run_time' do
         scenarios = statistics.send(:speed_analysis, passed_scenarios)
-        expect(scenarios).to have(3).elements
+        expect(scenarios.size).to eq 3
 
         run_time_list = scenarios.map(&:run_time)
         expect(run_time_list.sort).to eq run_time_list

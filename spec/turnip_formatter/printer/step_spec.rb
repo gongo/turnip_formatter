@@ -23,9 +23,9 @@ module TurnipFormatter::Printer
           end
 
           before do
-            StepExtraArgs.should_receive(:print_out).with(['a', table]).and_return('extra_args')
-            source_style.should_receive(:build).with('b').and_return('source')
-            exception_style.should_receive(:build).with('c').and_return('exception')
+            expect(StepExtraArgs).to receive(:print_out).with(['a', table]).and_return('extra_args')
+            expect(source_style).to receive(:build).with('b').and_return('source')
+            expect(exception_style).to receive(:build).with('c').and_return('exception')
           end
 
           it { should have_tag 'div.args', text: "extra_args\nsource\nexception" }
@@ -60,7 +60,7 @@ module TurnipFormatter::Printer
           end
 
           it 'should call corresponding method in step' do
-            subject.should have_tag 'div.args' do
+            expect(subject).to have_tag 'div.args' do
               with_tag 'em', text: 'aiueo'
               with_tag 'strong', text: '12345'
             end
@@ -76,9 +76,9 @@ module TurnipFormatter::Printer
         end
 
         before do
-          StepExtraArgs.should_not_receive(:print_out)
-          source_style.should_not_receive(:build)
-          exception_style.should_not_receive(:build)
+          expect(StepExtraArgs).not_to receive(:print_out)
+          expect(source_style).not_to receive(:build)
+          expect(exception_style).not_to receive(:build)
         end
 
         it { should have_tag 'div.args', text: '' }

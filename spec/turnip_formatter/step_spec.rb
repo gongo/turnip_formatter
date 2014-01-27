@@ -9,7 +9,7 @@ module TurnipFormatter
 
     describe '#attention?' do
       subject { step.attention? }
-      it { should be_false }
+      it { should be false }
     end
 
     describe '#name' do

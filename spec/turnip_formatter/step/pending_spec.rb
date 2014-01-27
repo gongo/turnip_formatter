@@ -51,7 +51,7 @@ module TurnipFormatter
 
       describe '#attention?' do
         subject { step.attention? }
-        it { should be_true }
+        it { should be true }
       end
 
       describe '#status' do

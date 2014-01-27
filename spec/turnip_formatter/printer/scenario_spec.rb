@@ -25,8 +25,8 @@ module TurnipFormatter::Printer
     context 'not turnip example' do
       describe '.print_out' do
         before do
-          scenario.stub(:validation) { raise NoFeatureFileError }
-          RuntimeError.should_receive(:print_out)
+          allow(scenario).to receive(:validation) { raise NoFeatureFileError }
+          expect(RuntimeError).to receive(:print_out)
         end
 
         it { Scenario.print_out(scenario) }
