@@ -4,11 +4,11 @@ module Escape
   end
 
   step "I was able to escape" do
-    expect(@escape_result).to be_true
+    expect(@escape_result).to be true
   end
 
   step "I could not escape" do
-    expect(@escape_result).to be_false
+    expect(@escape_result).to be false
   end
 end
 
