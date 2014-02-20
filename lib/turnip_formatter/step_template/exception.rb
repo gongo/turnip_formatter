@@ -55,7 +55,7 @@ module TurnipFormatter
   Step::Pending.add_template StepTemplate::Exception do
     message = example.execution_result[:pending_message]
     exception = RSpec::Core::Pending::PendingDeclaredInExample.new(message)
-    exception.set_backtrace(example.location)
+    exception.set_backtrace([example.location])
     exception
   end
 end
