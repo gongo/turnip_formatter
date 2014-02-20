@@ -9,7 +9,7 @@ module TurnipFormatter
       let(:template) { ::TurnipFormatter::StepTemplate::Exception }
       let(:exception) do
         StandardError.new('StepExceptionError').tap do |e|
-          e.set_backtrace('/path/to/error.rb: 10')
+          e.set_backtrace(['/path/to/error.rb: 10'])
         end
       end
 
