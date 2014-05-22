@@ -1,50 +1,28 @@
 require 'spec_helper'
 
-module TurnipFormatter::Scenario
-  describe Failure do
-    let(:scenario) { ::TurnipFormatter::Scenario::Failure.new(failure_example) }
-    include_context 'turnip_formatter standard scenario metadata'
-    include_context 'turnip_formatter failure scenario setup'
+describe TurnipFormatter::Scenario::Failure do
+  let(:example) { failed_example }
+  let(:scenario) { described_class.new(example) }
 
-    context 'Turnip example' do
-      let(:failure_example) do
-        example.exception.backtrace.push ":in step:0 `"
-        example
-      end
+  describe '#valid?' do
+    subject { scenario.valid? }
 
-      describe '#validation' do
-        it 'should not raise exception' do
-          expect { scenario.validation }.not_to raise_error
-        end
-      end
+    context 'called by turnip example' do
+      it { should be true }
     end
 
-    context 'Not Turnip example' do
-      let(:failure_example) do
-        example
+    context 'called by not turnip example' do
+      let(:example) do
+        failed_example.tap { |e| e.exception.backtrace.pop }
       end
 
-      context 'Not failed example' do
-        include_context 'turnip_formatter scenario setup'
+      it { should be false }
+    end
+  end
 
-        describe '#validation' do
-          it 'should raise exception' do
-            expect {
-              scenario.validation
-            }.to raise_error NotFailedScenarioError
-          end
-        end        
-      end
-
-      context 'Not exist failed step information' do
-        describe '#validation' do
-          it 'should raise exception' do
-            expect {
-              scenario.validation
-            }.to raise_error NoExistFailedStepInformationError
-          end
-        end        
-      end
+  describe '#status' do
+    it 'return scenario status' do
+      expect(scenario.status).to eq 'failed'
     end
   end
 end

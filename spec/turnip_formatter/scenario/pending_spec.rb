@@ -1,51 +1,28 @@
 require 'spec_helper'
 
-module TurnipFormatter::Scenario
-  describe Failure do
-    include_context 'turnip_formatter standard scenario metadata'
-    include_context 'turnip_formatter pending scenario setup'
+describe TurnipFormatter::Scenario::Pending do
+  let(:example) { pending_example }
+  let(:scenario) { described_class.new(example) }
 
-    let(:scenario) { ::TurnipFormatter::Scenario::Pending.new(pending_example) }
+  describe '#valid?' do
+    subject { scenario.valid? }
 
-    context 'Turnip example' do
-      let(:pending_example) do
-        example.execution_result[:pending_message] = 'No such step(0): '
-        example
-      end
-
-      describe '#validation' do
-        it 'should not raise exception' do
-          expect { scenario.validation }.not_to raise_error
-        end
-      end
+    context 'called by turnip example' do
+      it { should be true }
     end
 
-    context 'Not Turnip example' do
-      let(:pending_example) do
-        example
+    context 'called by not turnip example' do
+      let(:example) do
+        pending_example.tap { |e| e.execution_result[:pending_message] = '' }
       end
 
-      context 'Not pending example' do
-        include_context 'turnip_formatter scenario setup'
+      it { should be false }
+    end
+  end
 
-        describe '#validation' do
-          it 'should raise exception' do
-            expect {
-              scenario.validation
-            }.to raise_error NotPendingScenarioError
-          end
-        end        
-      end
-
-      context 'Not exist pending step information' do
-        describe '#validation' do
-          it 'should raise exception' do
-            expect {
-              scenario.validation
-            }.to raise_error NoExistPendingStepInformationError
-          end
-        end        
-      end
+  describe '#status' do
+    it 'return scenario status' do
+      expect(scenario.status).to eq 'pending'
     end
   end
 end
