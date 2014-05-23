@@ -3,15 +3,12 @@ require 'turnip_formatter/printer/tab_speed_statistics'
 
 module TurnipFormatter::Printer
   describe TabSpeedStatistics do
-    include_context 'turnip_formatter scenario setup'
-    include_context 'turnip_formatter standard scenario metadata'
-
     let :statistics do
       TurnipFormatter::Printer::TabSpeedStatistics
     end
 
     let :passed_scenarios do
-      ([example] * 3).map do |ex|
+      ([passed_example] * 3).map do |ex|
         TurnipFormatter::Scenario::Pass.new(ex)
       end.each { |s| allow(s).to receive(:run_time).and_return(rand) }
     end
