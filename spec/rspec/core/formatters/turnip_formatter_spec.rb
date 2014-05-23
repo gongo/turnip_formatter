@@ -3,12 +3,19 @@ require 'stringio'
 
 module RSpec::Core::Formatters
   describe TurnipFormatter do
-    include_context 'turnip_formatter standard scenario metadata'
-
     let(:feature) { RSpec::Core::ExampleGroup.describe('Feature') }
     let(:scenario) { feature.describe('Scenario') }
     let(:output) { StringIO.new }
     let(:formatter) { TurnipFormatter.new(output) }
+
+    let(:metadata) do
+      {
+        turnip_formatter: {
+          steps: [ { name: 'Step 1', extra_args: [], keyword: 'When' } ],
+          tags: []
+        }
+      }
+    end
 
     describe '#example_passed' do
       before do

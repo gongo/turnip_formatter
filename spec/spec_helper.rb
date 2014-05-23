@@ -20,4 +20,5 @@ end
 
 RSpec.configure do |config|
   config.include ExampleHelper
+  config.include StepHelper
 end

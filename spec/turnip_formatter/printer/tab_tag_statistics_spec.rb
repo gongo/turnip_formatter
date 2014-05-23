@@ -3,11 +3,8 @@ require 'turnip_formatter/printer/tab_tag_statistics'
 
 module TurnipFormatter::Printer
   describe TabTagStatistics do
-    include_context 'turnip_formatter scenario setup'
-    include_context 'turnip_formatter standard scenario metadata'
-
     let :base_scenario do
-      TurnipFormatter::Scenario::Pass.new(example)
+      TurnipFormatter::Scenario::Pass.new(passed_example)
     end
 
     let :scenarios do

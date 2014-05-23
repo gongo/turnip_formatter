@@ -3,14 +3,8 @@ require 'spec_helper'
 module TurnipFormatter
   class Step
     describe Failure do
-      include_context 'turnip_formatter standard step parameters'
-      include_context 'turnip_formatter pending scenario setup'
-      include_context 'turnip_formatter standard scenario metadata'
-
       let(:step) do
-        step = ::TurnipFormatter::Step.new(example, description)
-        step.extend TurnipFormatter::Step::Pending
-        step
+        pending_step
       end
 
       let(:klasses) do

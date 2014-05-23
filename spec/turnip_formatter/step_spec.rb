@@ -2,10 +2,9 @@ require 'spec_helper'
 
 module TurnipFormatter
   describe Step do
-    include_context 'turnip_formatter standard step parameters'
-    include_context 'turnip_formatter scenario setup'
-    include_context 'turnip_formatter standard scenario metadata'
-    let(:step) { ::TurnipFormatter::Step.new(example, description) }
+    let(:step) do
+      passed_step
+    end
 
     describe '#attention?' do
       subject { step.attention? }
