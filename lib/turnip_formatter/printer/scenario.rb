@@ -9,8 +9,10 @@ module TurnipFormatter
         include TurnipFormatter::Printer
 
         def print_out(scenario)
-          scenario.validation
-          render_template(:scenario, scenario: scenario)
+          #
+          # TODO output for scenario.valid? == false
+          #
+          render_template(:scenario, scenario: scenario) if scenario.valid?
         rescue => e
           TurnipFormatter::Printer::RuntimeError.print_out(scenario.example, e)
         end
