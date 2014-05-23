@@ -1,4 +1,5 @@
 require 'turnip_formatter/step'
+require 'support/example_helper'
 
 module StepHelper
   include ExampleHelper
