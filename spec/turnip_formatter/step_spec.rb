@@ -6,11 +6,6 @@ module TurnipFormatter
       passed_step
     end
 
-    describe '#attention?' do
-      subject { step.attention? }
-      it { should be false }
-    end
-
     describe '#name' do
       subject { step.name }
       it { should eq('KeywordStepName') }

@@ -43,11 +43,6 @@ module TurnipFormatter
         end
       end
 
-      describe '#attention?' do
-        subject { step.attention? }
-        it { should be true }
-      end
-
       describe '#status' do
         subject { step.status }
         it { should eq :pending }

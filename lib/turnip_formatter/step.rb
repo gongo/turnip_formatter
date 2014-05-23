@@ -28,16 +28,12 @@ module TurnipFormatter
 
     #
     # @param  [RSpec::Core::Example]  example
-    # @param  [Hash]  description
+    # @param  [Hash]  raw
     #
-    def initialize(example, description)
+    def initialize(example, raw)
       @example = example
-      @name = description[:keyword] + description[:name]
-      @docs = { extra_args: { klass: nil, value: description[:extra_args] } }
-    end
-
-    def attention?
-      !status.empty?
+      @name = raw[:keyword] + raw[:name]
+      @docs = { extra_args: { klass: nil, value: raw[:extra_args] } }
     end
 
     def status

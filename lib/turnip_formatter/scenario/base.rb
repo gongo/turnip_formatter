@@ -17,7 +17,7 @@ module TurnipFormatter
       end
 
       def valid?
-        unless example.metadata.has_key?(:turnip_formatter)
+        unless example.metadata.key?(:turnip_formatter)
           @errors << 'has no steps information'
         end
 
@@ -25,13 +25,13 @@ module TurnipFormatter
       end
 
       def steps
-        @steps ||= descriptions.map do |desc|
-          TurnipFormatter::Step.new(example, desc)
+        @steps ||= raw_steps.map do |step|
+          TurnipFormatter::Step.new(example, step)
         end
       end
 
       def id
-        "scenario_" + object_id.to_s
+        'scenario_' + object_id.to_s
       end
 
       #
@@ -56,7 +56,7 @@ module TurnipFormatter
       end
 
       def feature_info
-        path = RSpec::Core::Metadata::relative_path(feature_file_path)
+        path = RSpec::Core::Metadata.relative_path(feature_file_path)
         "\"#{feature_name}\" in #{path}"
       end
 
@@ -78,7 +78,7 @@ module TurnipFormatter
           example.metadata[:file_path]
         end
 
-        def descriptions
+        def raw_steps
           example.metadata[:turnip_formatter][:steps]
         end
 
