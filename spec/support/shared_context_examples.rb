@@ -31,9 +31,3 @@ shared_context 'turnip_formatter standard scenario metadata' do
     }
   end
 end
-
-shared_context 'turnip_formatter standard step parameters' do
-  let(:description) do
-    { name: 'StepName', keyword: 'Keyword', extra_args: ['Docstring'] }
-  end
-end
