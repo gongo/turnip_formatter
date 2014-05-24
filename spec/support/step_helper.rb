@@ -1,4 +1,3 @@
-require 'turnip_formatter/step'
 require 'support/example_helper'
 
 module StepHelper
@@ -9,11 +8,11 @@ module StepHelper
   end
 
   def failed_step
-    base_step(failed_example).tap { |s| s.extend TurnipFormatter::Step::Failure }
+    base_step(failed_example).tap { |s| s.status = :failed }
   end
 
   def pending_step
-    base_step(pending_example).tap { |s| s.extend TurnipFormatter::Step::Pending }
+    base_step(pending_example).tap { |s| s.status = :pending  }
   end
 
   private

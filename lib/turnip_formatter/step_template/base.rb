@@ -3,7 +3,11 @@ module TurnipFormatter
     class Base
       class << self
         def inherited(child)
-          TurnipFormatter.step_templates << child
+          TurnipFormatter.step_templates << child.new
+        end
+
+        def on_passed(template)
+          hooks[:passed] << template
         end
 
         def on_failed(template)
@@ -15,7 +19,7 @@ module TurnipFormatter
         end
 
         def hooks
-          @hooks ||= { failed: [], pending: [] }
+          @hooks ||= { passed: [], failed: [], pending: [] }
         end
 
         #
@@ -24,26 +28,6 @@ module TurnipFormatter
         def scss
           ''
         end
-      end
-
-      #
-      # Return parameters to be used in template
-      #
-      # @example
-      #  class FooTemplate < TurnipFormatter::StepTemplate::Base
-      #    def template(value)  # value == example.exception.backtrace.count
-      #      "value = #{v}"
-      #    end
-      #
-      #    def value(example)
-      #      example.exception.backtrace.count
-      #    end
-      #  end
-      #
-      # @param  [RSpec::Core::Example]  example
-      #
-      def value(example)
-        nil
       end
     end
   end

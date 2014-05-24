@@ -1,12 +1,11 @@
 require 'turnip_formatter/scenario/base'
-require 'turnip_formatter/step/failure'
 
 module TurnipFormatter
   module Scenario
     class Failure < Base
       def steps
         steps = super
-        steps[@offending_line].extend TurnipFormatter::Step::Failure
+        steps[@offending_line].status = :failed
         steps
       end
 
