@@ -4,6 +4,12 @@ require "turnip_formatter/version"
 require 'turnip'
 
 module TurnipFormatter
+  class << self
+    def step_templates
+      @step_templates ||= []
+    end
+  end
+
   require 'rspec/core/formatters/turnip_formatter'
   require 'turnip_formatter/template'
   require 'turnip_formatter/step_template'
