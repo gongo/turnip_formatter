@@ -1,4 +1,7 @@
 <li class="step <%= step.status %>">
   <span><%= h(step.name) %></span>
-  <div class="args"><%= step_docs %></div>
+  <div class="args">
+    <%= TurnipFormatter::Printer::StepExtraArgs.print_out(step.extra_args) %>
+    <%= step_docs %>
+  </div>
 </li>

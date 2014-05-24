@@ -1,12 +1,11 @@
 require 'turnip_formatter/scenario/base'
-require 'turnip_formatter/step/pending'
 
 module TurnipFormatter
   module Scenario
     class Pending < Base
       def steps
         steps = super
-        steps[@offending_line].extend TurnipFormatter::Step::Pending
+        steps[@offending_line].status = :pending
         steps
       end
 
