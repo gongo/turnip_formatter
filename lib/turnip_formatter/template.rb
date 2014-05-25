@@ -10,64 +10,52 @@ module TurnipFormatter
         RSpec.configuration.respond_to?(:project_name) ? RSpec.configuration.project_name : 'Turnip'
       end
 
-      def add_js(js_string)
-        js_list << js_string
+      def add_javascript_code(code)
+        js_code_list << code
       end
 
-      def add_js_file(file)
-        if URI(file).scheme
-          js_file_list << file
-        else
-          js_list << File.read(file)
-        end
+      def add_javascript_link(link)
+        js_file_list << link
       end
 
-      def add_scss(scss_string)
-        css_list << Sass::Engine.new(scss_string, scss_option).render
+      def add_stylesheet_code(code)
+        css_code_list << Sass::Engine.new(code, scss_option).render
       end
 
-      def add_css_file(file)
-        if URI(file).scheme
-          css_file_list << file
-        else
-          add_scss_file(file)
-        end
+      def add_stylesheet_link(file)
+        css_file_list << file
       end
 
-      def add_scss_file(path)
-        css_list << Sass::Engine.for_file(path, scss_option).render
+      def render_javascript_codes
+        js_code_list.join("\n")
       end
 
-      def js_render
-        js_list.join("\n")
-      end
-
-      def js_file_render
+      def render_javascript_links
         js_file_list.map do |file|
           "<script src=\"#{file}\" type=\"text/javascript\"></script>"
         end.join("\n")
       end
 
-      def css_render
-        css_list.join("\n")
+      def render_stylesheet_codes
+        css_code_list.join("\n")
       end
 
-      def css_file_render
+      def render_stylesheet_links
         css_file_list.map do |file|
           "<link rel=\"stylesheet\" href=\"#{file}\">"
         end.join("\n")
       end
 
-      def js_list
-        @js_list ||= []
+      def js_code_list
+        @js_code_list ||= []
       end
 
       def js_file_list
         @js_file_list ||= []
       end
 
-      def css_list
-        @css_list ||= []
+      def css_code_list
+        @css_code_list ||= []
       end
 
       def css_file_list
@@ -78,10 +66,10 @@ module TurnipFormatter
         { syntax: :scss, style: :compressed }
       end
     end
-  end
-end
 
-(File.dirname(__FILE__) + '/template').tap do |dirname|
-  TurnipFormatter::Template.add_css_file(dirname + '/turnip_formatter.scss')
-  TurnipFormatter::Template.add_js_file(dirname + '/turnip_formatter.js')
+    (File.dirname(__FILE__) + '/template').tap do |dirname|
+      add_stylesheet_code(File.read(dirname + '/turnip_formatter.scss'))
+      add_javascript_code(File.read(dirname + '/turnip_formatter.js'))
+    end
+  end
 end

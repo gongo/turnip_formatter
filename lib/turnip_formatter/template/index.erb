@@ -7,14 +7,14 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.9.1/jquery.tablesorter.min.js"></script>
 
-    <%= TurnipFormatter::Template.js_file_render %>
+    <%= TurnipFormatter::Template.render_javascript_links %>
 
     <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/themes/smoothness/jquery-ui.css">
 
-    <style><%= TurnipFormatter::Template.css_render %></style>
-    <script><%= TurnipFormatter::Template.js_render %></script>
+    <style><%= TurnipFormatter::Template.render_stylesheet_codes %></style>
+    <script><%= TurnipFormatter::Template.render_javascript_codes %></script>
 
-    <%= TurnipFormatter::Template.css_file_render %>
+    <%= TurnipFormatter::Template.render_stylesheet_links %>
   </head>
   <body>
     <div id="report">
