@@ -37,6 +37,10 @@ module TurnipFormatter
       end
 
       def render_stylesheet_codes
+        TurnipFormatter.step_templates.each do |template|
+          add_stylesheet_code(template.class.scss)
+        end
+
         css_code_list.join("\n")
       end
 
