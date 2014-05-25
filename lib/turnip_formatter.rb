@@ -8,26 +8,12 @@ module TurnipFormatter
     end
 
     def step_templates_for(status)
-      @step_templates_for ||= {}
-      @step_templates_for.clear if stale_cache?
-
-      @step_templates_for[status] ||= step_templates.reduce([]) do |templates, t|
+      step_templates.reduce([]) do |templates, t|
         hooks = t.class.hooks
         next unless hooks.key?(status)
         templates + [t].product(hooks[status])
       end
     end
-
-    private
-
-      def stale_cache?
-        @prev_template_count ||= 0
-        current_template_count = step_templates.size
-
-        result = (@prev_template_count != current_template_count)
-        @prev_template_count = current_template_count
-        result
-      end
   end
 
   require 'rspec/core/formatters/turnip_formatter'
