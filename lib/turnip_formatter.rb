@@ -11,18 +11,11 @@ module TurnipFormatter
       @step_templates_for ||= {}
       @step_templates_for.clear if stale_cache?
 
-      unless @step_templates_for.key?(status)
-        templates = []
-        step_templates.each do |t|
-          hooks = t.class.hooks
-          next unless hooks.key?(status)
-          templates += [t].product(hooks[status])
-        end
-
-        @step_templates_for[status] = templates
+      @step_templates_for[status] ||= step_templates.reduce([]) do |templates, t|
+        hooks = t.class.hooks
+        next unless hooks.key?(status)
+        templates + [t].product(hooks[status])
       end
-
-      @step_templates_for[status]
     end
 
     private
@@ -39,7 +32,8 @@ module TurnipFormatter
 
   require 'rspec/core/formatters/turnip_formatter'
   require 'turnip_formatter/template'
-  require 'turnip_formatter/step_template'
+  require 'turnip_formatter/step_template/exception'
+  require 'turnip_formatter/step_template/source'
   require 'turnip_formatter/ext/turnip/rspec'
   require 'turnip_formatter/ext/turnip/builder'
   require 'turnip_formatter/printer/index'
