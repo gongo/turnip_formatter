@@ -9,15 +9,17 @@ module TurnipFormatter
         steps
       end
 
-      def valid?
-        if pending_message =~ /^No such step\((?<stepno>\d+)\): /
-          @offending_line = $~[:stepno].to_i
-        else
-          @errors << 'has no pending step information'
-        end
+      protected
 
-        super
-      end
+        def validation
+          if pending_message =~ /^No such step\((?<stepno>\d+)\): /
+            @offending_line = $~[:stepno].to_i
+          else
+            @errors << 'has no pending step information'
+          end
+
+          super
+        end
 
       private
 

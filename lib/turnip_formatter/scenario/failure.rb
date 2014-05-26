@@ -9,15 +9,17 @@ module TurnipFormatter
         steps
       end
 
-      def valid?
-        if failed_message =~ /:in step:(?<stepno>\d+) `/
-          @offending_line = $~[:stepno].to_i
-        else
-          @errors << 'has no failed step information'
-        end
+      protected
 
-        super
-      end
+        def validation
+          if failed_message =~ /:in step:(?<stepno>\d+) `/
+            @offending_line = $~[:stepno].to_i
+          else
+            @errors << 'has no failed step information'
+          end
+
+          super
+        end
 
       private
 

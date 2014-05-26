@@ -13,14 +13,12 @@ module TurnipFormatter
       def initialize(example)
         @example = example
         @errors  = []
+
+        validation
         clean_backtrace
       end
 
       def valid?
-        unless example.metadata.key?(:turnip_formatter)
-          @errors << 'has no steps information'
-        end
-
         errors.empty?
       end
 
@@ -71,6 +69,14 @@ module TurnipFormatter
       def example
         @example
       end
+
+      protected
+
+        def validation
+          unless example.metadata.key?(:turnip_formatter)
+            @errors << 'has no steps information'
+          end
+        end
 
       private
 
