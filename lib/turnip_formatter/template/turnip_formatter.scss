@@ -7,6 +7,8 @@ $yellow-background: #FFFFDD;
 $gray-front: #7A7B7D;
 $gray-background: #DDDDDD;
 
+@import "bootstrap";
+
 @mixin step_span($front, $back, $with_args: false) {
     > span {
         border: 1px solid $front;
@@ -41,9 +43,12 @@ $gray-background: #DDDDDD;
     padding: 2em;
 }
 
-body {
-    margin: 0;
-    background-color: #ffffff;
+#report {
+    #status_display_switch {
+        label {
+            @extend .checkbox-inline;
+        }
+    }
 }
 
 footer {
@@ -54,6 +59,20 @@ footer {
 }
 
 div#steps-statistics section.scenario {
+    @extend .panel;
+
+    &.passed {
+        @extend .panel-success;
+    }
+
+    &.failed {
+        @extend .panel-danger;
+    }
+
+    &.pending {
+        @extend .panel-warning;
+    }
+
     > div.panel-heading {
         &:hover {
             text-decoration: underline;
@@ -87,13 +106,38 @@ div#steps-statistics section.scenario {
 
             table.step_outline {
                margin-top: 2em;
+               @extend .table;
+               @extend .table-striped;
+               @extend .table-bordered;
+            }
+
+            pre.multiline {
+                margin-top: 2em;
+                font-size: 13px;
+                color: #586e75;
             }
         }
+    }
+}
 
-        pre.multiline {
-            margin-top: 2em;
-            font-size: 13px;
-            color: #586e75;
+div#feature-statistics,
+div#tag-statistics {
+    table {
+        @extend .table;
+        @extend .table-hover;
+
+        tbody td {
+            &.passed {
+                @extend .success;
+            }
+
+            &.failed {
+                @extend .danger;
+            }
+
+            &.pending {
+                @extend .warning;
+            }
         }
     }
 }

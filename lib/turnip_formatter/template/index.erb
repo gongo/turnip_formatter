@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title><%= TurnipFormatter::Template.project_name %> report</title>
 
-    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
     <%= TurnipFormatter::Template.render_stylesheet_links %>
     <style><%= TurnipFormatter::Template.render_stylesheet_codes %></style>
 
@@ -20,14 +19,15 @@
         <div class="page-header">
           <h1><%= TurnipFormatter::Template.project_name %> Report</h1>
         </div>
-        <section>
-          <label class="checkbox-inline" for="passed_check">
+
+        <section id="status_display_switch">
+          <label for="passed_check">
             <input type="checkbox" id="passed_check"> Passed
           </label>
-          <label class="checkbox-inline" for="failed_check">
+          <label for="failed_check">
             <input type="checkbox" checked id="failed_check"> Failed
           </label>
-          <label class="checkbox-inline" for="pending_check">
+          <label for="pending_check">
             <input type="checkbox" id="pending_check"> Pending
           </label>
         </section>
