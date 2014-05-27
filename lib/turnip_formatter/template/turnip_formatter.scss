@@ -53,17 +53,6 @@ footer {
     text-align: right;
 }
 
-div#main {
-    .ui-tabs-nav {
-        border-width: 0;
-        padding: 0;
-    }
-
-    .ui-tabs-panel {
-        border: 1px solid $gray-front;
-    }
-}
-
 div#steps-statistics section.scenario {
     margin: 1em 0em;
     padding-left: 1em;
