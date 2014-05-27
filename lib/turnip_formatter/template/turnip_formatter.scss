@@ -46,12 +46,6 @@ body {
     background-color: #ffffff;
 }
 
-div#report {
-    @include content_centering;
-    background: black;
-    color: $green-front;
-}
-
 footer {
     @include content_centering;
     background: black;
@@ -60,9 +54,6 @@ footer {
 }
 
 div#main {
-    @include content_centering;
-    background-color: #ffffff;
-
     .ui-tabs-nav {
         border-width: 0;
         padding: 0;
@@ -145,8 +136,7 @@ div#steps-statistics section.scenario {
 
         li.step {
             padding: 0.5em;
-            font-weight: bold;
-            margin: 0.5em 0em;
+            margin: 0.5em;
 
             @include step_span($green-front, $green-background);
 
@@ -157,22 +147,9 @@ div#steps-statistics section.scenario {
             &.pending {
                 @include step_span($yellow-front, $yellow-background, true);
             }
-        }
 
-        table.step_outline {
-            margin-top: 2em;
-
-            tr:nth-child(odd) {
-                background-color: #ddddcc;
-            }
-
-            tr:nth-child(even) {
-                background-color: #ccccdd;
-            }
-
-            td {
-                border: 2px solid black;
-                padding: 0.3em 1em;
+            table.step_outline {
+               margin-top: 2em;
             }
         }
 

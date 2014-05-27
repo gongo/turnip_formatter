@@ -20,25 +20,35 @@
     <%= TurnipFormatter::Template.render_stylesheet_links %>
   </head>
   <body>
-    <div id="report">
-      <h1><%= TurnipFormatter::Template.project_name %> Report</h1>
-      <section class="checkbox">
-        <label for="passed_check">Passed</label><input type="checkbox" id="passed_check">
-        <label for="failed_check">Failed</label><input type="checkbox" checked id="failed_check">
-        <label for="pending_check">Pending</label><input type="checkbox" id="pending_check">
-      </section>
+    <header id="report">
+      <div class="container">
+        <div class="page-header">
+          <h1><%= TurnipFormatter::Template.project_name %> Report</h1>
+        </div>
+        <section>
+          <label class="checkbox-inline" for="passed_check">
+            <input type="checkbox" id="passed_check"> Passed
+          </label>
+          <label class="checkbox-inline" for="failed_check">
+            <input type="checkbox" checked id="failed_check"> Failed
+          </label>
+          <label class="checkbox-inline" for="pending_check">
+            <input type="checkbox" id="pending_check"> Pending
+          </label>
+        </section>
 
-      <section class="result">
-        <p>
-          <span id="total_count"><%= h(scenarios.size) %></span> Scenario
-          (<span id="failed_count"><%= h(failed_count) %></span> failed
-          <span id="pending_count"><%= h(pending_count) %></span> pending).
-        </p>
-        <p>Finished in <span id="total_time"><%= h(total_time) %></span></p>
-      </section>
-    </div>
+        <section class="result">
+          <p>
+            <span id="total_count"><%= h(scenarios.size) %></span> Scenario
+            (<span id="failed_count"><%= h(failed_count) %></span> failed
+            <span id="pending_count"><%= h(pending_count) %></span> pending).
+          </p>
+          <p>Finished in <span id="total_time"><%= h(total_time) %></span></p>
+        </section>
+      </div>
+    </header>
 
-    <div id="main" role="main">
+    <div id="main" role="main" class="container">
       <ul>
         <li><a href="#steps-statistics">Steps</a></li>
         <li><a href="#speed-statistics">Speed Statistics</a></li>
@@ -46,7 +56,12 @@
         <li><a href="#tag-statistics">Tag Statistics</a></li>
       </ul>
       <div id="steps-statistics">
-        <label><input type="checkbox" id="scenario_display_check" checked>step folding</label>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" id="scenario_display_check" checked>
+            step folding
+          </label>
+        </div>
         <% scenarios.each do |scenario| %>
           <%= TurnipFormatter::Printer::Scenario.print_out(scenario) %>
         <% end %>
