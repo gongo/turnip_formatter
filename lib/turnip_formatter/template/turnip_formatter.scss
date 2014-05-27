@@ -156,49 +156,6 @@ div#steps-statistics section.scenario {
     cursor: pointer;
 }
 
-div#speed-statistics,
-div#feature-statistics,
-div#tag-statistics {
-    table {
-        width: 100%;
-        margin: 1em 0em;
-
-        thead {
-            th {
-                border-bottom: 1px solid $gray-front;
-            }
-        }
-
-        tbody {
-            tr:nth-child(odd) {
-                background-color: #FFFFFF;
-            }
-
-            tr:nth-child(even) {
-                background-color: $gray-background;
-            }
-
-            td {
-                border: 1px solid $gray-front;
-                padding: 0.3em 1em;
-
-                &.passed {
-                    background-color: $green-background;
-                    color: $green-front;
-                }
-                &.failed {
-                    background-color: $red-background;
-                    color: $red-front;
-                }
-                &.pending {
-                    background-color: $yellow-background;
-                    color: $yellow-front;
-                }
-            }
-        }
-    }
-}
-
 div#speed-statistics {
     .tablesorter-header {
         @include tablesorter-header;

@@ -28,15 +28,22 @@ module TurnipFormatter
           info = OpenStruct.new(
             name: name,
             scenario_count: scenarios.size,
-            passed_count: status_group["passed"].size,
-            failed_count: status_group["failed"].size,
-            pending_count: status_group["pending"].size,
-            status: 'failed'
+            passed_count: status_group['passed'].size,
+            failed_count: status_group['failed'].size,
+            pending_count: status_group['pending'].size,
+            status: 'failed',
+            style: ''
           )
 
           if info.failed_count.zero?
             info.status = info.pending_count.zero? ? 'passed' : 'pending'
           end
+
+          info.style = case info.status
+                       when 'passed' then 'success'
+                       when 'pending' then 'warning'
+                       when 'failed' then 'danger'
+                       end
 
           info
         end

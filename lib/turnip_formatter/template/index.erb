@@ -5,6 +5,7 @@
     <title><%= TurnipFormatter::Template.project_name %> report</title>
 
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <%= TurnipFormatter::Template.render_stylesheet_links %>
     <style><%= TurnipFormatter::Template.render_stylesheet_codes %></style>
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -12,8 +13,6 @@
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.9.1/jquery.tablesorter.min.js"></script>
     <%= TurnipFormatter::Template.render_javascript_links %>
     <script><%= TurnipFormatter::Template.render_javascript_codes %></script>
-
-    <%= TurnipFormatter::Template.render_stylesheet_links %>
   </head>
   <body>
     <header id="report">
