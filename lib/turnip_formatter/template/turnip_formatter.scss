@@ -54,68 +54,16 @@ footer {
 }
 
 div#steps-statistics section.scenario {
-    margin: 1em 0em;
-    padding-left: 1em;
-    border: 2px solid green;
-
-    > header {
-        margin: 1em 0em;
-
+    > div.panel-heading {
         &:hover {
             text-decoration: underline;
             cursor: pointer;
-        }
-
-        span.scenario_name {
-            font-weight: bold;
-            font-size: 14px;
-        }
-
-        span.feature_name {
-            font-size: 13px;
-            color: #839496;
         }
 
         span.permalink {
             margin-right: 1em;
             font-size: 15px;
             a { color: #268bd2; }
-        }
-    }
-
-    > ul.tags {
-        font-size: 12px;
-
-        li {
-            color: #839496;
-            display: inline;
-        }
-    }
-
-    &.passed {
-        border-color: $green-front;
-
-        > header .scenario_name {
-            color: $green-front;
-            &:before { content: "\2713\20"; }
-        }
-    }
-
-    &.failed {
-        border-color: $red-front;
-
-        > header .scenario_name {
-            color: $red-front;
-            &:before { content: "\2717\20"; }
-        }
-    }
-
-    &.pending {
-        border-color: $yellow-front;
-
-        > header .scenario_name {
-            color: $yellow-front;
-            &:before { content: "\d8\20"; }
         }
     }
 
