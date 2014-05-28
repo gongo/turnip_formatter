@@ -2,8 +2,10 @@
   <div class="step-title">
     <%= h(step.name) %>
   </div>
-  <div class="step-body">
-    <%= TurnipFormatter::Printer::StepExtraArgs.print_out(step.extra_args) %>
-    <%= step_docs %>
-  </div>
+  <% if has_args_or_documents %>
+    <div class="step-body">
+      <%= TurnipFormatter::Printer::StepExtraArgs.print_out(step.extra_args) %>
+      <%= step_docs %>
+    </div>
+  <% end %>
 </div>
