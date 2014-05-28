@@ -1,5 +1,5 @@
 <section class="scenario <%= h(scenario.status) %>" id="<%= scenario.id %>">
-  <div class="panel-heading">
+  <div class="scenario-title">
     <span class="permalink">
       <a href="#<%= scenario.id %>">&para;</a>
     </span>
@@ -17,11 +17,11 @@
         <% end %>
       </ul>
 
-      <ul class="steps">
+      <div class="steps">
         <% scenario.steps.each do |step| %>
           <%= TurnipFormatter::Printer::Step.print_out(step) %>
         <% end %>
-      </ul>
+      </div>
     </div>
   </div>
 </section>

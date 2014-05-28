@@ -73,7 +73,9 @@ div#steps-statistics section.scenario {
         @extend .panel-warning;
     }
 
-    > div.panel-heading {
+    div.scenario-title {
+        @extend .panel-heading;
+
         &:hover {
             text-decoration: underline;
             cursor: pointer;
@@ -86,22 +88,30 @@ div#steps-statistics section.scenario {
         }
     }
 
-    ul.steps {
-        font-size: 12px;
-        list-style-type: none;
+    div.steps {
+        @extend .panel-group;
 
-        li.step {
-            padding: 0.5em;
-            margin: 0.5em;
+        div.step {
+            @extend .panel;
 
-            @include step_span($green-front, $green-background);
+            &.passed {
+                @extend .panel-success;
+            }
 
-            &.failure {
-                @include step_span($red-front, $red-background, true);
+            &.failed {
+                @extend .panel-danger;
             }
 
             &.pending {
-                @include step_span($yellow-front, $yellow-background, true);
+                @extend .panel-warning;
+            }
+
+            div.step-title {
+                @extend .panel-heading;
+            }
+
+            div.step-body {
+                @extend .panel-body;
             }
 
             table.step_outline {
