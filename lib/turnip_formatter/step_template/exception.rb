@@ -10,15 +10,16 @@ module TurnipFormatter
       def self.scss
         <<-EOS
           div#steps-statistics section.scenario {
-              ul.steps {
+              div.steps {
                   div.step_exception {
                       margin: 1em 0em;
-                      padding: 1em 0em 1em 1em;
+                      padding: 1em;
                       border: 1px solid #999999;
                       background-color: #eee8d5;
                       color: #586e75;
 
-                      > pre {
+                      dd {
+                          margin-top: 1em;
                           margin-left: 1em;
                       }
                   }
@@ -53,14 +54,20 @@ module TurnipFormatter
         def template_step_exception
           @template_step_exception ||= ERB.new(<<-EOS)
             <div class="step_exception">
-              <span>Failure:</span>
-              <pre><%= ERB::Util.h(exception.to_s) %></pre>
-              <span>Backtrace:</span>
-              <ol>
-                <% exception.backtrace.each do |line| %>
-                <li><%= ERB::Util.h(line) %></li>
-                <% end %>
-              </ol>
+              <dl>
+                <dt>Failure:</dt>
+                <dd>
+                  <pre><%= ERB::Util.h(exception.to_s) %></pre>
+                </dd>
+                <dt>Backtrace:</dt>
+                <dd>
+                  <ol>
+                    <% exception.backtrace.each do |line| %>
+                    <li><%= ERB::Util.h(line) %></li>
+                    <% end %>
+                  </ol>
+                </dd>
+              </dl>
             </div>
           EOS
         end
