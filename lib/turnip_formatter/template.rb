@@ -2,6 +2,7 @@
 
 require 'turnip_formatter/template'
 require 'sass'
+require 'bootstrap-sass'
 
 module TurnipFormatter
   class Template

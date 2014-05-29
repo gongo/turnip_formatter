@@ -15,10 +15,9 @@ describe TurnipFormatter::Printer::Scenario do
       subject { described_class.print_out(scenario) }
 
       it { should have_tag 'a', with: { href: '#' + scenario.id } }
-      it { should have_tag 'span.scenario_name', text: /Scenario: Scenario/ }
-      it { should have_tag 'span.feature_name' }
+      it { should have_tag 'div.scenario-title', text: /Scenario: Scenario/ }
       it { should have_tag 'ul.tags' }
-      it { should have_tag 'ul.steps' }
+      it { should have_tag 'div.steps' }
     end
 
     context 'with no turnip example' do

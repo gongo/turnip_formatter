@@ -13,8 +13,9 @@ describe TurnipFormatter::Printer::Step do
       end
 
       it do
-        should have_tag 'li.step'
-        should have_tag 'div.args'
+        should have_tag 'div.step' do
+          with_tag 'div.step-title'
+        end
       end
     end
 
@@ -23,17 +24,19 @@ describe TurnipFormatter::Printer::Step do
 
       let(:step) do
         step = passed_step
-        expect(step).to receive(:extra_args).and_return([table])
+        allow(step).to receive(:extra_args).and_return([table])
         step
       end
 
       it do
-        should have_tag 'li.step'
-        should have_tag 'div.args'
-        should have_tag 'table.step_outline'
+        should have_tag 'div.step' do
+          with_tag 'div.step-title'
+          with_tag 'div.step-body' do
+            with_tag 'table.step_outline'
+          end
+        end
       end
     end
-
 
     context 'has outline argument' do
       let(:step) do
@@ -41,9 +44,12 @@ describe TurnipFormatter::Printer::Step do
       end
 
       it do
-        should have_tag 'li.step'
-        should have_tag 'div.args'
-        should have_tag 'pre.multiline'
+        should have_tag 'div.step' do
+          with_tag 'div.step-title'
+          with_tag 'div.step-body' do
+            with_tag 'table.multiline'
+          end
+        end
       end
     end
   end

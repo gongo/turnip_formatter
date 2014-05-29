@@ -7,6 +7,8 @@ $yellow-background: #FFFFDD;
 $gray-front: #7A7B7D;
 $gray-background: #DDDDDD;
 
+@import "bootstrap";
+
 @mixin step_span($front, $back, $with_args: false) {
     > span {
         border: 1px solid $front;
@@ -41,15 +43,12 @@ $gray-background: #DDDDDD;
     padding: 2em;
 }
 
-body {
-    margin: 0;
-    background-color: #ffffff;
-}
-
-div#report {
-    @include content_centering;
-    background: black;
-    color: $green-front;
+#report {
+    #status_display_switch {
+        label {
+            @extend .checkbox-inline;
+        }
+    }
 }
 
 footer {
@@ -59,41 +58,27 @@ footer {
     text-align: right;
 }
 
-div#main {
-    @include content_centering;
-    background-color: #ffffff;
-
-    .ui-tabs-nav {
-        border-width: 0;
-        padding: 0;
-    }
-
-    .ui-tabs-panel {
-        border: 1px solid $gray-front;
-    }
-}
-
 div#steps-statistics section.scenario {
-    margin: 1em 0em;
-    padding-left: 1em;
-    border: 2px solid green;
+    @extend .panel;
 
-    > header {
-        margin: 1em 0em;
+    &.passed {
+        @extend .panel-success;
+    }
+
+    &.failed {
+        @extend .panel-danger;
+    }
+
+    &.pending {
+        @extend .panel-warning;
+    }
+
+    div.scenario-title {
+        @extend .panel-heading;
 
         &:hover {
             text-decoration: underline;
             cursor: pointer;
-        }
-
-        span.scenario_name {
-            font-weight: bold;
-            font-size: 14px;
-        }
-
-        span.feature_name {
-            font-size: 13px;
-            color: #839496;
         }
 
         span.permalink {
@@ -103,83 +88,70 @@ div#steps-statistics section.scenario {
         }
     }
 
-    > ul.tags {
-        font-size: 12px;
-
-        li {
-            color: #839496;
-            display: inline;
-        }
+    ul.tags {
+        @extend .list-inline;
     }
 
-    &.passed {
-        border-color: $green-front;
+    div.steps {
+        @extend .panel-group;
 
-        > header .scenario_name {
-            color: $green-front;
-            &:before { content: "\2713\20"; }
-        }
-    }
+        div.step {
+            @extend .panel;
 
-    &.failed {
-        border-color: $red-front;
+            &.passed {
+                @extend .panel-success;
+            }
 
-        > header .scenario_name {
-            color: $red-front;
-            &:before { content: "\2717\20"; }
-        }
-    }
-
-    &.pending {
-        border-color: $yellow-front;
-
-        > header .scenario_name {
-            color: $yellow-front;
-            &:before { content: "\d8\20"; }
-        }
-    }
-
-    ul.steps {
-        font-size: 12px;
-        list-style-type: none;
-
-        li.step {
-            padding: 0.5em;
-            font-weight: bold;
-            margin: 0.5em 0em;
-
-            @include step_span($green-front, $green-background);
-
-            &.failure {
-                @include step_span($red-front, $red-background, true);
+            &.failed {
+                @extend .panel-danger;
             }
 
             &.pending {
-                @include step_span($yellow-front, $yellow-background, true);
+                @extend .panel-warning;
+            }
+
+            div.step-title {
+                @extend .panel-heading;
+            }
+
+            div.step-body {
+                @extend .panel-body;
+            }
+
+            table.step_outline {
+               margin-top: 2em;
+               @extend .table;
+               @extend .table-striped;
+               @extend .table-bordered;
+            }
+
+            pre.multiline {
+                margin-top: 2em;
+                font-size: 13px;
+                color: #586e75;
             }
         }
+    }
+}
 
-        table.step_outline {
-            margin-top: 2em;
+div#feature-statistics,
+div#tag-statistics {
+    table {
+        @extend .table;
+        @extend .table-hover;
 
-            tr:nth-child(odd) {
-                background-color: #ddddcc;
+        tbody td {
+            &.passed {
+                @extend .success;
             }
 
-            tr:nth-child(even) {
-                background-color: #ccccdd;
+            &.failed {
+                @extend .danger;
             }
 
-            td {
-                border: 2px solid black;
-                padding: 0.3em 1em;
+            &.pending {
+                @extend .warning;
             }
-        }
-
-        pre.multiline {
-            margin-top: 2em;
-            font-size: 13px;
-            color: #586e75;
         }
     }
 }
@@ -188,49 +160,6 @@ div#steps-statistics section.scenario {
     background-position: center right;
     background-repeat: no-repeat;
     cursor: pointer;
-}
-
-div#speed-statistics,
-div#feature-statistics,
-div#tag-statistics {
-    table {
-        width: 100%;
-        margin: 1em 0em;
-
-        thead {
-            th {
-                border-bottom: 1px solid $gray-front;
-            }
-        }
-
-        tbody {
-            tr:nth-child(odd) {
-                background-color: #FFFFFF;
-            }
-
-            tr:nth-child(even) {
-                background-color: $gray-background;
-            }
-
-            td {
-                border: 1px solid $gray-front;
-                padding: 0.3em 1em;
-
-                &.passed {
-                    background-color: $green-background;
-                    color: $green-front;
-                }
-                &.failed {
-                    background-color: $red-background;
-                    color: $red-front;
-                }
-                &.pending {
-                    background-color: $yellow-background;
-                    color: $yellow-front;
-                }
-            }
-        }
-    }
 }
 
 div#speed-statistics {

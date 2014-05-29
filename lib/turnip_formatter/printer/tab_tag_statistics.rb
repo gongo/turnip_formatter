@@ -28,9 +28,9 @@ module TurnipFormatter
           info = OpenStruct.new(
             name: name,
             scenario_count: scenarios.size,
-            passed_count: status_group["passed"].size,
-            failed_count: status_group["failed"].size,
-            pending_count: status_group["pending"].size,
+            passed_count: status_group['passed'].size,
+            failed_count: status_group['failed'].size,
+            pending_count: status_group['pending'].size,
             status: 'failed'
           )
 
