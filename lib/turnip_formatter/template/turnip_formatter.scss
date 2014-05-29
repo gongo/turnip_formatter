@@ -88,6 +88,10 @@ div#steps-statistics section.scenario {
         }
     }
 
+    ul.tags {
+        @extend .list-inline;
+    }
+
     div.steps {
         @extend .panel-group;
 
