@@ -9,7 +9,8 @@ module TurnipFormatter
       class << self
         include TurnipFormatter::Printer
 
-        def print_out(passed_scenarios)
+        def print_out(scenarios)
+          passed_scenarios = scenarios.select { |s| s.status == 'passed' }
           results = speed_analysis(passed_scenarios)
           render_template(:tab_speed_statistics, { analysis_results: results })
         end

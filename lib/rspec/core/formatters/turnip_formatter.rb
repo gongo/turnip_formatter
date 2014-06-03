@@ -11,17 +11,12 @@ module RSpec
   module Core
     module Formatters
       class TurnipFormatter < BaseFormatter
-        attr_reader :passed_scenarios, :failed_scenarios, :pending_scenarios
-        attr_reader :scenarios
-        attr_reader :scenario_output_files
+        attr_reader :scenarios, :scenario_output_files
 
         SCENARIO_TEMPORARY_OUTPUT_DIR = File.expand_path('./turnip_tmp')
 
         def initialize(output)
           super(output)
-          @passed_scenarios  = []
-          @failed_scenarios  = []
-          @pending_scenarios = []
           @scenarios = []
           @scenario_output_files = []
 
@@ -29,33 +24,22 @@ module RSpec
         end
 
         def dump_summary(duration, example_count, failure_count, pending_count)
-          super(duration, example_count, failure_count, pending_count)
           output.puts ::TurnipFormatter::Printer::Index.print_out(self)
-
           FileUtils.rm_rf(SCENARIO_TEMPORARY_OUTPUT_DIR)
         end
 
         def example_passed(example)
-          super(example)
-
           scenario = ::TurnipFormatter::Scenario::Pass.new(example)
-          @passed_scenarios << scenario
           output_scenario(scenario)
         end
 
         def example_pending(example)
-          super(example)
-
           scenario = ::TurnipFormatter::Scenario::Pending.new(example)
-          @pending_scenarios << scenario
           output_scenario(scenario)
         end
 
         def example_failed(example)
-          super(example)
-
           scenario = ::TurnipFormatter::Scenario::Failure.new(example)
-          @failed_scenarios << scenario
           output_scenario(scenario)
         end
 

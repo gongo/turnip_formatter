@@ -6,11 +6,11 @@ module TurnipFormatter::Printer
 
     let(:formatter) do
       double("Formatter", {
-          :scenarios        => [],
-          :passed_scenarios => [],
-          :failure_count    => 0,
-          :pending_count    => 0,
-          :duration         => 0
+          :scenarios             => [],
+          :scenario_output_files => [],
+          :failure_count         => 0,
+          :pending_count         => 0,
+          :duration              => 0
         })
     end
 
