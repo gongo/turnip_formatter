@@ -60,8 +60,8 @@
             </label>
           </div>
           <div class="panel-group" id="scenarios">
-            <% scenarios.each do |scenario| %>
-              <%= TurnipFormatter::Printer::Scenario.print_out(scenario) %>
+            <% scenario_files.each do |f| %>
+              <%= File.read(f) %>
             <% end %>
           </div>
         </div>
