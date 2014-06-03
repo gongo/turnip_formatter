@@ -16,10 +16,10 @@ module TurnipFormatter
         def print_out(formatter)
           render_template(:index, {
               scenarios:        formatter.scenarios,
-              passed_scenarios: formatter.passed_scenarios,
               failed_count:     formatter.failure_count,
               pending_count:    formatter.pending_count,
               total_time:       formatter.duration,
+              scenario_files:   formatter.scenario_output_files
             }
           )
         end
