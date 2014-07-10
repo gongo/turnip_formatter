@@ -1,0 +1,18 @@
+%table
+  %thead
+    %tr
+      %th Tag
+      %th Scearios
+      %th passed
+      %th failed
+      %th pending
+      %th status
+  %tbody
+    - analysis_results.each do |info|
+      %tr
+        %td&= info.name
+        %td&= info.scenario_count
+        %td&= info.passed_count
+        %td&= info.failed_count
+        %td&= info.pending_count
+        %td{ class: info.status }&= info.status

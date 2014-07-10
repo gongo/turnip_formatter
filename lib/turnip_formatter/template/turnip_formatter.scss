@@ -9,6 +9,20 @@ $gray-background: #DDDDDD;
 
 @import "bootstrap";
 
+article {
+  @extend .panel;
+  @extend .panel-success;
+
+  header {
+    @extend .panel-heading;
+  }
+
+  section {
+    @extend .panel-body;
+  }
+}
+
+
 @mixin step_span($front, $back, $with_args: false) {
     > span {
         border: 1px solid $front;

@@ -1,5 +1,5 @@
 require 'turnip_formatter/step_template/base'
-require 'erb'
+require 'haml'
 
 module TurnipFormatter
   module StepTemplate
@@ -48,27 +48,21 @@ module TurnipFormatter
       private
 
         def build(exception)
-          template_step_exception.result(binding)
+          template_step_exception.render(exception)
         end
 
         def template_step_exception
-          @template_step_exception ||= ERB.new(<<-EOS)
-            <div class="step_exception">
-              <dl>
-                <dt>Failure:</dt>
-                <dd>
-                  <pre><%= ERB::Util.h(exception.to_s) %></pre>
-                </dd>
-                <dt>Backtrace:</dt>
-                <dd>
-                  <ol>
-                    <% exception.backtrace.each do |line| %>
-                    <li><%= ERB::Util.h(line) %></li>
-                    <% end %>
-                  </ol>
-                </dd>
-              </dl>
-            </div>
+          @template_step_exception ||= Haml::Engine.new(<<-EOS)
+%div.step_exception
+  %dl
+    %dt Failure:
+    %dd
+      %pre&= exception.to_s
+    %dt Backtrace:
+    %dd
+      %ol
+        - exception.backtrace.each do |line|
+          %li&= line
           EOS
         end
     end

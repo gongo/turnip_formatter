@@ -1,0 +1,8 @@
+%dt&= title + ' Exception'
+%dd
+  %pre&= exception.to_s
+%dt&= title + ' Exception Backtrace'
+%dd
+  %ol
+    - exception.backtrace.each do |line|
+      %li&= line
