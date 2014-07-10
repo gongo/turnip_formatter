@@ -24,7 +24,14 @@ module RSpec
         end
 
         def dump_summary(duration, example_count, failure_count, pending_count)
-          output.puts ::TurnipFormatter::Printer::Index.print_out(self)
+          print_params = {
+            scenarios:      scenarios,
+            failed_count:   failure_count,
+            pending_count:  pending_count,
+            total_time:     duration,
+            scenario_files: scenario_output_files
+          }
+          output.puts ::TurnipFormatter::Printer::Index.print_out(print_params)
           FileUtils.rm_rf(SCENARIO_TEMPORARY_OUTPUT_DIR)
         end
 

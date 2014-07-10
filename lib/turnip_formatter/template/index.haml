@@ -40,7 +40,8 @@
             pending).
           %p
             Finished in
-            %span#total_time&= total_time
+            %span#total_time&= total_time.to_s + ' sec'
+
     #main.container{ role: 'main' }
       %ul#statistics{ class: 'nav nav-tabs' }
         %li.active

@@ -5,13 +5,13 @@ module TurnipFormatter::Printer
   describe Index do
 
     let(:formatter) do
-      double("Formatter", {
-          :scenarios             => [],
-          :scenario_output_files => [],
-          :failure_count         => 0,
-          :pending_count         => 0,
-          :duration              => 0
-        })
+      {
+        scenarios:      [],
+        scenario_files: [],
+        failed_count:   0,
+        pending_count:  0,
+        duration:       0
+      }
     end
 
     describe '.print_out' do
