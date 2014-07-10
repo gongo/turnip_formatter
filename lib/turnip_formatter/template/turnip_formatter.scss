@@ -177,6 +177,11 @@ div#tag-statistics {
 }
 
 div#speed-statistics {
+    table {
+        @extend .table;
+        @extend .table-hover;
+    }
+
     .tablesorter-header {
         @include tablesorter-header;
         background-image: url("data:image/gif;base64,R0lGODlhFQAJAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAkAAAIXjI+AywnaYnhUMoqt3gZXPmVg94yJVQAAOw==");
