@@ -58,7 +58,7 @@
           .checkbox
             %label
               %input#scenario_display_check{ type: 'checkbox', checked: 'checked' }
-              %h4 step folding
+              Folding
           #scenarios.panel-group
             - scenario_files.each do |f|
               = File.read(f)
