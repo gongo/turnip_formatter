@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-require 'turnip_formatter/template'
 require 'sass'
 require 'bootstrap-sass'
 
