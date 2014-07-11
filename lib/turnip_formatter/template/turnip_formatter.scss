@@ -1,12 +1,3 @@
-$red-front: #ED1C24;
-$green-front: #509B49;
-$yellow-front: #D6A921;
-$red-background: #FFDDDD;
-$green-background: #EEFFEE;
-$yellow-background: #FFFFDD;
-$gray-front: #7A7B7D;
-$gray-background: #DDDDDD;
-
 @import "bootstrap";
 
 article {
@@ -22,41 +13,6 @@ article {
   }
 }
 
-
-@mixin step_span($front, $back, $with_args: false) {
-    > span {
-        border: 1px solid $front;
-        padding: 0.5em;
-        background-color: $back;
-        color: $front;
-
-        &:hover { border-width: 3px; }
-        ~ * { margin-left: 2em; }
-    }
-
-    @if $with_args {
-
-        > div.args {
-            font-size: 11px;
-            padding: 1em;
-            background-color: $back;
-            border: 1px solid $front;
-        }
-
-        /* skip/pending step style */
-        ~ li > span {
-            background-color: $gray-background;
-            border-color: $gray-front;
-            color: $gray-front;
-        }
-    }
-}
-
-@mixin content_centering {
-    margin: 0 auto;
-    padding: 2em;
-}
-
 #report {
     #status_display_switch {
         label {
@@ -65,12 +21,6 @@ article {
     }
 }
 
-footer {
-    @include content_centering;
-    background: black;
-    color: $green-front;
-    text-align: right;
-}
 
 div#steps-statistics section.scenario {
     @extend .panel;
@@ -215,5 +165,31 @@ section.exception {
     dd {
         line-height: 2em;
         font-size: 14px;
+    }
+}
+
+// Sticky footer styles
+// refs: http://getbootstrap.com/examples/sticky-footer/sticky-footer.css
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 80px;
+}
+
+footer {
+    @extend .text-right;
+    @extend .container;
+
+    bottom: 0;
+    height: 80px;
+    padding-top: 1em;
+    border-top: 1px solid #dddddd;
+
+    p {
+        @extend .text-muted;
     }
 }
