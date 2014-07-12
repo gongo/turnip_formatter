@@ -21,7 +21,6 @@ module TurnipFormatter
   require 'turnip_formatter/step_template/exception'
   require 'turnip_formatter/step_template/source'
   require 'turnip_formatter/ext/turnip/rspec'
-  require 'turnip_formatter/ext/turnip/builder'
   require 'turnip_formatter/printer/index'
 end
 
