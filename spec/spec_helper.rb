@@ -10,10 +10,15 @@ end
 
 require 'rspec-html-matchers'
 require 'turnip_formatter'
-Dir.glob(File.dirname(__FILE__) + "/support/**/*.rb") { |f| require(f) }
+Dir.glob(File.dirname(__FILE__) + '/support/**/*.rb') { |f| require(f) }
 
 class NoopObject
   def method_missing(name, *args, &block)
     # nooooooop
   end
+end
+
+RSpec.configure do |config|
+  config.include ExampleHelper
+  config.include StepHelper
 end

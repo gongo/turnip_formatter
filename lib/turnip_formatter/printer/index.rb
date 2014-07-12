@@ -10,16 +10,13 @@ module TurnipFormatter
       class << self
         include TurnipFormatter::Printer
 
-        #
-        # @param  RSpec::Core::Formatters::TurnipFormatter  formatter
-        #
-        def print_out(formatter)
+        def print_out(params)
           render_template(:index, {
-              scenarios:        formatter.scenarios,
-              passed_scenarios: formatter.passed_scenarios,
-              failed_count:     formatter.failure_count,
-              pending_count:    formatter.pending_count,
-              total_time:       formatter.duration,
+              scenarios:        params[:scenarios],
+              failed_count:     params[:failed_count],
+              pending_count:    params[:pending_count],
+              total_time:       params[:total_time],
+              scenario_files:   params[:scenario_files]
             }
           )
         end

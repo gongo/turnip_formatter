@@ -1,36 +1,34 @@
-# -*- coding: utf-8 -*-
-
-require 'turnip_formatter/scenario'
-require 'turnip_formatter/step/failure'
+require 'turnip_formatter/scenario/base'
 
 module TurnipFormatter
   module Scenario
-    class NotFailedScenarioError < ::StandardError; end
-    class NoExistFailedStepInformationError < ::StandardError; end
-
-    class Failure
-      include TurnipFormatter::Scenario
-
+    class Failure < Base
       def steps
         steps = super
-        steps[offending_line].extend TurnipFormatter::Step::Failure
+        steps[@offending_line].status = :failed
+        steps[(@offending_line + 1)..-1].each do |step|
+          step.status = :unexecuted
+        end
         steps
       end
 
-      def validation
-        raise NotFailedScenarioError if status != 'failed'
-        offending_line
-        super
-      end
+      protected
+
+        def validation
+          if failed_message =~ /:in step:(?<stepno>\d+) `/
+            @offending_line = $~[:stepno].to_i
+          else
+            @errors << 'has no failed step information'
+          end
+
+          super
+        end
 
       private
 
-      def offending_line
-        unless example.exception.backtrace.last =~ /:in step:(?<stepno>\d+) `/
-          raise NoExistFailedStepInformationError
+        def failed_message
+          example.exception.backtrace.last
         end
-        $~[:stepno].to_i
-      end
     end
   end
 end

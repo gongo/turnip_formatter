@@ -1,36 +1,42 @@
 require 'spec_helper'
 require 'turnip_formatter/printer/scenario'
 
-module TurnipFormatter::Printer
-  describe Scenario do
-    include_context 'turnip_formatter scenario setup'
-    include_context 'turnip_formatter standard scenario metadata'
+describe TurnipFormatter::Printer::Scenario do
+  let(:example) do
+    passed_example
+  end
 
-    let(:scenario) do
-      TurnipFormatter::Scenario::Pass.new(example)
+  let(:scenario) do
+    TurnipFormatter::Scenario::Pass.new(example)
+  end
+
+  describe '.print_out' do
+    context 'with turnip example' do
+      subject { described_class.print_out(scenario) }
+
+      it { should have_tag 'a', with: { href: '#' + scenario.id } }
+      it { should have_tag 'div.scenario-title', text: /Scenario: Scenario/ }
+      it { should have_tag 'ul.tags' }
+      it { should have_tag 'div.steps' }
     end
 
-    context 'turnip example' do
-      describe '.print_out' do
-        subject { Scenario.print_out(scenario) }
-
-        it { should have_tag 'a', with: { href: '#' + scenario.id } }
-        it { should have_tag 'span.scenario_name', text: /Scenario: Scenario/ }
-        it { should have_tag 'span.feature_name' }
-        it { should have_tag 'ul.tags' }
-        it { should have_tag 'ul.steps' }
+    context 'with no turnip example' do
+      let(:example) do
+        passed_example.tap { |e| e.metadata.delete(:turnip_formatter) }
       end
+
+      subject { described_class.print_out(scenario) }
+
+      it { should be nil }
     end
 
-    context 'not turnip example' do
-      describe '.print_out' do
-        before do
-          allow(scenario).to receive(:validation) { raise NoFeatureFileError }
-          expect(RuntimeError).to receive(:print_out)
-        end
-
-        it { Scenario.print_out(scenario) }
+    context 'runtime error' do
+      before do
+        allow(scenario).to receive(:valid?) { raise StandardError }
+        expect(TurnipFormatter::Printer::RuntimeError).to receive(:print_out)
       end
+
+      it { described_class.print_out(scenario) }
     end
   end
 end

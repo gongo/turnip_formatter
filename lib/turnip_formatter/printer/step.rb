@@ -8,24 +8,26 @@ module TurnipFormatter
         include TurnipFormatter::Printer
 
         def print_out(step)
-          render_template(:step, { step: step, step_docs: documents(step.docs) })
+          step_templates = TurnipFormatter.step_templates_for(step.status)
+
+          render_template(:step,
+            {
+              step: step,
+              has_args_or_documents: has_args_or_documents?(step, step_templates),
+              step_docs: documents(step, step_templates)
+            }
+          )
         end
 
         private
 
-        def documents(docs)
-          docs.map do |style, template|
-            if style == :extra_args
-              TurnipFormatter::Printer::StepExtraArgs.print_out(template[:value])
-            else
-              #
-              # Template class which is registered in
-              #    +Step::Failure.add_template+
-              #    +Step::Pending.add_template+
-              # be called.
-              #
-              template[:klass].build(template[:value])
-            end
+        def has_args_or_documents?(step, templates)
+          (step.extra_args.length + templates.length) > 0
+        end
+
+        def documents(step, templates)
+          templates.map do |template, method|
+            template.send(method, step.example)
           end.join("\n")
         end
       end

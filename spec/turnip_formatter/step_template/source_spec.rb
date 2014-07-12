@@ -1,20 +1,17 @@
-# -*- coding: utf-8 -*-
-
 require 'spec_helper'
 require 'turnip_formatter/step_template/source'
 
-module TurnipFormatter
-  module StepTemplate
-    describe Source do
-      let(:template) { ::TurnipFormatter::StepTemplate::Source }
-      let(:source) { __FILE__ + ':3' }
+describe TurnipFormatter::StepTemplate::Source do
+  let(:template) do
+    described_class.new
+  end
 
-      describe '.build' do
-        subject { template.build(source) }
-        it do
-          should match '<pre class="source"><code class="ruby">'
-          should match "require 'turnip_formatter/step_template/source'"
-        end
+  describe '#build' do
+    subject { template.build(failed_example) }
+
+    it do
+      expect(subject).to have_tag 'pre.source > code.ruby' do
+        with_tag 'span.linenum'
       end
     end
   end

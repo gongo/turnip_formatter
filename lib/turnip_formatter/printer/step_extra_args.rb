@@ -7,6 +7,8 @@ module TurnipFormatter
         include TurnipFormatter::Printer
 
         def print_out(args)
+          return '' if args.nil?
+
           args.map do |arg|
             if arg.instance_of?(Turnip::Table)
               render_template(:step_outline, { table: arg.to_a })

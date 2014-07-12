@@ -14,6 +14,7 @@ Requirements
 * Ruby
     * `~> 1.9.3`
     * `~> 2.0.0`
+    * `~> 2.1.0`
 
 Installation
 --------------------
@@ -44,34 +45,29 @@ Run this command.
     $ rspec -r turnip_formatter --format RSpecTurnipFormatter --out report.html
 
 
-Screenshot
---------------------
-
-### Step overview
-
-![Tab steps](https://github.com/gongo/turnip_formatter/raw/master/images/tab_steps.png)
-
-expand:
-
-![Expand tab steps](https://github.com/gongo/turnip_formatter/raw/master/images/tab_steps_expanding.png)
-
-### Speed Statistics
-
-![Expand tab steps](https://github.com/gongo/turnip_formatter/raw/master/images/tab_speed_statistics.png)
-
-### Feature Statistics
-
-![Expand tab steps](https://github.com/gongo/turnip_formatter/raw/master/images/tab_feature_statistics.png)
-
-### Tag Statistics
-
-![Expand tab steps](https://github.com/gongo/turnip_formatter/raw/master/images/tab_tag_statistics.png)
-
-
 Example
 --------------------
 
-see https://github.com/gongo/turnip_formatter/tree/master/example
+See:
+
+- Feature and Steps
+    - https://github.com/gongo/turnip_formatter/tree/master/example
+- Report
+    - http://gongo.github.io/turnip_formatter/examples/report.html
+
+Configuration
+--------------------
+
+```ruby
+TurnipFormatter.configure do |config|
+  config.title = 'My Report'                                 # <h1>My Report</h1>
+  config.add_stylesheet File.dirname(__FILE__) + '/foo.css'  # <style>..</style>
+  config.add_javascript File.dirname(__FILE__) + '/bar.js'   # <script>..</script>
+
+  config.add_stylesheet 'http://cdn.example.com/hoge.css'    # <link rel="..">
+  config.add_javascript '//cdn.example.com/fuga.js'          # <script src="..">
+end
+```
 
 Add-on
 --------------------

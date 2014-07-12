@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
 
 module TurnipFormatter
-  VERSION = "0.2.11"
+  VERSION = '0.3.0'
 end

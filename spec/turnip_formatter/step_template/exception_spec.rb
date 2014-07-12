@@ -1,25 +1,33 @@
-# -*- coding: utf-8 -*-
-
 require 'spec_helper'
 require 'turnip_formatter/step_template/exception'
 
-module TurnipFormatter
-  module StepTemplate
-    describe Exception do
-      let(:template) { ::TurnipFormatter::StepTemplate::Exception }
-      let(:exception) do
-        StandardError.new('StepExceptionError').tap do |e|
-          e.set_backtrace(['/path/to/error.rb: 10'])
-        end
-      end
+describe TurnipFormatter::StepTemplate::Exception do
+  after do
+    TurnipFormatter.step_templates.pop
+  end
 
-      describe '.build' do
-        subject { template.build(exception) }
-        it do
-          should match %r{div class="step_exception"}
-          should match %r{<pre>.*#{exception.message}.*</pre>}
-          should match %r{<li>/path/to/error.rb: 10</li>}
-        end
+  let!(:template) do
+    described_class.new
+  end
+
+  describe '#build_failed' do
+    subject { template.build_failed(failed_example) }
+
+    it do
+      expect(subject).to have_tag 'div.step_exception' do
+        with_tag 'pre'
+        with_tag 'ol > li', text: ':in step:0 `'
+      end
+    end
+  end
+
+  describe '#build_pending' do
+    subject { template.build_pending(pending_example) }
+
+    it do
+      expect(subject).to have_tag 'div.step_exception' do
+        with_tag 'pre', text: 'No such step(0):'
+        with_tag 'ol > li'
       end
     end
   end

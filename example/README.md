@@ -20,7 +20,7 @@ Scenario: normal monster
     And Fanfare
 ```
 
-![Basic step](https://github.com/gongo/turnip_formatter/raw/master/example/images/basic_step.png)
+![Basic step](./images/basic_step.png)
 
 ### Failed step
 
@@ -36,7 +36,7 @@ Scenario: strong monster
     And Fanfare
 ```
 
-![Failed step](https://github.com/gongo/turnip_formatter/raw/master/example/images/failed_step.png)
+![Failed step](./images/failed_step.png)
 
 ### Pending step and specify tag
 
@@ -61,9 +61,7 @@ Scenario: strong monster
       And Fanfare
 ```
 
-![Pending step](https://github.com/gongo/turnip_formatter/raw/master/example/images/pending_step.png)
-
-![Tag step](https://github.com/gongo/turnip_formatter/raw/master/example/images/tag_step.png)
+![Pending step](./images/pending_step.png)
 
 ### Background
 
@@ -86,7 +84,7 @@ Feature: Battle a monster with weapon
       And Fanfare
 ```
 
-![Background step](https://github.com/gongo/turnip_formatter/raw/master/example/images/background.png)
+![Background step](./images/background.png)
 
 ### Outline
 
@@ -109,7 +107,7 @@ Feature: Battle monsters
      Then I could not escape
 ```
 
-![outline](https://github.com/gongo/turnip_formatter/raw/master/example/images/outline.png)
+![outline](./images/outline.png)
 
 ### Multiline
 
@@ -124,4 +122,4 @@ Feature: A feature with multiline strings
     Then the song should have 2 lines
 ```
 
-![Multiline](https://github.com/gongo/turnip_formatter/raw/master/example/images/multiline.png)
+![Multiline](./images/multiline.png)

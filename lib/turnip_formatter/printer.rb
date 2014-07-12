@@ -1,30 +1,25 @@
+require 'tilt'
+
 module TurnipFormatter
   module Printer
-    include ERB::Util
-
     #
     # @example
     #   render_template(:main, { name: 'user' })
-    #     # => ERB.new('/path/to/main.erb') render { name: 'user' }
+    #     # => Tilt.new('/path/to/main.erb') render { name: 'user' }
     #
     def render_template(name, params = {})
-      render_template_list(name).result(template_params_binding(params))
+      render_template_list(name).render(self, params)
     end
 
     private
 
     def render_template_list(name)
       if templates[name].nil?
-        path = File.dirname(__FILE__) + "/template/#{name.to_s}.erb"
-        templates[name] = ERB.new(File.read(path))
+        path = File.dirname(__FILE__) + "/template/#{name}.haml"
+        templates[name] = Tilt.new(path)
       end
 
       templates[name]
-    end
-
-    def template_params_binding(params)
-      code = params.keys.map { |k| "#{k} = params[#{k.inspect}];" }.join
-      eval(code + ";binding")
     end
 
     def templates
