@@ -44,30 +44,6 @@ Run this command.
     $ rspec -r turnip_formatter --format RSpecTurnipFormatter --out report.html
 
 
-Screenshot
---------------------
-
-### Step overview
-
-![Tab steps](https://github.com/gongo/turnip_formatter/raw/master/images/tab_steps.png)
-
-expand:
-
-![Expand tab steps](https://github.com/gongo/turnip_formatter/raw/master/images/tab_steps_expanding.png)
-
-### Speed Statistics
-
-![Expand tab steps](https://github.com/gongo/turnip_formatter/raw/master/images/tab_speed_statistics.png)
-
-### Feature Statistics
-
-![Expand tab steps](https://github.com/gongo/turnip_formatter/raw/master/images/tab_feature_statistics.png)
-
-### Tag Statistics
-
-![Expand tab steps](https://github.com/gongo/turnip_formatter/raw/master/images/tab_tag_statistics.png)
-
-
 Example
 --------------------
 
