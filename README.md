@@ -78,6 +78,20 @@ See:
 - Report
     - http://gongo.github.io/turnip_formatter/examples/report.html
 
+Configuration
+--------------------
+
+```ruby
+TurnipFormatter.configure do |config|
+  config.title = 'My Report'                                 # <h1>My Report</h1>
+  config.add_stylesheet File.dirname(__FILE__) + '/foo.css'  # <style>..</style>
+  config.add_javascript File.dirname(__FILE__) + '/bar.js'   # <script>..</script>
+
+  config.add_stylesheet 'http://cdn.example.com/hoge.css'    # <link rel="..">
+  config.add_javascript '//cdn.example.com/fuga.js'          # <script src="..">
+end
+```
+
 Add-on
 --------------------
 

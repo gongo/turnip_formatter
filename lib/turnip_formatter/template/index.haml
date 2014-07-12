@@ -3,6 +3,8 @@
   %head
     %meta{ :charset => "UTF-8" }
     %title= TurnipFormatter::Template.project_name + ' report'
+
+    = TurnipFormatter::Template.render_stylesheet_links
     %style= TurnipFormatter::Template.render_stylesheet_codes
 
     %script{ src: 'http://code.jquery.com/jquery-1.11.0.min.js' }
@@ -10,7 +12,6 @@
     %script{ src: 'http://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.17.0/jquery.tablesorter.min.js' }
 
     = TurnipFormatter::Template.render_javascript_links
-
     %script= TurnipFormatter::Template.render_javascript_codes
 
   %body

@@ -97,8 +97,8 @@ module TurnipFormatter
 
       def remote_url?(path)
         uri = URI.parse(path)
-        true if %w(http https).include?(uri.scheme)
-        true if uri.nil? && uri.start_with?('//')
+        return true if %w(http https).include?(uri.scheme)
+        return true if (uri.scheme.nil? && path.start_with?('//'))
         false
       rescue URI::InvalidURIError
         null
