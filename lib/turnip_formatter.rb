@@ -14,6 +14,26 @@ module TurnipFormatter
         templates + [t].product(hooks[status])
       end
     end
+
+    def add_stylesheet(stylesheets)
+      stylesheets = [stylesheets] if stylesheets.is_a? String
+
+      stylesheets.each do |s|
+        TurnipFormatter::Template.add_stylesheet(s)
+      end
+    end
+
+    def add_javascript(scripts)
+      scripts = [scripts] if scripts.is_a? String
+
+      scripts.each do |s|
+        TurnipFormatter::Template.add_javascript(s)
+      end
+    end
+
+    def configure
+      yield self
+    end
   end
 
   require 'rspec/core/formatters/turnip_formatter'
