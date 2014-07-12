@@ -22,8 +22,8 @@ module TurnipFormatter::Printer
 
     context 'project_name is changed' do
       before do
-        @original_project_name = RSpec.configuration.project_name
-        RSpec.configuration.project_name = 'My Project'
+        @original_project_name = TurnipFormatter.configuration.title
+        TurnipFormatter.configuration.title = 'My Project'
       end
 
       describe '.print_out' do
@@ -33,7 +33,7 @@ module TurnipFormatter::Printer
       end
 
       after do
-        RSpec.configuration.project_name = @original_project_name
+        TurnipFormatter.configuration.title = @original_project_name
       end
     end
   end

@@ -3,6 +3,8 @@ require 'turnip'
 
 module TurnipFormatter
   class << self
+    attr_accessor :title
+
     def step_templates
       @step_templates ||= []
     end
@@ -34,6 +36,10 @@ module TurnipFormatter
     def configure
       yield self
     end
+
+    def configuration
+      self
+    end
   end
 
   require 'rspec/core/formatters/turnip_formatter'
@@ -46,6 +52,6 @@ end
 
 RSpecTurnipFormatter = RSpec::Core::Formatters::TurnipFormatter
 
-RSpec.configure do |config|
-  config.add_setting :project_name, default: 'Turnip'
+TurnipFormatter.configure do |config|
+  config.title = 'Turnip'
 end

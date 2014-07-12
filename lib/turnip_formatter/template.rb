@@ -8,7 +8,7 @@ module TurnipFormatter
   class Template
     class << self
       def project_name
-        RSpec.configuration.respond_to?(:project_name) ? RSpec.configuration.project_name : 'Turnip'
+        TurnipFormatter.configuration.title
       end
 
       def add_javascript(script)
