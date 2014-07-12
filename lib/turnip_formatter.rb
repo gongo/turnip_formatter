@@ -10,7 +10,7 @@ module TurnipFormatter
     def step_templates_for(status)
       step_templates.reduce([]) do |templates, t|
         hooks = t.class.hooks
-        next unless hooks.key?(status)
+        return templates unless hooks.key?(status)
         templates + [t].product(hooks[status])
       end
     end

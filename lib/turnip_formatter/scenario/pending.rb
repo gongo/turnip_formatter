@@ -6,6 +6,9 @@ module TurnipFormatter
       def steps
         steps = super
         steps[@offending_line].status = :pending
+        steps[(@offending_line + 1)..-1].each do |step|
+          step.status = :unexecuted
+        end
         steps
       end
 
