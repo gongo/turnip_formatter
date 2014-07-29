@@ -20,6 +20,7 @@ module ExampleHelper
     def base_example(&assertion)
       group = ::RSpec::Core::ExampleGroup.describe('Feature').describe('Scenario')
       example = group.example('example', example_metadata, &assertion)
+      example.metadata[:file_path] = '/path/to/hoge.feature'
       group.run(NoopObject.new)
       example
     end
@@ -29,8 +30,7 @@ module ExampleHelper
         turnip_formatter: {
           steps: [ { name: 'Step 1', extra_args: [], keyword: 'When' } ],
           tags: []
-        },
-        file_path: '/path/to/hoge.feature'
+        }
       }
     end
 end
