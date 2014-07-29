@@ -7,6 +7,7 @@ require 'turnip_formatter/scenario/pending'
 require 'turnip_formatter/printer/index'
 require 'turnip_formatter/printer/scenario'
 require_relative './turnip_formatter/for_rspec2'
+require_relative './turnip_formatter/for_rspec3'
 
 module RSpec
   module Core
@@ -16,7 +17,12 @@ module RSpec
 
         SCENARIO_TEMPORARY_OUTPUT_DIR = File.expand_path('./turnip_tmp')
 
-        include TurnipFormatter::ForRSpec2
+        if Formatters.respond_to?(:register)
+          include TurnipFormatter::ForRSpec3
+          Formatters.register self, :example_passed, :example_pending, :example_failed, :dump_summary
+        else
+          include TurnipFormatter::ForRSpec2
+        end
 
         def initialize(output)
           super(output)
