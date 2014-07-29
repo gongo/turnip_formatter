@@ -5,6 +5,10 @@ module RSpec
     module Formatters
       class TurnipFormatter < BaseFormatter
         module ForRSpec3
+          def self.included(klass)
+            RSpec::Core::Formatters.register klass, :example_passed, :example_pending, :example_failed, :dump_summary
+          end
+
           def dump_summary(summary)
             print_params = {
               scenarios:      scenarios,

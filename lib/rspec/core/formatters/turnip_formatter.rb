@@ -19,7 +19,6 @@ module RSpec
 
         if Formatters.respond_to?(:register)
           include TurnipFormatter::ForRSpec3
-          Formatters.register self, :example_passed, :example_pending, :example_failed, :dump_summary
         else
           include TurnipFormatter::ForRSpec2
         end
