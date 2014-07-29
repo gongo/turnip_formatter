@@ -6,10 +6,8 @@ module TurnipFormatter
     class RuntimeError
       class << self
         include TurnipFormatter::Printer
-        include RSpec::Core::BacktraceFormatter
 
         def print_out(example, exception)
-          exception.set_backtrace(format_backtrace(exception.backtrace))
           render_template(:runtime_exception, {
               example: example,
               runtime_exception: runtime_exception(exception),
