@@ -32,7 +32,7 @@ module TurnipFormatter
       # @param  [RSpec::Core::Example]  example
       #
       def build_failed(example)
-        build(example.exception)
+        build(example.exception.to_s, example.exception.backtrace)
       end
 
       #
@@ -40,15 +40,13 @@ module TurnipFormatter
       #
       def build_pending(example)
         message = example.execution_result[:pending_message]
-        exception = RSpec::Core::Pending::PendingDeclaredInExample.new(message)
-        exception.set_backtrace([example.location])
-        build(exception)
+        build(message, [example.location])
       end
 
       private
 
-        def build(exception)
-          template_step_exception.render(exception)
+        def build(message, backtrace)
+          template_step_exception.render(Object.new, { message: message, backtrace: backtrace })
         end
 
         def template_step_exception
@@ -57,11 +55,11 @@ module TurnipFormatter
   %dl
     %dt Failure:
     %dd
-      %pre&= exception.to_s
+      %pre&= message
     %dt Backtrace:
     %dd
       %ol
-        - exception.backtrace.each do |line|
+        - backtrace.each do |line|
           %li&= line
           EOS
         end

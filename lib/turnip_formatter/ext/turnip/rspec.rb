@@ -19,7 +19,7 @@ module Turnip
           else
             pending("No such step(#{index}): '#{e}'")
           end
-        rescue StandardError => e
+        rescue StandardError, ::RSpec::Expectations::ExpectationNotMetError => e
           example.metadata[:line_number] = step.line
           e.backtrace.push "#{feature_file}:#{step.line}:in step:#{index} `#{step.description}'"
           raise e

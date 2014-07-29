@@ -3,8 +3,6 @@ require 'turnip_formatter/step'
 module TurnipFormatter
   module Scenario
     class Base
-      include RSpec::Core::BacktraceFormatter
-
       attr_reader :errors
 
       #
@@ -15,7 +13,6 @@ module TurnipFormatter
         @errors  = []
 
         validation
-        clean_backtrace
       end
 
       def valid?
@@ -86,12 +83,6 @@ module TurnipFormatter
 
         def raw_steps
           example.metadata[:turnip_formatter][:steps]
-        end
-
-        def clean_backtrace
-          return if example.exception.nil?
-          formatted = format_backtrace(example.exception.backtrace, example.metadata)
-          example.exception.set_backtrace(formatted)
         end
     end
   end
