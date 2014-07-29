@@ -12,7 +12,13 @@ module Turnip
           step(step)
         rescue Turnip::Pending => e
           example.metadata[:line_number] = step.line
-          pending("No such step(#{index}): '#{e}'")
+          example.metadata[:location] = "#{example.metadata[:file_path]}:#{step.line}"
+
+          if ::RSpec::Version::STRING >= '2.99.0'
+            skip("No such step(#{index}): '#{e}'")
+          else
+            pending("No such step(#{index}): '#{e}'")
+          end
         rescue StandardError => e
           example.metadata[:line_number] = step.line
           e.backtrace.push "#{feature_file}:#{step.line}:in step:#{index} `#{step.description}'"
@@ -40,7 +46,7 @@ module Turnip
     class << self
       def run(feature_file)
         Turnip::Builder.build(feature_file).features.each do |feature|
-          describe feature.name, feature.metadata_hash do
+          ::RSpec.describe feature.name, feature.metadata_hash do
             let(:backgrounds) do
               feature.backgrounds
             end
