@@ -6,3 +6,7 @@ rvm:
   - 2.1.2
   - jruby-1.7.10
 script: bundle exec rspec
+gemfile:
+  - spec/gemfiles/Gemfile-rspec-2.14.x
+  - spec/gemfiles/Gemfile-rspec-2.99.x
+  - spec/gemfiles/Gemfile-rspec-3.0.x

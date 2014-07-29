@@ -23,7 +23,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'haml'
   spec.add_dependency 'sass'
   spec.add_dependency 'bootstrap-sass'
-  spec.add_dependency 'rspec', '~> 2.14.0'
+  spec.add_dependency 'rspec', ['>=2.14.0', '<4.0']
   spec.add_development_dependency 'bundler', '~> 1.3'
   spec.add_development_dependency 'rake'
   spec.add_development_dependency 'rspec-html-matchers'
