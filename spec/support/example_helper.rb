@@ -11,13 +11,18 @@ module ExampleHelper
 
   def pending_example
     if ::RSpec::Version::STRING >= '2.99.0'
-      example = base_example { skip('Pending') }
+      base_example { skip('No such step(0): ') }
     else
-      example = base_example { pending('Pending') }
+      base_example { pending('No such step(0): ') }
     end
+  end
 
-    example.execution_result[:pending_message] = 'No such step(0): '
-    example
+  def invalid_pending_example
+    if ::RSpec::Version::STRING >= '2.99.0'
+      base_example { skip('Pending') }
+    else
+      base_example { pending('Pending') }
+    end
   end
 
   private

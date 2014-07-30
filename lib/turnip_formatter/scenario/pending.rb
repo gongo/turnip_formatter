@@ -27,7 +27,13 @@ module TurnipFormatter
       private
 
         def pending_message
-          example.execution_result[:pending_message]
+          if example.execution_result.is_a?(Hash)
+            # RSpec 2
+            example.execution_result[:pending_message]
+          else
+            # RSpec 3
+            example.execution_result.pending_message
+          end
         end
     end
   end
