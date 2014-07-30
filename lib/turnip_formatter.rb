@@ -43,6 +43,7 @@ module TurnipFormatter
   end
 
   require 'rspec/core/formatters/turnip_formatter'
+  require 'turnip_formatter/helper'
   require 'turnip_formatter/template'
   require 'turnip_formatter/step_template/exception'
   require 'turnip_formatter/step_template/source'
