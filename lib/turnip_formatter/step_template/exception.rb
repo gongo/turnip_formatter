@@ -39,15 +39,8 @@ module TurnipFormatter
       # @param  [RSpec::Core::Example]  example
       #
       def build_pending(example)
-        if example.execution_result.is_a?(Hash)
-          # RSpec 2
-          message = example.execution_result[:pending_message]
-        else
-          # RSpec 3
-          message = example.execution_result.pending_message
-        end
-
-        build(message, [example.location])
+        result = TurnipFormatter::Helper.example_execution_result(example)
+        build(result.pending_message, [example.location])
       end
 
       private

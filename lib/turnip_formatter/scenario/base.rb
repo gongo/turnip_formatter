@@ -102,14 +102,7 @@ module TurnipFormatter
       # @return  [OpenStruct or ::RSpec::Core::Example::ExecutionResult]
       #
       def execution_result
-        @execution_result ||= case example.execution_result
-                              when Hash
-                                # RSpec 2
-                                OpenStruct.new(example.execution_result)
-                              when ::RSpec::Core::Example::ExecutionResult
-                                # RSpec 3
-                                example.execution_result
-                              end
+        @execution_result ||= Helper.example_execution_result(example)
       end
     end
   end
