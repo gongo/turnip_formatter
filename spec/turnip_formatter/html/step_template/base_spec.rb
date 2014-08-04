@@ -1,7 +1,7 @@
 require 'spec_helper'
-require 'turnip_formatter/step_template/exception'
+require 'turnip_formatter/html/step_template/exception'
 
-describe TurnipFormatter::StepTemplate::Base do
+describe TurnipFormatter::Html::StepTemplate::Base do
   before do
     @backup_templates = TurnipFormatter.step_templates
     TurnipFormatter.step_templates.clear

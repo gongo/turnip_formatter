@@ -1,13 +1,14 @@
-require 'turnip_formatter/step_template/base'
+require 'turnip_formatter/html/step_template/base'
 require 'rspec/core/formatters/snippet_extractor'
 
 module TurnipFormatter
-  module StepTemplate
-    class Source < Base
-      on_failed :build
+  module Html
+    module StepTemplate
+      class Source < Base
+        on_failed :build
 
-      def self.scss
-        <<-EOS
+        def self.scss
+          <<-EOS
           pre.source {
               font-size: 12px;
               font-family: monospace;
@@ -27,14 +28,14 @@ module TurnipFormatter
               }
           }
         EOS
-      end
+        end
 
-      def build(example)
-        code = extractor.snippet([location(example)])
-        '<pre class="source"><code class="ruby">' + code + '</code></pre>'
-      end
+        def build(example)
+          code = extractor.snippet([location(example)])
+          '<pre class="source"><code class="ruby">' + code + '</code></pre>'
+        end
 
-      private
+        private
 
         def location(example)
           example.exception.backtrace.first
@@ -43,6 +44,7 @@ module TurnipFormatter
         def extractor
           @extractor ||= ::RSpec::Core::Formatters::SnippetExtractor.new
         end
+      end
     end
   end
 end

@@ -1,7 +1,7 @@
 require 'spec_helper'
-require 'turnip_formatter/step_template/source'
+require 'turnip_formatter/html/step_template/source'
 
-describe TurnipFormatter::StepTemplate::Source do
+describe TurnipFormatter::Html::StepTemplate::Source do
   let(:template) do
     described_class.new
   end

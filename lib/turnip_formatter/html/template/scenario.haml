@@ -11,4 +11,4 @@
           %li @#{tag}
       %div.steps
         - scenario.steps.each do |step|
-          = TurnipFormatter::Printer::Step.print_out(step)
+          = TurnipFormatter::Html::Printer::Step.print_out(step)

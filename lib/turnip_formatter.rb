@@ -44,11 +44,11 @@ module TurnipFormatter
 
   require 'rspec/core/formatters/turnip_formatter'
   require 'turnip_formatter/helper'
-  require 'turnip_formatter/template'
-  require 'turnip_formatter/step_template/exception'
-  require 'turnip_formatter/step_template/source'
+  require 'turnip_formatter/html/template'
+  require 'turnip_formatter/html/step_template/exception'
+  require 'turnip_formatter/html/step_template/source'
   require 'turnip_formatter/ext/turnip/rspec'
-  require 'turnip_formatter/printer/index'
+  require 'turnip_formatter/html/printer/index'
 end
 
 RSpecTurnipFormatter = RSpec::Core::Formatters::TurnipFormatter

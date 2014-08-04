@@ -1,7 +1,7 @@
 require 'spec_helper'
-require 'turnip_formatter/printer/tab_tag_statistics'
+require 'turnip_formatter/html/printer/tab_tag_statistics'
 
-module TurnipFormatter::Printer
+module TurnipFormatter::Html::Printer
   describe TabTagStatistics do
     let :base_scenario do
       TurnipFormatter::Scenario::Pass.new(passed_example)
@@ -47,7 +47,7 @@ module TurnipFormatter::Printer
     end
 
     let :statistics do
-      TurnipFormatter::Printer::TabTagStatistics
+      TurnipFormatter::Html::Printer::TabTagStatistics
     end
 
     let :groups do

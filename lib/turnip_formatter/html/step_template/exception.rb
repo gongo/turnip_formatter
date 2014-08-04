@@ -1,14 +1,15 @@
-require 'turnip_formatter/step_template/base'
+require 'turnip_formatter/html/step_template/base'
 require 'haml'
 
 module TurnipFormatter
-  module StepTemplate
-    class Exception < Base
-      on_failed :build_failed
-      on_pending :build_pending
+  module Html
+    module StepTemplate
+      class Exception < Base
+        on_failed :build_failed
+        on_pending :build_pending
 
-      def self.scss
-        <<-EOS
+        def self.scss
+          <<-EOS
           div#steps-statistics section.scenario {
               div.steps {
                   div.step_exception {
@@ -26,24 +27,24 @@ module TurnipFormatter
               }
           }
         EOS
-      end
+        end
 
-      #
-      # @param  [RSpec::Core::Example]  example
-      #
-      def build_failed(example)
-        build(example.exception.to_s, example.exception.backtrace)
-      end
+        #
+        # @param  [RSpec::Core::Example]  example
+        #
+        def build_failed(example)
+          build(example.exception.to_s, example.exception.backtrace)
+        end
 
-      #
-      # @param  [RSpec::Core::Example]  example
-      #
-      def build_pending(example)
-        result = TurnipFormatter::Helper.example_execution_result(example)
-        build(result.pending_message, [example.location])
-      end
+        #
+        # @param  [RSpec::Core::Example]  example
+        #
+        def build_pending(example)
+          result = TurnipFormatter::Helper.example_execution_result(example)
+          build(result.pending_message, [example.location])
+        end
 
-      private
+        private
 
         def build(message, backtrace)
           template_step_exception.render(Object.new, { message: message, backtrace: backtrace })
@@ -63,6 +64,7 @@ module TurnipFormatter
           %li&= line
           EOS
         end
+      end
     end
   end
 end

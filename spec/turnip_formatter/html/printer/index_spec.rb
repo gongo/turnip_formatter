@@ -1,7 +1,7 @@
 require 'spec_helper'
-require 'turnip_formatter/printer/index'
+require 'turnip_formatter/html/printer/index'
 
-module TurnipFormatter::Printer
+module TurnipFormatter::Html::Printer
   describe Index do
 
     let(:formatter) do

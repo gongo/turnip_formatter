@@ -1,7 +1,7 @@
 require 'spec_helper'
-require 'turnip_formatter/printer/step'
+require 'turnip_formatter/html/printer/step'
 
-describe TurnipFormatter::Printer::Step do
+describe TurnipFormatter::Html::Printer::Step do
   describe '.print_out' do
     subject { described_class.print_out(step) }
 

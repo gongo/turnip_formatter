@@ -1,7 +1,7 @@
 require 'spec_helper'
-require 'turnip_formatter/step_template/exception'
+require 'turnip_formatter/html/step_template/exception'
 
-describe TurnipFormatter::StepTemplate::Exception do
+describe TurnipFormatter::Html::StepTemplate::Exception do
   after do
     TurnipFormatter.step_templates.pop
   end

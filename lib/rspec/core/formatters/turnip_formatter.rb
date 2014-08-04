@@ -4,8 +4,8 @@ require 'rspec/core/formatters/base_formatter'
 require 'turnip_formatter/scenario/pass'
 require 'turnip_formatter/scenario/failure'
 require 'turnip_formatter/scenario/pending'
-require 'turnip_formatter/printer/index'
-require 'turnip_formatter/printer/scenario'
+require 'turnip_formatter/html/printer/index'
+require 'turnip_formatter/html/printer/scenario'
 require_relative './turnip_formatter/for_rspec2'
 require_relative './turnip_formatter/for_rspec3'
 
@@ -34,7 +34,7 @@ module RSpec
         private
 
           def output_html(params)
-            output.puts ::TurnipFormatter::Printer::Index.print_out(params)
+            output.puts ::TurnipFormatter::Html::Printer::Index.print_out(params)
             FileUtils.rm_rf(SCENARIO_TEMPORARY_OUTPUT_DIR)
           end
 
@@ -42,7 +42,7 @@ module RSpec
             filepath = SCENARIO_TEMPORARY_OUTPUT_DIR + "/#{scenario.id}.html"
 
             File.open(filepath, 'w') do |io|
-              io.puts ::TurnipFormatter::Printer::Scenario.print_out(scenario)
+              io.puts ::TurnipFormatter::Html::Printer::Scenario.print_out(scenario)
             end
 
             @scenario_output_files << filepath

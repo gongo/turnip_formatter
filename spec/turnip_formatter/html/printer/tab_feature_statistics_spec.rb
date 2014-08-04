@@ -1,14 +1,14 @@
 require 'spec_helper'
-require 'turnip_formatter/printer/tab_feature_statistics'
+require 'turnip_formatter/html/printer/tab_feature_statistics'
 
-module TurnipFormatter::Printer
+module TurnipFormatter::Html::Printer
   describe TabFeatureStatistics do
     let :base_scenario do
       TurnipFormatter::Scenario::Pass.new(passed_example)
     end
 
     let :statistics do
-      TurnipFormatter::Printer::TabFeatureStatistics
+      TurnipFormatter::Html::Printer::TabFeatureStatistics
     end
 
     context 'feature only passed scenario' do

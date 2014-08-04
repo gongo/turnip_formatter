@@ -1,7 +1,7 @@
 require 'spec_helper'
-require 'turnip_formatter/printer/step_extra_args'
+require 'turnip_formatter/html/printer/step_extra_args'
 
-module TurnipFormatter::Printer
+module TurnipFormatter::Html::Printer
   describe StepExtraArgs do
     context 'Turnip::Table' do
       describe '.print_out' do

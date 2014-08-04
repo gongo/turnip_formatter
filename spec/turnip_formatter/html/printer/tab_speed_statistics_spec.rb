@@ -1,10 +1,10 @@
 require 'spec_helper'
-require 'turnip_formatter/printer/tab_speed_statistics'
+require 'turnip_formatter/html/printer/tab_speed_statistics'
 
-module TurnipFormatter::Printer
+module TurnipFormatter::Html::Printer
   describe TabSpeedStatistics do
     let :statistics do
-      TurnipFormatter::Printer::TabSpeedStatistics
+      TurnipFormatter::Html::Printer::TabSpeedStatistics
     end
 
     let :passed_scenarios do

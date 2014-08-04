@@ -1,7 +1,7 @@
 require 'spec_helper'
-require 'turnip_formatter/printer/scenario'
+require 'turnip_formatter/html/printer/scenario'
 
-describe TurnipFormatter::Printer::Scenario do
+describe TurnipFormatter::Html::Printer::Scenario do
   let(:example) do
     passed_example
   end
@@ -33,7 +33,7 @@ describe TurnipFormatter::Printer::Scenario do
     context 'runtime error' do
       before do
         allow(scenario).to receive(:valid?) { raise StandardError }
-        expect(TurnipFormatter::Printer::RuntimeError).to receive(:print_out)
+        expect(TurnipFormatter::Html::Printer::RuntimeError).to receive(:print_out)
       end
 
       it { described_class.print_out(scenario) }
