@@ -42,7 +42,7 @@ module TurnipFormatter
     end
   end
 
-  require 'rspec/core/formatters/turnip_formatter'
+  require 'rspec/core/formatters/turnip_html_formatter'
   require 'turnip_formatter/helper'
   require 'turnip_formatter/html/template'
   require 'turnip_formatter/html/step_template/exception'
@@ -51,7 +51,8 @@ module TurnipFormatter
   require 'turnip_formatter/html/printer/index'
 end
 
-RSpecTurnipFormatter = RSpec::Core::Formatters::TurnipFormatter
+RSpecTurnipFormatter = RSpec::Core::Formatters::TurnipHtmlFormatter
+RSpecTurnipHtmlFormatter = RSpec::Core::Formatters::TurnipHtmlFormatter
 
 TurnipFormatter.configure do |config|
   config.title = 'Turnip'

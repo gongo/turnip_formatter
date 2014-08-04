@@ -17,7 +17,7 @@ module RSpec
               total_time:     summary.duration,
               scenario_files: scenario_output_files
             }
-            output_html(print_params)
+            output_summary(print_params)
           end
 
           def example_passed(notification)
