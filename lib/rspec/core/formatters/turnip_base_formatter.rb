@@ -15,9 +15,10 @@ module RSpec
 
         def self.inherited(child)
           if Formatters.respond_to?(:register)
-            child.include TurnipFormatter::ForRSpec3
+            # not called `child.include` for 1.9.3
+            child.send(:include, TurnipFormatter::ForRSpec3)
           else
-            child.include TurnipFormatter::ForRSpec2
+            child.send(:include, TurnipFormatter::ForRSpec2)
           end
         end
 
