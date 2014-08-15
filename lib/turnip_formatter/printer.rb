@@ -1,4 +1,4 @@
-require 'tilt'
+require 'haml'
 
 module TurnipFormatter
   module Printer
@@ -11,12 +11,12 @@ module TurnipFormatter
       render_template_list(name).render(self, params)
     end
 
-    private
+  private
 
     def render_template_list(name)
       if templates[name].nil?
         path = File.dirname(__FILE__) + "/template/#{name}.haml"
-        templates[name] = Tilt.new(path)
+        templates[name] = Haml::Engine.new(File.read(path))
       end
 
       templates[name]
