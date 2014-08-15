@@ -19,7 +19,6 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_dependency 'turnip', '~> 1.2.2'
-  spec.add_dependency 'tilt'
   spec.add_dependency 'haml'
   spec.add_dependency 'sass'
   spec.add_dependency 'bootstrap-sass'
