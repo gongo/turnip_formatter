@@ -13,7 +13,11 @@ describe TurnipFormatter::Scenario::Failure do
 
     context 'called by not turnip example' do
       let(:example) do
-        failed_example.tap { |e| e.exception.backtrace.pop }
+        backtrace = failed_example.exception.backtrace.reject do |b|
+          b.include? failed_example.metadata[:file_path]
+        end
+
+        failed_example.tap { |e| e.exception.set_backtrace(backtrace) }
       end
 
       it { should be false }

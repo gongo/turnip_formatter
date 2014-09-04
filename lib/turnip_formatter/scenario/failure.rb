@@ -5,30 +5,40 @@ module TurnipFormatter
     class Failure < Base
       def steps
         steps = super
-        steps[@offending_line].status = :failed
-        steps[(@offending_line + 1)..-1].each do |step|
-          step.status = :unexecuted
+        return steps unless failed_line_number
+
+        steps.each do |step|
+          case
+          when step.line == failed_line_number
+            step.status = :failed
+          when step.line > failed_line_number
+            step.status = :unexecuted
+          end
         end
+
         steps
       end
 
       protected
 
-        def validation
-          if failed_message =~ /:in step:(?<stepno>\d+) `/
-            @offending_line = $~[:stepno].to_i
-          else
-            @errors << 'has no failed step information'
-          end
-
-          super
-        end
+      def validation
+        @errors << 'has no failed step information' unless failed_line_number
+        super
+      end
 
       private
 
-        def failed_message
-          example.exception.backtrace.last
+      def failed_line_number
+        return @failed_line_number if @failed_line_number
+        return unless example.exception
+
+        filepath = File.basename(feature_file_path)
+        line = example.exception.backtrace.find do |backtrace|
+          backtrace.match(/#{filepath}:(\d+)/)
         end
+
+        @failed_line_number = Regexp.last_match[1].to_i if line
+      end
     end
   end
 end

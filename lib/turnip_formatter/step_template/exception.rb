@@ -32,7 +32,7 @@ module TurnipFormatter
       # @param  [RSpec::Core::Example]  example
       #
       def build_failed(example)
-        build(example.exception.to_s, example.exception.backtrace)
+        build(example.exception.to_s, formatted_backtrace(example))
       end
 
       #
@@ -62,6 +62,10 @@ module TurnipFormatter
         - backtrace.each do |line|
           %li&= line
           EOS
+        end
+
+        def formatted_backtrace(example)
+          RSpec::Core::Formatters::TurnipFormatter.formatted_backtrace(example)
         end
     end
   end

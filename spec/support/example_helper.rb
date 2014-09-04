@@ -17,28 +17,24 @@ module ExampleHelper
     end
   end
 
-  def invalid_pending_example
-    if ::RSpec::Version::STRING >= '2.99.0'
-      base_example { skip('Pending') }
-    else
-      base_example { pending('Pending') }
-    end
-  end
-
   private
 
     def base_example(&assertion)
       group = ::RSpec::Core::ExampleGroup.describe('Feature').describe('Scenario')
       example = group.example('example', example_metadata, &assertion)
       example.metadata[:file_path] = '/path/to/hoge.feature'
-      group.run(NoopObject.new)
+
+      instance_eval <<-EOS, example.metadata[:file_path], 1
+        group.run(NoopObject.new)
+      EOS
+
       example
     end
 
     def example_metadata
       {
         turnip_formatter: {
-          steps: [ { name: 'Step 1', extra_args: [], keyword: 'When' } ],
+          steps: [Turnip::Builder::Step.new('Step 1', [], 1, 'When')],
           tags: []
         }
       }

@@ -13,7 +13,7 @@ describe TurnipFormatter::Scenario::Pending do
 
     context 'called by not turnip example' do
       let(:example) do
-        invalid_pending_example
+        pending_example.tap { |e| e.metadata[:line_number] = nil }
       end
 
       it { should be false }
