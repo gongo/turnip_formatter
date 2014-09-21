@@ -39,7 +39,7 @@ module TurnipFormatter
       private
 
         def location(example)
-          example.exception.backtrace.first
+          formatted_backtrace(example).first
         end
 
         def extractor
