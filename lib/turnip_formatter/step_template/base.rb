@@ -25,7 +25,7 @@ module TurnipFormatter
         #
         # Return SCSS string that be used in this class
         #
-        def scss
+        def css
           ''
         end
       end

@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 
 require 'uri'
-require 'sass'
-require 'bootstrap-sass'
 
 module TurnipFormatter
   class Template
@@ -41,7 +39,7 @@ module TurnipFormatter
 
       def render_stylesheet_codes
         TurnipFormatter.step_templates.each do |template|
-          add_stylesheet_code(template.class.scss)
+          add_stylesheet_code(template.class.css)
         end
 
         css_code_list.join("\n")
@@ -69,10 +67,6 @@ module TurnipFormatter
         @css_file_list ||= []
       end
 
-      def scss_option
-        { syntax: :scss, style: :compressed }
-      end
-
       private
 
       def add_javascript_code(code)
@@ -84,7 +78,7 @@ module TurnipFormatter
       end
 
       def add_stylesheet_code(code)
-        css_code_list << Sass::Engine.new(code, scss_option).render
+        css_code_list << code
       end
 
       def add_stylesheet_link(file)
@@ -106,7 +100,7 @@ module TurnipFormatter
     end
 
     (File.dirname(__FILE__) + '/template').tap do |dirname|
-      add_stylesheet(dirname + '/turnip_formatter.scss')
+      add_stylesheet(dirname + '/turnip_formatter.css')
       add_javascript(dirname + '/turnip_formatter.js')
     end
   end

@@ -7,23 +7,19 @@ module TurnipFormatter
       on_failed :build_failed
       on_pending :build_pending
 
-      def self.scss
+      def self.css
         <<-EOS
-          div#steps-statistics section.scenario {
-              div.steps {
-                  div.step_exception {
-                      margin: 1em 0em;
-                      padding: 1em;
-                      border: 1px solid #999999;
-                      background-color: #eee8d5;
-                      color: #586e75;
+          section.scenario div.steps div.step_exception {
+              margin: 1em 0em;
+              padding: 1em;
+              border: 1px solid #999999;
+              background-color: #eee8d5;
+              color: #586e75;
+          }
 
-                      dd {
-                          margin-top: 1em;
-                          margin-left: 1em;
-                      }
-                  }
-              }
+          section.scenario div.steps div.step_exception dd {
+              margin-top: 1em;
+              margin-left: 1em;
           }
         EOS
       end
