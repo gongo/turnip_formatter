@@ -9,21 +9,28 @@ module TurnipFormatter
         TurnipFormatter.configuration.title
       end
 
+      def reset!
+        @js_code_list = []
+        @js_file_list = []
+        @css_code_list = []
+        @css_file_list = []
+      end
+
       def add_javascript(script)
         case
         when local_file?(script)
-          add_javascript_code File.read(script)
+          js_code_list << File.read(script)
         when remote_url?(script)
-          add_javascript_link script
+          js_file_list << script
         end
       end
 
       def add_stylesheet(stylesheet)
         case
         when local_file?(stylesheet)
-          add_stylesheet_code File.read(stylesheet)
+          css_code_list << File.read(stylesheet)
         when remote_url?(stylesheet)
-          add_stylesheet_link stylesheet
+          css_file_list << stylesheet
         end
       end
 
@@ -38,11 +45,11 @@ module TurnipFormatter
       end
 
       def render_stylesheet_codes
-        TurnipFormatter.step_templates.each do |template|
-          add_stylesheet_code(template.class.css)
+        codes = TurnipFormatter.step_templates.map do |template|
+          template.class.css
         end
 
-        css_code_list.join("\n")
+        codes.concat(css_code_list).join("\n")
       end
 
       def render_stylesheet_links
@@ -50,6 +57,8 @@ module TurnipFormatter
           "<link rel=\"stylesheet\" href=\"#{file}\">"
         end.join("\n")
       end
+
+      private
 
       def js_code_list
         @js_code_list ||= []
@@ -67,24 +76,6 @@ module TurnipFormatter
         @css_file_list ||= []
       end
 
-      private
-
-      def add_javascript_code(code)
-        js_code_list << code
-      end
-
-      def add_javascript_link(link)
-        js_file_list << link
-      end
-
-      def add_stylesheet_code(code)
-        css_code_list << code
-      end
-
-      def add_stylesheet_link(file)
-        css_file_list << file
-      end
-
       def local_file?(path)
         File.exist? path
       end
@@ -92,10 +83,10 @@ module TurnipFormatter
       def remote_url?(path)
         uri = URI.parse(path)
         return true if %w(http https).include?(uri.scheme)
-        return true if (uri.scheme.nil? && path.start_with?('//'))
+        return true if uri.scheme.nil? && path.start_with?('//')
         false
       rescue URI::InvalidURIError
-        null
+        nil
       end
     end
 
