@@ -3,7 +3,7 @@ require 'turnip_formatter/step'
 module TurnipFormatter
   module Scenario
     class Base
-      attr_reader :errors
+      attr_reader :errors, :example
 
       #
       # @param  [RSpec::Core::Example]  example
@@ -61,10 +61,6 @@ module TurnipFormatter
 
       def tags
         example.metadata[:turnip_formatter][:tags]
-      end
-
-      def example
-        @example
       end
 
       protected

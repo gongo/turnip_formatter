@@ -18,14 +18,14 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^spec/})
   spec.require_paths = ['lib']
 
-  spec.add_dependency 'turnip', '~> 1.2.2'
+  spec.add_dependency 'turnip', '~> 1.2.4'
   spec.add_dependency 'haml'
-  spec.add_dependency 'sass'
-  spec.add_dependency 'bootstrap-sass'
   spec.add_dependency 'rspec', ['>=2.14.0', '<4.0']
   spec.add_development_dependency 'bundler', '~> 1.3'
   spec.add_development_dependency 'rake'
   spec.add_development_dependency 'rspec-html-matchers'
   spec.add_development_dependency 'coveralls'
   spec.add_development_dependency 'guard-rspec'
+  spec.add_development_dependency 'sass'
+  spec.add_development_dependency 'bootstrap-sass'
 end

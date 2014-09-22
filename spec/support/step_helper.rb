@@ -22,6 +22,6 @@ module StepHelper
     end
 
     def step_description
-      { name: 'StepName', keyword: 'Keyword', extra_args: ['Docstring'] }
+      Turnip::Builder::Step.new('StepName', ['Docstring'], 1, 'Keyword')
     end
 end

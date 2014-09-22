@@ -19,8 +19,10 @@ module RSpec
 
         if Formatters.respond_to?(:register)
           include TurnipFormatter::ForRSpec3
+          extend TurnipFormatter::ForRSpec3::Helper
         else
           include TurnipFormatter::ForRSpec2
+          extend TurnipFormatter::ForRSpec2::Helper
         end
 
         def initialize(output)

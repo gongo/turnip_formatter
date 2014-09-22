@@ -23,15 +23,13 @@ module TurnipFormatter
         end
 
         def example_exception(example)
-          unless example.exception
-            ''
-          else
-            render_template(:exception, {
-                title: 'Example',
-                exception: example.exception
-              }
-            )
-          end
+          return '' unless example.exception
+
+          render_template(:exception, {
+              title: 'Example',
+              exception: example.exception
+            }
+          )
         end
       end
     end

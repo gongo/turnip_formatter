@@ -6,25 +6,27 @@ module TurnipFormatter
     class Source < Base
       on_failed :build
 
-      def self.scss
+      def self.css
         <<-EOS
           pre.source {
               font-size: 12px;
               font-family: monospace;
               background-color: #073642;
               color: #dddddd;
+          }
 
-              code.ruby {
-                  padding: 0.1em 0 0.2em 0;
+          pre.source code.ruby {
+              padding: 0.1em 0 0.2em 0;
+          }
 
-                  .linenum {
-                      width: 75px;
-                      color: #fffbd3;
-                      padding-right: 1em;
-                  }
+          pre.source code.ruby .linenum {
+              width: 75px;
+              color: #fffbd3;
+              padding-right: 1em;
+          }
 
-                  .offending { background-color: gray; }
-              }
+          pre.source code.ruby .offending {
+              background-color: gray;
           }
         EOS
       end
@@ -37,7 +39,7 @@ module TurnipFormatter
       private
 
         def location(example)
-          example.exception.backtrace.first
+          formatted_backtrace(example).first
         end
 
         def extractor

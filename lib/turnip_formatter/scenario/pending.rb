@@ -5,31 +5,37 @@ module TurnipFormatter
     class Pending < Base
       def steps
         steps = super
-        steps[@offending_line].status = :pending
-        steps[(@offending_line + 1)..-1].each do |step|
-          step.status = :unexecuted
+        return steps unless pending_line_number
+
+        steps.each do |step|
+          case
+          when step.line == pending_line_number
+            step.status = :pending
+          when step.line > pending_line_number
+            step.status = :unexecuted
+          end
         end
+
         steps
       end
 
       protected
 
-        def validation
-          if pending_message =~ /^No such step\((?<stepno>\d+)\): /
-            @offending_line = $~[:stepno].to_i
-          else
-            @errors << 'has no pending step information'
-          end
-
-          super
-        end
+      def validation
+        @errors << 'has no pending step information' unless pending_line_number
+        super
+      end
 
       private
 
-        def pending_message
-          result = TurnipFormatter::Helper.example_execution_result(example)
-          result.pending_message
-        end
+      def pending_line_number
+        example.metadata[:line_number]
+      end
+
+      def pending_message
+        result = TurnipFormatter::Helper.example_execution_result(example)
+        result.pending_message
+      end
     end
   end
 end

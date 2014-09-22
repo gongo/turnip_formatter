@@ -26,23 +26,19 @@ module RSpec
           end
 
           def example_pending(notification)
-            clean_backtrace(notification)
             scenario = ::TurnipFormatter::Scenario::Pending.new(notification.example)
             output_scenario(scenario)
           end
 
           def example_failed(notification)
-            clean_backtrace(notification)
             scenario = ::TurnipFormatter::Scenario::Failure.new(notification.example)
             output_scenario(scenario)
           end
 
-          private
-
-          def clean_backtrace(notification)
-            if notification.respond_to?(:formatted_backtrace)
-              formatted = notification.formatted_backtrace
-              notification.example.exception.set_backtrace(formatted)
+          module Helper
+            def formatted_backtrace(example)
+              formatter = RSpec.configuration.backtrace_formatter
+              formatter.format_backtrace(example.exception.backtrace, example.metadata)
             end
           end
         end
