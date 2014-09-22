@@ -3,79 +3,116 @@ require 'spec_helper'
 describe TurnipFormatter::Template do
   let(:template) { described_class }
 
+  let(:local_js_path) do
+    Tempfile.open('local.js') do |f|
+      f.write('alert("local!");')
+      f.path
+    end
+  end
+
+  let(:local_css_path) do
+    Tempfile.open('local.css') do |f|
+      f.write('body { color: green; }')
+      f.path
+    end
+  end
+
+  let(:remote_js_path) { 'http://example.com/foo.js' }
+  let(:remote_css_path) { 'http://example.com/foo.css' }
+
   before do
     template.reset!
   end
 
-  describe '.add_javascript' do
-    let(:js_codes) { template.render_javascript_codes }
-    let(:js_links) { template.render_javascript_links }
+  describe '.render_javascript_codes' do
+    subject { template.render_javascript_codes }
 
     before do
       template.add_javascript(path)
     end
 
-    context 'add local javascript file' do
-      let(:path) do
-        Tempfile.open('local.js') do |f|
-          f.write('alert("local!");')
-          f.path
-        end
-      end
-
-      it do
-        expect(js_codes).to include 'alert("local!");'
-      end
+    context 'added local javascript file' do
+      let(:path) { local_js_path }
+      it { should include 'alert("local!");' }
     end
 
     context 'add remote javascript file' do
-      let(:path) { 'http://example.com/foo.js' }
-
-      it do
-        expect(js_links).to include %Q(<script src="#{path}" type="text/javascript"></script>)
-      end
-    end
-
-    context 'add incorrect remote javascript file' do
-      let(:path) { 'http://e_xample.com/foo.js' }
-
-      it { expect(js_links).to eq '' }
+      let(:path) { remote_js_path }
+      it { should be_empty }
     end
   end
 
-  describe '.add_stylesheet' do
-    let(:css_codes) { template.render_stylesheet_codes }
-    let(:css_links) { template.render_stylesheet_links }
+  describe '.render_javascript_links' do
+    subject { template.render_javascript_links }
+
+    before do
+      template.add_javascript(path)
+    end
+
+    context 'added local javascript file' do
+      let(:path) { local_js_path }
+      it { should be_empty }
+    end
+
+    context 'add remote javascript file' do
+      let(:path) { remote_js_path }
+      it { should include %Q(<script src="#{path}" type="text/javascript"></script>) }
+    end
+
+    context 'add remote javascript file (no schema)' do
+      let(:path) { '//example.com/foo.js' }
+      it { should include %Q(<script src="#{path}" type="text/javascript"></script>) }
+    end
+
+    context 'add incorrect uri' do
+      let(:path) { 'http://e_xample.com/foo.js' }
+      it { should be_empty }
+    end
+  end
+
+  describe '.render_stylesheet_codes' do
+    subject { template.render_stylesheet_codes }
 
     before do
       template.add_stylesheet(path)
     end
 
-    context 'add local stylesheet file' do
-      let(:path) do
-        Tempfile.open('local.css') do |f|
-          f.write('body { color: green; }')
-          f.path
-        end
-      end
-
-      it do
-        expect(css_codes).to include 'body { color: green; }'
-      end
+    context 'added local stylesheet file' do
+      let(:path) { local_css_path }
+      it { should include 'body { color: green; }' }
     end
 
     context 'add remote stylesheet file' do
-      let(:path) { 'http://example.com/foo.css' }
+      let(:path) { remote_css_path }
+      it { should be_empty }
+    end
+  end
 
-      it do
-        expect(css_links).to include %Q(<link rel="stylesheet" href="#{path}">)
-      end
+  describe '.render_stylesheet_links' do
+    subject { template.render_stylesheet_links }
+
+    before do
+      template.add_stylesheet(path)
     end
 
-    context 'add incorrect remote stylesheet file' do
-      let(:path) { 'http://e_xample.com/foo.css' }
+    context 'added local stylesheet file' do
+      let(:path) { local_js_path }
+      it { should be_empty }
+    end
 
-      it { expect(css_links).to eq '' }
+    context 'add remote stylesheet file' do
+      let(:path) { remote_css_path }
+      it { should include %Q(<link rel="stylesheet" href="#{path}">) }
+    end
+
+    context 'add remote stylesheet file (no schema)' do
+      let(:path) { '//example.com/foo.css' }
+      it { should include %Q(<link rel="stylesheet" href="#{path}">) }
+    end
+
+    context 'add incorrect uri' do
+      let(:path) { 'http://e_xample.com/foo.css' }
+      it { should be_empty }
     end
   end
 end
