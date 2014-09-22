@@ -40,7 +40,7 @@ module TurnipFormatter
 
       def render_javascript_links
         js_file_list.map do |file|
-          "<script src=\"#{file}\" type=\"text/javascript\"></script>"
+          "<script src=\"#{file}\"></script>"
         end.join("\n")
       end
 

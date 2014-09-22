@@ -56,12 +56,12 @@ describe TurnipFormatter::Template do
 
     context 'add remote javascript file' do
       let(:path) { remote_js_path }
-      it { should include %Q(<script src="#{path}" type="text/javascript"></script>) }
+      it { should include %Q(<script src="#{path}"></script>) }
     end
 
     context 'add remote javascript file (no schema)' do
       let(:path) { '//example.com/foo.js' }
-      it { should include %Q(<script src="#{path}" type="text/javascript"></script>) }
+      it { should include %Q(<script src="#{path}"></script>) }
     end
 
     context 'add incorrect uri' do
