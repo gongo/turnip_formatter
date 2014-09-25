@@ -10,25 +10,24 @@ module RSpec
               scenarios:      scenarios,
               failed_count:   failure_count,
               pending_count:  pending_count,
-              total_time:     duration,
-              scenario_files: scenario_output_files
+              total_time:     duration
             }
             output_html(print_params)
           end
 
           def example_passed(example)
             scenario = ::TurnipFormatter::Scenario::Pass.new(example)
-            output_scenario(scenario)
+            scenarios << scenario
           end
 
           def example_pending(example)
             scenario = ::TurnipFormatter::Scenario::Pending.new(example)
-            output_scenario(scenario)
+            scenarios << scenario
           end
 
           def example_failed(example)
             scenario = ::TurnipFormatter::Scenario::Failure.new(example)
-            output_scenario(scenario)
+            scenarios << scenario
           end
 
           module Helper

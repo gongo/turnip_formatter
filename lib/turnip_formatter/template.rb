@@ -86,7 +86,7 @@ module TurnipFormatter
         return true if uri.scheme.nil? && path.start_with?('//')
         false
       rescue URI::InvalidURIError
-        nil
+        false
       end
     end
 

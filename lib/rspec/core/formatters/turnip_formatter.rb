@@ -13,9 +13,7 @@ module RSpec
   module Core
     module Formatters
       class TurnipFormatter < BaseFormatter
-        attr_reader :scenarios, :scenario_output_files
-
-        SCENARIO_TEMPORARY_OUTPUT_DIR = File.expand_path('./turnip_tmp')
+        attr_accessor :scenarios
 
         if Formatters.respond_to?(:register)
           include TurnipFormatter::ForRSpec3
@@ -28,28 +26,13 @@ module RSpec
         def initialize(output)
           super(output)
           @scenarios = []
-          @scenario_output_files = []
-
-          FileUtils.mkdir_p(SCENARIO_TEMPORARY_OUTPUT_DIR)
         end
 
         private
 
-          def output_html(params)
-            output.puts ::TurnipFormatter::Printer::Index.print_out(params)
-            FileUtils.rm_rf(SCENARIO_TEMPORARY_OUTPUT_DIR)
-          end
-
-          def output_scenario(scenario)
-            filepath = SCENARIO_TEMPORARY_OUTPUT_DIR + "/#{scenario.id}.html"
-
-            File.open(filepath, 'w') do |io|
-              io.puts ::TurnipFormatter::Printer::Scenario.print_out(scenario)
-            end
-
-            @scenario_output_files << filepath
-            @scenarios << scenario
-          end
+        def output_html(params)
+          output.puts ::TurnipFormatter::Printer::Index.print_out(params)
+        end
       end
     end
   end

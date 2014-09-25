@@ -61,8 +61,8 @@
               %input#scenario_display_check{ type: 'checkbox', checked: 'checked' }
               Folding
           #scenarios.panel-group
-            - scenario_files.each do |f|
-              = File.read(f)
+            - scenarios.each do |s|
+              = ::TurnipFormatter::Printer::Scenario.print_out(s)
 
         #feature-statistics.tab-pane
           %h4 The results for the feature:
