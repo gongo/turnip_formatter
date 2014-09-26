@@ -1,5 +1,5 @@
 require 'turnip_formatter/step_template/base'
-require 'haml'
+require 'slim'
 
 module TurnipFormatter
   module StepTemplate
@@ -46,18 +46,7 @@ module TurnipFormatter
         end
 
         def template_step_exception
-          @template_step_exception ||= Haml::Engine.new(<<-EOS)
-%div.step_exception
-  %dl
-    %dt Failure:
-    %dd
-      %pre&= message
-    %dt Backtrace:
-    %dd
-      %ol
-        - backtrace.each do |line|
-          %li&= line
-          EOS
+          @template_step_exception ||= Slim::Template.new(File.dirname(__FILE__) + "/exception.slim")
         end
     end
   end

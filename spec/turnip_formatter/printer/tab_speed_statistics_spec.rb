@@ -21,7 +21,7 @@ module TurnipFormatter::Printer
           expect(html).to have_tag "tbody tr:nth-child(#{index})" do
             with_tag 'td:nth-child(1) span', text: scenario.feature_name
             with_tag "td:nth-child(2) a[href='\##{scenario.id}']", text: scenario.name
-            with_tag 'td:nth-child(3) span', text: scenario.run_time
+            with_tag 'td:nth-child(3) span', text: /#{scenario.run_time}/
           end
         end
       end

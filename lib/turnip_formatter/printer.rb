@@ -1,4 +1,4 @@
-require 'haml'
+require 'slim'
 
 module TurnipFormatter
   module Printer
@@ -15,8 +15,8 @@ module TurnipFormatter
 
     def render_template_list(name)
       if templates[name].nil?
-        path = File.dirname(__FILE__) + "/template/#{name}.haml"
-        templates[name] = Haml::Engine.new(File.read(path))
+        path = File.dirname(__FILE__) + "/template/#{name}.slim"
+        templates[name] = Slim::Template.new(path)
       end
 
       templates[name]

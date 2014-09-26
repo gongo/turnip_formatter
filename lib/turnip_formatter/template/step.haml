@@ -1,6 +1,0 @@
-%div{ class: "step #{step.status}" }
-  %div.step-title&= step.name
-  - if has_args_or_documents
-    %div.step-body
-      = TurnipFormatter::Printer::StepExtraArgs.print_out(step.extra_args)
-      ~ step_docs
