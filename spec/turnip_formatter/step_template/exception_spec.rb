@@ -26,7 +26,7 @@ describe TurnipFormatter::StepTemplate::Exception do
 
     it do
       expect(subject).to have_tag 'div.step_exception' do
-        with_tag 'pre', text: 'No such step(0):'
+        with_tag 'pre', text: 'No such step(0): '
         with_tag 'ol > li'
       end
     end
