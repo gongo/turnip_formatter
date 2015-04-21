@@ -1,3 +1,4 @@
+require 'rspec-html-matchers'
 require 'simplecov'
 require 'coveralls'
 
@@ -21,4 +22,5 @@ end
 RSpec.configure do |config|
   config.include ExampleHelper
   config.include StepHelper
+  config.include RSpecHtmlMatchers
 end
