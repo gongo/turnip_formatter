@@ -65,7 +65,7 @@ describe TurnipFormatter::Template do
     end
 
     context 'add incorrect uri' do
-      let(:path) { 'http://e_xample.com/foo.js' }
+      let(:path) { 'http://e xample.com/foo.js' }
       it { should be_empty }
     end
   end
@@ -111,7 +111,7 @@ describe TurnipFormatter::Template do
     end
 
     context 'add incorrect uri' do
-      let(:path) { 'http://e_xample.com/foo.css' }
+      let(:path) { 'http://e xample.com/foo.css' }
       it { should be_empty }
     end
   end
