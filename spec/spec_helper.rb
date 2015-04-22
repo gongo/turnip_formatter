@@ -1,4 +1,3 @@
-require 'rspec-html-matchers'
 require 'simplecov'
 require 'coveralls'
 
@@ -9,7 +8,6 @@ SimpleCov.start do
   add_filter 'lib/turnip_formatter/ext'
 end
 
-require 'rspec-html-matchers'
 require 'turnip_formatter'
 Dir.glob(File.dirname(__FILE__) + '/support/**/*.rb') { |f| require(f) }
 
@@ -22,5 +20,4 @@ end
 RSpec.configure do |config|
   config.include ExampleHelper
   config.include StepHelper
-  config.include RSpecHtmlMatchers
 end

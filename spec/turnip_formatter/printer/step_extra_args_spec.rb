@@ -15,18 +15,9 @@ module TurnipFormatter::Printer
 
         subject { StepExtraArgs.print_out([string]) }
 
-        it {
-          expect(subject).to have_tag 'table.step_outline' do
-            with_tag 'tr:nth-child(1) td:nth-child(1)', text: /State/
-            with_tag 'tr:nth-child(1) td:nth-child(2)', text: /Money/
-
-            with_tag 'tr:nth-child(2) td:nth-child(1)', text: /<Tokushima>/
-            with_tag 'tr:nth-child(2) td:nth-child(2)', text: /555/
-
-            with_tag 'tr:nth-child(3) td:nth-child(1)', text: /<Okinawa>/
-            with_tag 'tr:nth-child(3) td:nth-child(2)', text: /368/
-          end
-        }
+        it { should match %r{<td>State</td>[[:space:]]*<td>Money</td>} }
+        it { should match %r{<td>&lt;Tokushima&gt;</td>[[:space:]]*<td>555</td>} }
+        it { should match %r{<td>&lt;Okinawa&gt;</td>[[:space:]]*<td>368</td>} }
       end
     end
 
@@ -34,7 +25,7 @@ module TurnipFormatter::Printer
       describe '.print_out' do
         let(:string) { 'a<a>a' }
         subject { StepExtraArgs.print_out([string]) }
-        it { should have_tag 'pre.multiline', text: 'a<a>a' }
+        it { should match %r{<pre class="multiline">a&lt;a&gt;a</pre>} }
       end
     end
   end
