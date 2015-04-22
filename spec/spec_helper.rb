@@ -8,7 +8,6 @@ SimpleCov.start do
   add_filter 'lib/turnip_formatter/ext'
 end
 
-require 'rspec-html-matchers'
 require 'turnip_formatter'
 Dir.glob(File.dirname(__FILE__) + '/support/**/*.rb') { |f| require(f) }
 

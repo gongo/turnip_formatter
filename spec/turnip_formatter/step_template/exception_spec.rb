@@ -13,22 +13,13 @@ describe TurnipFormatter::StepTemplate::Exception do
   describe '#build_failed' do
     subject { template.build_failed(failed_example) }
 
-    it do
-      expect(subject).to have_tag 'div.step_exception' do
-        with_tag 'pre'
-        with_tag 'ol > li'
-      end
-    end
+    it { should match %r{<div class="step_exception">} }
   end
 
   describe '#build_pending' do
     subject { template.build_pending(pending_example) }
 
-    it do
-      expect(subject).to have_tag 'div.step_exception' do
-        with_tag 'pre', text: 'No such step(0): '
-        with_tag 'ol > li'
-      end
-    end
+    it { should match %r{<div class="step_exception">} }
+    it { should match %r{<pre>No such step} }
   end
 end

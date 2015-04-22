@@ -1,12 +1,13 @@
 language: ruby
 rvm:
-  - 1.9.3
   - 2.0.0
-  - 2.1.0
-  - 2.1.2
+  - 2.1
+  - 2.2
   - jruby-1.7.10
 script: bundle exec rspec
 gemfile:
   - spec/gemfiles/Gemfile-rspec-2.14.x
   - spec/gemfiles/Gemfile-rspec-2.99.x
   - spec/gemfiles/Gemfile-rspec-3.0.x
+  - spec/gemfiles/Gemfile-rspec-3.1.x
+  - spec/gemfiles/Gemfile-rspec-3.2.x

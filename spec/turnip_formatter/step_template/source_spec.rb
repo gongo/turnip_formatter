@@ -10,9 +10,9 @@ describe TurnipFormatter::StepTemplate::Source do
     subject { template.build(failed_example) }
 
     it do
-      expect(subject).to have_tag 'pre.source > code.ruby' do
-        with_tag 'span.linenum'
-      end
+      should match %r{<pre class="source">}
+      should match %r{<code class="ruby">}
+      should match %r{<span class="linenum">}
     end
   end
 end

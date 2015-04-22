@@ -14,10 +14,10 @@ describe TurnipFormatter::Printer::Scenario do
     context 'with turnip example' do
       subject { described_class.print_out(scenario) }
 
-      it { should have_tag 'a', with: { href: '#' + scenario.id } }
-      it { should have_tag 'div.scenario-title', text: /Scenario: Scenario/ }
-      it { should have_tag 'ul.tags' }
-      it { should have_tag 'div.steps' }
+      it { should match %r{<a .*href="##{scenario.id}"} }
+      it { should match %r{<div class="scenario-title">.*Scenario: Scenario} }
+      it { should match %{<ul class="tags">} }
+      it { should match %{<div class="steps} }
     end
 
     context 'with no turnip example' do

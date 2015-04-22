@@ -12,11 +12,10 @@ describe TurnipFormatter::Printer::Step do
         step
       end
 
-      it do
-        should have_tag 'div.step' do
-          with_tag 'div.step-title'
-        end
-      end
+      it {
+        should match %r{<div class="step passed">}
+        should match %r{<div class="step-title">}
+      }
     end
 
     context 'has table argument' do
@@ -28,14 +27,10 @@ describe TurnipFormatter::Printer::Step do
         step
       end
 
-      it do
-        should have_tag 'div.step' do
-          with_tag 'div.step-title'
-          with_tag 'div.step-body' do
-            with_tag 'table.step_outline'
-          end
-        end
-      end
+      it {
+        should match %r{<div class="step-body">}
+        should match %r{<table class="step_outline">}
+      }
     end
 
     context 'has outline argument' do
@@ -43,14 +38,10 @@ describe TurnipFormatter::Printer::Step do
         passed_step
       end
 
-      it do
-        should have_tag 'div.step' do
-          with_tag 'div.step-title'
-          with_tag 'div.step-body' do
-            with_tag 'table.multiline'
-          end
-        end
-      end
+      it {
+        should match %r{<div class="step-body">}
+        should match %r{<pre class="multiline">}
+      }
     end
   end
 end

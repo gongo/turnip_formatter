@@ -14,10 +14,10 @@ module TurnipFormatter::Printer
       }
     end
 
-    describe '.print_out' do
-      subject { Index.print_out(formatter) }
+    subject { Index.print_out(formatter) }
 
-      it { should have_tag 'h1', text: 'Turnip Report' }
+    describe '.print_out' do
+      it { should match %r{<h1>Turnip Report</h1>} }
     end
 
     context 'project_name is changed' do
@@ -27,9 +27,7 @@ module TurnipFormatter::Printer
       end
 
       describe '.print_out' do
-        subject { Index.print_out(formatter) }
-
-        it { should have_tag 'h1', text: 'My Project Report' }
+        it { should match %r{<h1>My Project Report</h1>} }
       end
 
       after do
