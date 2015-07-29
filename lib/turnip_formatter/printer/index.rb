@@ -11,6 +11,8 @@ module TurnipFormatter
         include TurnipFormatter::Printer
 
         def print_out(params)
+          puts 'FAILED' if params[:failed_count] > 0
+
           render_template(:index, {
               scenarios:        params[:scenarios],
               failed_count:     params[:failed_count],
@@ -19,7 +21,6 @@ module TurnipFormatter
               scenario_files:   params[:scenario_files]
             }
           )
-          puts 'FAILED' if params[:failed_count] > 0
         end
       end
     end
