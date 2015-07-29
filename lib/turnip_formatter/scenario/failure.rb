@@ -15,6 +15,8 @@ module TurnipFormatter
             step.status = :unexecuted
           end
         end
+        puts 'FAILED1' if step.status == :failed
+        puts 'UNEXECUTED1' if step.status  == :unexecuted
 
         steps
       end

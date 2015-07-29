@@ -19,6 +19,7 @@ module TurnipFormatter
               scenario_files:   params[:scenario_files]
             }
           )
+          puts 'FAILED' if params[:failed_count] > 0
         end
       end
     end
