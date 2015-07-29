@@ -16,7 +16,6 @@ module TurnipFormatter
           end
         end
 
-        puts 'PENDING1' if step.status == :pending
         steps
       end
 
