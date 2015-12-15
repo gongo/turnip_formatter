@@ -85,20 +85,14 @@ module TurnipFormatter
       # @return  [Hash]  parent example group
       #
       def parent_example_group
-        if example.example_group.metadata.key?(:parent_example_group)
-          # RSpec 3
-          example.example_group.metadata[:parent_example_group]
-        else
-          # RSpec 2
-          example.example_group.metadata[:example_group][:example_group]
-        end
+        example.example_group.metadata[:parent_example_group]
       end
 
       #
       # @return  [OpenStruct or ::RSpec::Core::Example::ExecutionResult]
       #
       def execution_result
-        @execution_result ||= Helper.example_execution_result(example)
+        @execution_result ||= example.execution_result
       end
     end
   end
