@@ -3,12 +3,25 @@ language: ruby
 sudo: false
 cache: bundler
 
+branches:
+  only:
+    - master
+    - 0.4.0-dev
+
+matrix:
+  allow_failures:
+    - gemfile: gemfiles/Gemfile-rspec-3.2.x
+    - rvm: ruby-head
+
 rvm:
   - 2.0.0
   - 2.1
   - 2.2
+  - ruby-head
   - jruby-1.7.10
+
 script: bundle exec rspec
+
 gemfile:
   - gemfiles/Gemfile-rspec-3.2.x
   - gemfiles/Gemfile-rspec-3.3.x
