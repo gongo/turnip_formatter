@@ -35,8 +35,7 @@ module TurnipFormatter
       # @param  [RSpec::Core::Example]  example
       #
       def build_pending(example)
-        result = TurnipFormatter::Helper.example_execution_result(example)
-        build(result.pending_message, [example.location])
+        build(example.execution_result.pending_message, [example.location])
       end
 
       private
