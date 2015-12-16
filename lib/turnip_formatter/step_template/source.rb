@@ -1,5 +1,4 @@
 require 'turnip_formatter/step_template/base'
-require 'rspec/core/formatters/snippet_extractor'
 
 module TurnipFormatter
   module StepTemplate
@@ -38,13 +37,21 @@ module TurnipFormatter
 
       private
 
-        def location(example)
-          formatted_backtrace(example).first
-        end
+      def location(example)
+        formatted_backtrace(example).first
+      end
 
-        def extractor
-          @extractor ||= ::RSpec::Core::Formatters::SnippetExtractor.new
-        end
+      def extractor
+        @extractor ||= begin
+                         # RSpec 3.4
+                         require 'rspec/core/formatters/html_snippet_extractor'
+                         ::RSpec::Core::Formatters::HtmlSnippetExtractor.new
+                       rescue LoadError
+                         # RSpec 3.3 or earlier
+                         require 'rspec/core/formatters/snippet_extractor'
+                         ::RSpec::Core::Formatters::SnippetExtractor.new
+                       end
+      end
     end
   end
 end
