@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'tempfile'
 
 describe TurnipFormatter::Template do
   let(:template) { described_class }

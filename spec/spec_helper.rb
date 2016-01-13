@@ -1,11 +1,13 @@
-require 'simplecov'
-require 'coveralls'
+if !defined?(JRUBY_VERSION)
+  require 'simplecov'
+  require 'coveralls'
 
-SimpleCov.formatter = Coveralls::SimpleCov::Formatter
-SimpleCov.start do
-  add_filter 'spec/'
-  add_filter 'vendor/'
-  add_filter 'lib/turnip_formatter/ext'
+  SimpleCov.formatter = Coveralls::SimpleCov::Formatter
+  SimpleCov.start do
+    add_filter 'spec/'
+    add_filter 'vendor/'
+    add_filter 'lib/turnip_formatter/ext'
+  end
 end
 
 require 'turnip_formatter'

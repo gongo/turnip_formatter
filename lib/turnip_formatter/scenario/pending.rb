@@ -33,8 +33,7 @@ module TurnipFormatter
       end
 
       def pending_message
-        result = TurnipFormatter::Helper.example_execution_result(example)
-        result.pending_message
+        example.execution_result.pending_message
       end
     end
   end

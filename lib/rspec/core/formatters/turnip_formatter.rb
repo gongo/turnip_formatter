@@ -6,8 +6,6 @@ require 'turnip_formatter/scenario/failure'
 require 'turnip_formatter/scenario/pending'
 require 'turnip_formatter/printer/index'
 require 'turnip_formatter/printer/scenario'
-require_relative './turnip_formatter/for_rspec2'
-require_relative './turnip_formatter/for_rspec3'
 
 module RSpec
   module Core
@@ -15,17 +13,41 @@ module RSpec
       class TurnipFormatter < BaseFormatter
         attr_accessor :scenarios
 
-        if Formatters.respond_to?(:register)
-          include TurnipFormatter::ForRSpec3
-          extend TurnipFormatter::ForRSpec3::Helper
-        else
-          include TurnipFormatter::ForRSpec2
-          extend TurnipFormatter::ForRSpec2::Helper
+        Formatters.register self, :example_passed, :example_pending, :example_failed, :dump_summary
+
+        def self.formatted_backtrace(example)
+          formatter = RSpec.configuration.backtrace_formatter
+          formatter.format_backtrace(example.exception.backtrace, example.metadata)
         end
 
         def initialize(output)
           super(output)
           @scenarios = []
+        end
+
+        def dump_summary(summary)
+          print_params = {
+            scenarios:      scenarios,
+            failed_count:   summary.failure_count,
+            pending_count:  summary.pending_count,
+            total_time:     summary.duration
+          }
+          output_html(print_params)
+        end
+
+        def example_passed(notification)
+          scenario = ::TurnipFormatter::Scenario::Pass.new(notification.example)
+          scenarios << scenario
+        end
+
+        def example_pending(notification)
+          scenario = ::TurnipFormatter::Scenario::Pending.new(notification.example)
+          scenarios << scenario
+        end
+
+        def example_failed(notification)
+          scenario = ::TurnipFormatter::Scenario::Failure.new(notification.example)
+          scenarios << scenario
         end
 
         private
