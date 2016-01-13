@@ -6,7 +6,6 @@ cache: bundler
 branches:
   only:
     - master
-    - 0.4.0-dev
 
 matrix:
   allow_failures:
