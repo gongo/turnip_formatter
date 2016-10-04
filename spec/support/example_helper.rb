@@ -20,6 +20,18 @@ module ExampleHelper
     example
   end
 
+  def create_step_node(keyword, text, line)
+    step_metadata = {
+      type: :Step,
+      location: { line: line, column: 1 },
+      keyword: keyword,
+      text: text,
+      argument: nil
+    }
+
+    Turnip::Node::Step.new(step_metadata)
+  end
+
   private
 
     def base_example(&assertion)
@@ -37,7 +49,7 @@ module ExampleHelper
     def example_metadata
       {
         turnip_formatter: {
-          steps: [Turnip::Builder::Step.new('Step 1', [], 1, 'When')],
+          steps: [create_step_node('Step', 'Step 1', 1)],
           tags: []
         }
       }
