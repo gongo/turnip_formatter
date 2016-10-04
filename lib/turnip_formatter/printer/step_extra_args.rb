@@ -6,16 +6,17 @@ module TurnipFormatter
       class << self
         include TurnipFormatter::Printer
 
-        def print_out(args)
-          return '' if args.nil?
+        #
+        # @param  [nil or String or Turnip::Table]  Step argument
+        #
+        def print_out(argument)
+          return '' if argument.nil?
 
-          args.map do |arg|
-            if arg.instance_of?(Turnip::Table)
-              render_template(:step_outline, { table: arg.to_a })
-            else
-              render_template(:step_multiline, { lines: arg })
-            end
-          end.join
+          if argument.instance_of?(Turnip::Table)
+            render_template(:step_outline, { table: argument.to_a })
+          else
+            render_template(:step_multiline, { lines: argument })
+          end
         end
       end
     end

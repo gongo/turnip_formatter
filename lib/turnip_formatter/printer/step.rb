@@ -1,5 +1,4 @@
 require 'turnip_formatter/printer'
-require 'turnip_formatter/printer/step_extra_args'
 
 module TurnipFormatter
   module Printer
@@ -22,7 +21,7 @@ module TurnipFormatter
         private
 
         def has_args_or_documents?(step, templates)
-          (step.extra_args.length + templates.length) > 0
+          step.argument || (templates.length > 0)
         end
 
         def documents(step, templates)
