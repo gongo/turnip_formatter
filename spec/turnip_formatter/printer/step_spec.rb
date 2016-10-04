@@ -8,7 +8,7 @@ describe TurnipFormatter::Printer::Step do
     context 'not has extra argument' do
       let(:step) do
         step = passed_step
-        expect(step).to receive(:extra_args).and_return([])
+        expect(step).to receive(:argument).and_return(nil)
         step
       end
 
@@ -23,7 +23,7 @@ describe TurnipFormatter::Printer::Step do
 
       let(:step) do
         step = passed_step
-        allow(step).to receive(:extra_args).and_return([table])
+        allow(step).to receive(:argument).and_return(table)
         step
       end
 
@@ -35,7 +35,9 @@ describe TurnipFormatter::Printer::Step do
 
     context 'has outline argument' do
       let(:step) do
-        passed_step
+        step = passed_step
+        allow(step).to receive(:argument).and_return('DocString')
+        step
       end
 
       it {

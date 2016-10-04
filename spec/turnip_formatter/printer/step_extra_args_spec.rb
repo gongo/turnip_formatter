@@ -13,7 +13,7 @@ module TurnipFormatter::Printer
             ])
         end
 
-        subject { StepExtraArgs.print_out([string]) }
+        subject { StepExtraArgs.print_out(string) }
 
         it { should match %r{<td>State</td>[[:space:]]*<td>Money</td>} }
         it { should match %r{<td>&lt;Tokushima&gt;</td>[[:space:]]*<td>555</td>} }
@@ -24,7 +24,7 @@ module TurnipFormatter::Printer
     context 'String' do
       describe '.print_out' do
         let(:string) { 'a<a>a' }
-        subject { StepExtraArgs.print_out([string]) }
+        subject { StepExtraArgs.print_out(string) }
         it { should match %r{<pre class="multiline">a&lt;a&gt;a</pre>} }
       end
     end

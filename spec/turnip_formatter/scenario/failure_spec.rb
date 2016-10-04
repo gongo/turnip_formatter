@@ -9,11 +9,11 @@ describe TurnipFormatter::Scenario::Failure do
       example = failed_example
       example.metadata[:turnip_formatter] = {
         steps: [
-          Turnip::Builder::Step.new('Step 1', [],  1, 'When'),
-          Turnip::Builder::Step.new('Step 2', [],  3, 'When'),
-          Turnip::Builder::Step.new('Step 3', [], 10, 'When'), # failed line
-          Turnip::Builder::Step.new('Step 4', [], 11, 'When'),
-          Turnip::Builder::Step.new('Step 5', [], 12, 'When')
+          create_step_node('When', 'Step 1',  1),
+          create_step_node('When', 'Step 2',  3),
+          create_step_node('When', 'Step 3', 10), # failed line
+          create_step_node('When', 'Step 4', 11),
+          create_step_node('When', 'Step 5', 12)
         ],
         tags: []
       }

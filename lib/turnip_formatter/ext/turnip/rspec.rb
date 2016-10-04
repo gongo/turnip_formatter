@@ -27,7 +27,7 @@ module Turnip
         feature.scenarios.zip(examples).each do |scenario, parent_example|
           example = parent_example.examples.first
           steps   = background_steps + scenario.steps
-          tags    = (feature.tags + scenario.tags).uniq
+          tags    = (feature.tag_names + scenario.tag_names).uniq
 
           example.metadata[:turnip_formatter] = { steps: steps, tags: tags }
         end
