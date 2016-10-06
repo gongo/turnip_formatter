@@ -1,10 +1,13 @@
 require 'active_support/core_ext/string/inflections' # String#{demodulize,underscore}
 require 'tilt/erb'
+require 'forwardable'
 
 module TurnipFormatter
   module Renderer
     module Html
       class Base
+        extend Forwardable
+
         TEMPLATE_DIRECTORY = File.dirname(__FILE__) + '/views'
 
         class << self
@@ -16,6 +19,10 @@ module TurnipFormatter
 
           def resource_name
             @resource_name ||= self.to_s.demodulize.underscore
+          end
+
+          def delegate(*props)
+            def_delegators :@resource, *props
           end
         end
 
