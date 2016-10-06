@@ -20,7 +20,11 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'turnip', '~> 3.0.0.pre.beta'
   spec.add_dependency 'slim'
+  spec.add_dependency 'tilt'
   spec.add_dependency 'rspec', [">=3.0", "<3.5"]
+
+  # For ruby >= 2.1
+  spec.add_dependency 'activesupport', '~> 4.2.7'
 
   spec.add_development_dependency 'test-unit'
   spec.add_development_dependency 'bundler', '~> 1.3'
