@@ -1,21 +1,9 @@
 <table id="<%= id %>" class="data_table">
-
-  <thead>
-    <tr>
-      <% headers.each do |th| %>
-      <th><%= ERB::Util.h(th) %></th>
-      <% end %>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% rows.each do |row| %>
-    <tr>
-      <% row.each do |td| %>
+  <% table.each do |row| %>
+  <tr>
+    <% row.each do |td| %>
       <td><%= ERB::Util.h(td) %></td>
-      <% end %>
-    </tr>
     <% end %>
-  </tbody>
-
+  </tr>
+  <% end %>
 </table>

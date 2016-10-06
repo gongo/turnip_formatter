@@ -1,5 +1,4 @@
 require 'turnip_formatter/renderer/html/base'
-require 'turnip/table'
 
 module TurnipFormatter
   module Renderer
@@ -8,12 +7,8 @@ module TurnipFormatter
       # @resource [Turnip::Table]
       #
       class DataTable < Base
-        def headers
-          @resource.headers
-        end
-
-        def rows
-          @resource.rows
+        def table
+          @resource
         end
       end
     end
