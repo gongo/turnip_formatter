@@ -10,7 +10,7 @@ module TurnipFormatter::Renderer::Html
 
       document = html_parse(renderer.render).at_xpath('pre')
 
-      assert_equal('multiline', document.get('class'))
+      assert_equal('step_doc_string', document.get('class'))
       assert_equal('I Am a Cat', document.text.strip)
     end
   end

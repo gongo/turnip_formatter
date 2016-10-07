@@ -86,14 +86,14 @@ div#steps-statistics section.scenario {
                 @extend .panel-body;
             }
 
-            table.step_outline {
+            table.step_data_table {
                margin-top: 2em;
                @extend .table;
                @extend .table-striped;
                @extend .table-bordered;
             }
 
-            pre.multiline {
+            pre.step_doc_string {
                 margin-top: 2em;
                 font-size: 13px;
                 color: #586e75;

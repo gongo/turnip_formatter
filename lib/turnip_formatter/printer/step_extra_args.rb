@@ -1,4 +1,6 @@
 require 'turnip_formatter/printer'
+require 'turnip_formatter/renderer/html/doc_string'
+require 'turnip_formatter/renderer/html/data_table'
 
 module TurnipFormatter
   module Printer
@@ -12,10 +14,10 @@ module TurnipFormatter
         def print_out(argument)
           return '' if argument.nil?
 
-          if argument.instance_of?(Turnip::Table)
-            render_template(:step_outline, { table: argument.to_a })
+          if argument.is_a?(Turnip::Table)
+            TurnipFormatter::Renderer::Html::DataTable.new(argument).render
           else
-            render_template(:step_multiline, { lines: argument })
+            TurnipFormatter::Renderer::Html::DocString.new(argument).render
           end
         end
       end
