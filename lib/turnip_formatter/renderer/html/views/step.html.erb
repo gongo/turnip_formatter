@@ -1,0 +1,10 @@
+<div id="<%= id %>" class="step <%= status %>">
+  <div class="step-title"><%= keyword %> <%= text %></div>
+
+  <% if has_appendix? %>
+  <div class="step-body">
+    <%= argument %>
+    <%= extra_information %>
+  </div>
+  <% end %>
+</div>
