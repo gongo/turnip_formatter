@@ -1,4 +1,4 @@
-require 'turnip_formatter/step'
+require 'turnip_formatter/resource/step'
 
 module TurnipFormatter
   module Scenario
@@ -21,7 +21,7 @@ module TurnipFormatter
 
       def steps
         @steps ||= raw_steps.map do |step|
-          TurnipFormatter::Step.new(example, step)
+          TurnipFormatter::Resource::Step.new(example, step)
         end
       end
 

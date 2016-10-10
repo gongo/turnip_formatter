@@ -25,7 +25,7 @@ module TurnipFormatter::Printer
       describe '.print_out' do
         let(:string) { 'a<a>a' }
         subject { StepExtraArgs.print_out(string) }
-        it { should match %r{<pre class="multiline">a&lt;a&gt;a</pre>} }
+        it { should match %r{<pre class="step_doc_string">a&lt;a&gt;a</pre>} }
       end
     end
   end

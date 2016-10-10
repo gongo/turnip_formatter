@@ -31,7 +31,7 @@ describe TurnipFormatter::Scenario::Base do
 
     it 'returns step array' do
       expect(subject).to be_a Array
-      expect(subject[0]).to be_a TurnipFormatter::Step
+      expect(subject[0]).to be_a TurnipFormatter::Resource::Step
     end
   end
 

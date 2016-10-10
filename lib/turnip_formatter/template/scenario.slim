@@ -12,4 +12,4 @@ section class="scenario #{scenario.status}" id=scenario.id
           li = "@#{tag}"
       div.steps
         - scenario.steps.each do |step|
-          == TurnipFormatter::Printer::Step.print_out(step)
+          == TurnipFormatter::Renderer::Html::Step.new(step).render

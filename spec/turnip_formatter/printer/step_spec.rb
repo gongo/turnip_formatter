@@ -13,7 +13,7 @@ describe TurnipFormatter::Printer::Step do
       end
 
       it {
-        should match %r{<div class="step passed">}
+        should match %r{<div .* class="step passed">}
         should match %r{<div class="step-title">}
       }
     end
@@ -29,7 +29,7 @@ describe TurnipFormatter::Printer::Step do
 
       it {
         should match %r{<div class="step-body">}
-        should match %r{<table class="step_outline">}
+        should match %r{<table .* class="step_data_table">}
       }
     end
 
@@ -42,7 +42,7 @@ describe TurnipFormatter::Printer::Step do
 
       it {
         should match %r{<div class="step-body">}
-        should match %r{<pre class="multiline">}
+        should match %r{<pre class="step_doc_string">}
       }
     end
   end
