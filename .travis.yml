@@ -19,7 +19,9 @@ rvm:
   - ruby-head
   - jruby-9.0.0.0
 
-script: bundle exec rspec
+script:
+  - bundle exec rspec
+  - bundle exec rake test
 
 gemfile:
   - gemfiles/Gemfile-rspec-3.2.x
