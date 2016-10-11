@@ -1,5 +1,4 @@
 require 'turnip_formatter/printer'
-require 'turnip_formatter/printer/step_extra_args'
 
 module TurnipFormatter
   module Printer

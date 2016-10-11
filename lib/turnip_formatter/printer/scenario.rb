@@ -1,6 +1,6 @@
 require 'turnip_formatter/printer'
-require 'turnip_formatter/printer/step'
 require 'turnip_formatter/printer/runtime_error'
+require 'turnip_formatter/renderer/html/step'
 
 module TurnipFormatter
   module Printer

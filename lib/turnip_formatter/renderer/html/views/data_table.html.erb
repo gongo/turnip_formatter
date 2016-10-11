@@ -1,0 +1,9 @@
+<table id="<%= id %>" class="step_data_table">
+  <% table.each do |row| %>
+  <tr>
+    <% row.each do |td| %>
+      <td><%= ERB::Util.h(td) %></td>
+    <% end %>
+  </tr>
+  <% end %>
+</table>

@@ -18,7 +18,7 @@ module StepHelper
   private
 
     def base_step(example)
-      TurnipFormatter::Step.new(example, step_description)
+      TurnipFormatter::Resource::Step.new(example, step_description)
     end
 
     def step_description

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+require 'rspec'
 require 'rspec/core/formatters/base_formatter'
 require 'turnip_formatter/scenario/pass'
 require 'turnip_formatter/scenario/failure'
