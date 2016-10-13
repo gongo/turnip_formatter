@@ -8,16 +8,16 @@ module Turnip
       alias_method :original_run, :run
 
       def run(feature_file)
-        features = original_run(feature_file)
-        example_groups = ::RSpec.world.example_groups[-features.length..-1]
+        original_run(feature_file)
 
-        features.zip(example_groups).each do |feature, example_group|
-          update_metadata(feature, example_group)
-        end
+        feature = Turnip::Builder.build(feature_file)
+        example_group = ::RSpec.world.example_groups.last
+
+        update_metadata(feature, example_group)
       end
 
       #
-      # @param  [Turnip::Builder::Feature]   feature
+      # @param  [Turnip::Node::Feature]      feature
       # @param  [RSpec::Core::ExampleGroup]  example_group
       #
       def update_metadata(feature, example_group)

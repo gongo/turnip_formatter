@@ -25,7 +25,7 @@ module TurnipFormatter
       return @@sample_feature if @@sample_feature
 
       filename = File.expand_path('./sample.feature', File.dirname(__FILE__))
-      @@sample_feature = Turnip::Builder.build(filename).features[0]
+      @@sample_feature = Turnip::Builder.build(filename)
     end
   end
 end
