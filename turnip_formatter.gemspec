@@ -18,7 +18,7 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^spec/})
   spec.require_paths = ['lib']
 
-  spec.add_dependency 'turnip', '~> 3.0.0.pre.beta'
+  spec.add_dependency 'turnip', '~> 3.0.0.pre.beta.4'
   spec.add_dependency 'slim'
   spec.add_dependency 'tilt'
   spec.add_dependency 'rspec', [">=3.0", "<3.5"]
