@@ -29,7 +29,15 @@ module Turnip
           steps   = background_steps + scenario.steps
           tags    = (feature.tag_names + scenario.tag_names).uniq
 
-          example.metadata[:turnip_formatter] = { steps: steps, tags: tags }
+          example.metadata[:turnip_formatter] = {
+            # Turnip::Scenario (Backward compatibility)
+            steps: steps,
+            tags: tags,
+
+            # Turnip::Resource::Scenairo
+            feature: feature,
+            scenario: scenario,
+          }
         end
       end
     end
