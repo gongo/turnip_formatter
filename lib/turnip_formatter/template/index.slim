@@ -62,7 +62,7 @@ html
 
         #feature-statistics.tab-pane
           h4 The results for the feature:
-          == TurnipFormatter::Printer::TabFeatureStatistics.print_out(scenarios)
+          == TurnipFormatter::Renderer::Html::StatisticsFeature.new(scenarios).render
 
         #tag-statistics.tab-pane
           h4 The results for the tab:
