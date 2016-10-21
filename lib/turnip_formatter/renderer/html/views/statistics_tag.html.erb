@@ -1,0 +1,24 @@
+<table>
+  <thead>
+    <tr>
+      <th>Tag</th>
+      <th>Scenarios</th>
+      <th>passed</th>
+      <th>failed</th>
+      <th>pending</th>
+      <th>status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% results.each do |info| %>
+      <tr>
+        <td><%= info.name %></td>
+        <td><%= info.scenario_count %></td>
+        <td><%= info.passed_count %></td>
+        <td><%= info.failed_count %></td>
+        <td><%= info.pending_count %></td>
+        <td class="<%= info.status %>"><%= info.status %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

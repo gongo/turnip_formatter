@@ -66,7 +66,7 @@ html
 
         #tag-statistics.tab-pane
           h4 The results for the tab:
-          == TurnipFormatter::Printer::TabTagStatistics.print_out(scenarios)
+          == TurnipFormatter::Renderer::Html::StatisticsTag.new(scenarios).render
 
         #speed-statistics.tab-pane
           h4 Ranking of running time of each <strong>successfully</strong> scenario:
