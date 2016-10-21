@@ -2,11 +2,11 @@
 
 require 'rspec'
 require 'rspec/core/formatters/base_formatter'
-require 'turnip_formatter/scenario/pass'
-require 'turnip_formatter/scenario/failure'
-require 'turnip_formatter/scenario/pending'
 require 'turnip_formatter/printer/index'
 require 'turnip_formatter/printer/scenario'
+require 'turnip_formatter/resource/scenario/pass'
+require 'turnip_formatter/resource/scenario/failure'
+require 'turnip_formatter/resource/scenario/pending'
 
 module RSpec
   module Core
@@ -37,17 +37,17 @@ module RSpec
         end
 
         def example_passed(notification)
-          scenario = ::TurnipFormatter::Scenario::Pass.new(notification.example)
+          scenario = ::TurnipFormatter::Resource::Scenario::Pass.new(notification.example)
           scenarios << scenario
         end
 
         def example_pending(notification)
-          scenario = ::TurnipFormatter::Scenario::Pending.new(notification.example)
+          scenario = ::TurnipFormatter::Resource::Scenario::Pending.new(notification.example)
           scenarios << scenario
         end
 
         def example_failed(notification)
-          scenario = ::TurnipFormatter::Scenario::Failure.new(notification.example)
+          scenario = ::TurnipFormatter::Resource::Scenario::Failure.new(notification.example)
           scenarios << scenario
         end
 
