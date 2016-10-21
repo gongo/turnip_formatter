@@ -62,15 +62,15 @@ html
 
         #feature-statistics.tab-pane
           h4 The results for the feature:
-          == TurnipFormatter::Printer::TabFeatureStatistics.print_out(scenarios)
+          == TurnipFormatter::Renderer::Html::StatisticsFeature.new(scenarios).render
 
         #tag-statistics.tab-pane
           h4 The results for the tab:
-          == TurnipFormatter::Printer::TabTagStatistics.print_out(scenarios)
+          == TurnipFormatter::Renderer::Html::StatisticsTag.new(scenarios).render
 
         #speed-statistics.tab-pane
           h4 Ranking of running time of each <strong>successfully</strong> scenario:
-          == TurnipFormatter::Printer::TabSpeedStatistics.print_out(scenarios)
+          == TurnipFormatter::Renderer::Html::StatisticsSpeed.new(scenarios).render
 
     footer
       p
