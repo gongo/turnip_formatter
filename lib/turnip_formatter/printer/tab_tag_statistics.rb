@@ -57,16 +57,12 @@ module TurnipFormatter
         #
         def group_by_tag(scenarios)
           scenarios.map do |scenario|
-            if scenario.valid?
-              if scenario.tags.empty?
-                { name: 'turnip', scenario: scenario }
-              else
-                scenario.tags.map do |tag|
-                  { name: '@' + tag, scenario: scenario }
-                end
-              end
+            if scenario.tags.empty?
+              { name: 'turnip', scenario: scenario }
             else
-              { name: 'runtime error', scenario: scenario }
+              scenario.tags.map do |tag|
+                { name: '@' + tag, scenario: scenario }
+              end
             end
           end.flatten.group_by { |s| s[:name] }.sort
         end

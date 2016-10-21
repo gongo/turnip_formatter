@@ -10,7 +10,7 @@ module TurnipFormatter
         include TurnipFormatter::Printer
 
         def print_out(scenarios)
-          features = scenarios.group_by { |s| s.feature_name }
+          features = scenarios.group_by { |s| s.feature.name }
 
           results = features.map do |name, feature_scenarios|
             feature_analysis(name, feature_scenarios)

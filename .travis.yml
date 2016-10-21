@@ -21,7 +21,6 @@ rvm:
   - jruby-9.0.0.0
 
 script:
-  - bundle exec rspec
   - bundle exec rake test
 
 gemfile:

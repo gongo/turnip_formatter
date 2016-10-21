@@ -22,7 +22,7 @@ module TurnipFormatter
             OpenStruct.new(
               {
                 id: s.id,
-                feature_name: s.feature_name,
+                feature_name: s.feature.name,
                 name: s.name,
                 run_time: s.run_time
               }

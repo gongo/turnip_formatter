@@ -74,7 +74,7 @@ div#steps-statistics section.scenario {
                 @extend .panel-warning;
             }
 
-            &.unexecuted {
+            &.unexecute {
                 @extend .panel-info;
             }
 
