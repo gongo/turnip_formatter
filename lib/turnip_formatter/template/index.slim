@@ -70,7 +70,7 @@ html
 
         #speed-statistics.tab-pane
           h4 Ranking of running time of each <strong>successfully</strong> scenario:
-          == TurnipFormatter::Printer::TabSpeedStatistics.print_out(scenarios)
+          == TurnipFormatter::Renderer::Html::StatisticsSpeed.new(scenarios).render
 
     footer
       p

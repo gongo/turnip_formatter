@@ -1,8 +1,8 @@
 require 'turnip_formatter/printer'
 require 'turnip_formatter/printer/scenario'
-require 'turnip_formatter/printer/tab_speed_statistics'
 require 'turnip_formatter/renderer/html/statistics_feature'
 require 'turnip_formatter/renderer/html/statistics_tag'
+require 'turnip_formatter/renderer/html/statistics_speed'
 
 module TurnipFormatter
   module Printer
