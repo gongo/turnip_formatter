@@ -1,0 +1,20 @@
+<section class="exception">
+  <h1>TurnipFormatter Runtime Error</h1>
+  <h2><%= scenario.feature_info %></h2>
+
+  <dl>
+    <dt>Runtime Error</dt>
+    <dd>
+      <pre><%= runtime_exception.to_s %></pre>
+    </dd>
+
+    <dt>Runtime Error Backtrace</dt>
+    <dd>
+      <ol>
+        <% runtime_exception.backtrace.each do |line| %>
+          <li><%= ERB::Util.h(line) %></li>
+        <% end %>
+      </ol>
+    </dd>
+  </dl>
+</section>

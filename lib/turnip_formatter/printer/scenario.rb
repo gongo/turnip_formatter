@@ -1,6 +1,6 @@
 require 'turnip_formatter/printer'
-require 'turnip_formatter/printer/runtime_error'
 require 'turnip_formatter/renderer/html/scenario'
+require 'turnip_formatter/renderer/html/runtime_error'
 
 module TurnipFormatter
   module Printer
@@ -9,12 +9,9 @@ module TurnipFormatter
         include TurnipFormatter::Printer
 
         def print_out(scenario)
-          #
-          # TODO output for scenario.valid? == false
-          #
           TurnipFormatter::Renderer::Html::Scenario.new(scenario).render
         rescue => e
-          TurnipFormatter::Printer::RuntimeError.print_out(scenario.example, e)
+          TurnipFormatter::Renderer::Html::RuntimeError.new([e, scenario]).render
         end
       end
     end
