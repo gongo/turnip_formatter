@@ -1,5 +1,5 @@
 require 'active_support/core_ext/string/inflections' # String#{demodulize,underscore}
-require 'tilt/erb'
+require 'erb'
 require 'forwardable'
 
 module TurnipFormatter
@@ -12,8 +12,8 @@ module TurnipFormatter
 
         class << self
           def view
-            @view ||= ::Tilt::ERBTemplate.new(
-              "#{TEMPLATE_DIRECTORY}/#{resource_name}.html.erb"
+            @view ||= ::ERB.new(
+              File.read("#{TEMPLATE_DIRECTORY}/#{resource_name}.html.erb")
             )
           end
 
@@ -39,7 +39,7 @@ module TurnipFormatter
         end
 
         def render
-          view.render(self)
+          view.result(binding)
         end
       end
     end
