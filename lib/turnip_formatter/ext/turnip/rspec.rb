@@ -21,20 +21,11 @@ module Turnip
       # @param  [RSpec::Core::ExampleGroup]  example_group
       #
       def update_metadata(feature, example_group)
-        background_steps = feature.backgrounds.map(&:steps).flatten
         examples = example_group.children
 
         feature.scenarios.zip(examples).each do |scenario, parent_example|
           example = parent_example.examples.first
-          steps   = background_steps + scenario.steps
-          tags    = (feature.tag_names + scenario.tag_names).uniq
-
           example.metadata[:turnip_formatter] = {
-            # Turnip::Scenario (Backward compatibility)
-            steps: steps,
-            tags: tags,
-
-            # Turnip::Resource::Scenairo
             feature: feature,
             scenario: scenario,
           }
