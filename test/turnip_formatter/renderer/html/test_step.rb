@@ -34,5 +34,32 @@ module TurnipFormatter::Renderer::Html
         assert_not_nil(document.at_css('div.step-body'))
       end
     end
+
+    private
+
+    def sample_step
+      sample_feature.scenarios[0].steps[0]
+    end
+
+    def sample_step_with_docstring
+      sample_feature.scenarios[0].steps[1]
+    end
+
+    def sample_feature
+      feature_build(feature_text)
+    end
+
+    def feature_text
+      <<-EOS
+        Feature: Feature
+
+          Scenario: Scenario
+            When step
+            When step with DocString
+              """
+              DocString
+              """
+      EOS
+    end
   end
 end
