@@ -2,8 +2,7 @@
 
 require 'rspec'
 require 'rspec/core/formatters/base_formatter'
-require 'turnip_formatter/printer/index'
-require 'turnip_formatter/printer/scenario'
+require 'turnip_formatter/renderer/html/index'
 require 'turnip_formatter/resource/scenario/pass'
 require 'turnip_formatter/resource/scenario/failure'
 require 'turnip_formatter/resource/scenario/pending'
@@ -54,7 +53,7 @@ module RSpec
         private
 
         def output_html(params)
-          output.puts ::TurnipFormatter::Printer::Index.print_out(params)
+          output.puts ::TurnipFormatter::Renderer::Html::Index.new(params).render
         end
       end
     end
