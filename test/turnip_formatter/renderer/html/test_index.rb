@@ -29,7 +29,7 @@ module TurnipFormatter::Renderer::Html
     end
 
     def test_title
-      mock(TurnipFormatter::Template).project_name { 'Perfect Turnip' }
+      mock(TurnipFormatter::Renderer::Html).project_name { 'Perfect Turnip' }
       assert_equal('Perfect Turnip report', @renderer.title)
     end
 

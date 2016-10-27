@@ -17,23 +17,23 @@ module TurnipFormatter
       #
       class Index < Base
         def style_links
-          TurnipFormatter::Template.render_stylesheet_links
+          Html.render_stylesheet_links
         end
 
         def style_codes
-          TurnipFormatter::Template.render_stylesheet_codes
+          Html.render_stylesheet_codes
         end
 
         def script_links
-          TurnipFormatter::Template.render_javascript_links
+          Html.render_javascript_links
         end
 
         def script_codes
-          TurnipFormatter::Template.render_javascript_codes
+          Html.render_javascript_codes
         end
 
         def title
-          TurnipFormatter::Template.project_name + ' report'
+          Html.project_name + ' report'
         end
 
         def scenarios_html
