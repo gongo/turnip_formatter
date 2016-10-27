@@ -49,16 +49,18 @@ module TurnipFormatter
         end
 
         def render_stylesheet_codes
-          codes = TurnipFormatter.step_templates.map do |template|
-            template.class.css
-          end
-
-          codes.concat(style_codes).join("\n")
+          style_codes.join("\n")
         end
 
         def render_stylesheet_links
           style_files.map do |file|
             "<link rel=\"stylesheet\" href=\"#{file}\">"
+          end.join("\n")
+        end
+
+        def render_step_template_stylesheet_codes
+          TurnipFormatter.step_templates.map do |template|
+            template.class.css
           end.join("\n")
         end
 
