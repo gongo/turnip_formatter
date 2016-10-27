@@ -21,7 +21,7 @@ module TurnipFormatter
         end
 
         def style_codes
-          Html.render_stylesheet_codes
+          Html.render_stylesheet_codes + Html.render_step_template_stylesheet_codes
         end
 
         def script_links
