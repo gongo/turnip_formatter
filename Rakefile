@@ -5,10 +5,11 @@ require 'rake/testtask'
 
 desc 'Compile report CSS file'
 task :compile do
-  input = open('lib/turnip_formatter/template/turnip_formatter.scss').read
+  dir = 'lib/turnip_formatter/renderer/html/assets'
+  input = open("#{dir}/turnip_formatter.scss").read
   engine = Sass::Engine.new(input, syntax: :scss, style: :compressed)
 
-  File.open('lib/turnip_formatter/template/turnip_formatter.css', 'w') do |f|
+  File.open("#{dir}/turnip_formatter.css", 'w') do |f|
     f.write engine.render
   end
 end
