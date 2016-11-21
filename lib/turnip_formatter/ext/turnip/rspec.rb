@@ -11,6 +11,8 @@ module Turnip
         original_run(feature_file)
 
         feature = Turnip::Builder.build(feature_file)
+        return nil if feature.nil?
+
         example_group = ::RSpec.world.example_groups.last
 
         update_metadata(feature, example_group)
