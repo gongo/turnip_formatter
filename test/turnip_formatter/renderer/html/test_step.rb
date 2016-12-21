@@ -35,6 +35,21 @@ module TurnipFormatter::Renderer::Html
       end
     end
 
+    sub_test_case 'step should be escaped html style' do
+      def setup
+        resource = TurnipFormatter::Resource::Step.new(nil, sample_step_should_escaping)
+        @renderer = Step.new(resource)
+      end
+
+      def test_render
+        rendered = @renderer.render
+        document = html_parse(@renderer.render).at_xpath('/div')
+
+        assert_not_nil(%r{<div class="step-title">When step &gt;should&lt; escaped</div>}.match(rendered))
+        assert_nil(document.at_css('div.step-body'))
+      end
+    end
+
     private
 
     def sample_step
@@ -43,6 +58,10 @@ module TurnipFormatter::Renderer::Html
 
     def sample_step_with_docstring
       sample_feature.scenarios[0].steps[1]
+    end
+
+    def sample_step_should_escaping
+      sample_feature.scenarios[0].steps[2]
     end
 
     def sample_feature
@@ -59,6 +78,7 @@ module TurnipFormatter::Renderer::Html
               """
               DocString
               """
+            When step >should< escaped
       EOS
     end
   end
