@@ -1,5 +1,5 @@
 <div id="<%= id %>" class="step <%= status %>">
-  <div class="step-title"><%= keyword %> <%= text %></div>
+  <div class="step-title"><%= ERB::Util.h(keyword) %> <%= ERB::Util.h(text) %></div>
 
   <% if has_appendix? %>
   <div class="step-body">
