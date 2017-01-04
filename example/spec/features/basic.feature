@@ -6,19 +6,18 @@ Feature: Battle a monster
      Then it should die
       And Fanfare
 
-  Scenario: strong monster
+  Scenario: [ERROR] strong monster
 
-    This scenario will error
-    So, fanfare is not...oh...
+    This scenario will not success because his attacks can't defeat strong monster
 
     Given there is a strong monster
      When I attack it
      Then it should die
       And Fanfare
 
-  Scenario: spell magic
+  Scenario: [PENDING] spell magic
 
-    This scenario will error because he can't cast spell
+    This scenario will not success because he can't cast spell
 
     Given there is a strong monster
      When I cast a spell 'fireball'
@@ -27,7 +26,9 @@ Feature: Battle a monster
       And Fanfare
 
   @magician
-  Scenario: spell magic 
+  Scenario: spell magic
+
+    `magician` can cast spell.
 
     Given there is a strong monster
      When I cast a spell 'fireball'
