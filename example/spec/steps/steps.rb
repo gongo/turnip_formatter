@@ -32,6 +32,10 @@ step "there are monsters:" do |monsters|
   @monsters = monsters.map { |row| row[0] }
 end
 
+step "there should be :count monsters" do |count|
+  @monsters.length.should eq(count.to_i)
+end
+
 step "the monster sings the following song" do |song|
   @song = song
 end
