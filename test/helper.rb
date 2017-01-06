@@ -71,6 +71,14 @@ module TurnipFormatter
       rspec_context.include(Turnip::RSpec::Execute)
       rspec_context.include(ExecuteWrapper)
 
+      rspec_context.before(:example, before_hook_error: true) do
+        undefined_method # NameError
+      end
+
+      rspec_context.after(:example, after_hook_error: true) do
+        expect(true).to be false # RSpec Matcher Error
+      end
+
       Turnip::RSpec.__send__(:run_feature, rspec_context, feature, filename)
       rspec_context.run(NoopObject.new)
       Turnip::RSpec.update_metadata(feature, rspec_context)
