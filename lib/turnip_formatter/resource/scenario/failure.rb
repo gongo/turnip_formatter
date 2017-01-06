@@ -5,6 +5,8 @@ module TurnipFormatter
   module Resource
     module Scenario
       class Failure < Base
+        alias :super_steps :steps
+
         #
         # Return steps
         #
@@ -34,7 +36,7 @@ module TurnipFormatter
         private
 
         def steps_with_error
-          steps = method(:steps).super_method.call
+          steps = super_steps
 
           arys = steps.group_by { |s| (s.line <=> failed_line_number).to_s }
           arys['-1'].each { |s| s.status = :passed    } unless arys['-1'].nil?
@@ -45,15 +47,14 @@ module TurnipFormatter
         end
 
         def steps_with_error_in_before_hook
-          steps = method(:steps).super_method.call
+          steps = super_steps
 
           steps.each { |s| s.status = :unexecute }
           [TurnipFormatter::Resource::Hook.new(example, 'BeforeHook', :failed)] + steps
         end
 
         def steps_with_error_in_after_hook
-          steps = method(:steps).super_method.call
-          steps + [TurnipFormatter::Resource::Hook.new(example, 'AfterHook', :failed)]
+          super_steps + [TurnipFormatter::Resource::Hook.new(example, 'AfterHook', :failed)]
         end
 
         def error_in_steps?
