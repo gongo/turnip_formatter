@@ -38,7 +38,13 @@ module TurnipFormatter
       private
 
       def location(example)
-        formatted_backtrace(example).first
+        exception = example.exception
+
+        if example.exception.is_a?(RSpec::Core::MultipleExceptionError)
+          exception = example.exception.all_exceptions.first
+        end
+
+        formatted_backtrace(example, exception).first
       end
 
       def extractor

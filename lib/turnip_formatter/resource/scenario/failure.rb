@@ -22,6 +22,25 @@ module TurnipFormatter
         #   #<Step 'baz'>.status = :failed
         #   #<Step 'piyo'>.status = :unexecute
         #
+        # @TODO Correspond to multiple errors.
+        #
+        # example:
+        #
+        #   # foo.feature
+        #   @after_hook
+        #   When foo
+        #    And bar  <= failed line
+        #   Then baz
+        #
+        #   # spec_helper.rb
+        #   RSpec.configure do |config|
+        #     config.after(:example, after_hook: true) do
+        #       raise RuntimeError
+        #     end
+        #   end
+        #
+        # Currently, display only first error (`And bar`).
+        #
         def steps
           case
           when error_in_steps?
@@ -62,13 +81,13 @@ module TurnipFormatter
         end
 
         def error_in_before_hook?
-          example.exception.backtrace.any? do |backtrace|
+          exception.backtrace.any? do |backtrace|
             backtrace.match(/run_before_example/)
           end
         end
 
         def error_in_after_hook?
-          example.exception.backtrace.any? do |backtrace|
+          exception.backtrace.any? do |backtrace|
             backtrace.match(/run_after_example/)
           end
         end
@@ -76,10 +95,20 @@ module TurnipFormatter
         def failed_line_number
           @failed_line_number ||= (
             filepath = File.basename(feature_file_path)
-            line = example.exception.backtrace.find do |backtrace|
+            line = exception.backtrace.find do |backtrace|
               backtrace.match(/#{filepath}:(\d+)/)
             end
             Regexp.last_match[1].to_i if line
+          )
+        end
+
+        def exception
+          @exception ||= (
+            if example.exception.is_a?(RSpec::Core::MultipleExceptionError)
+              example.exception.all_exceptions.first
+            else
+              example.exception
+            end
           )
         end
       end

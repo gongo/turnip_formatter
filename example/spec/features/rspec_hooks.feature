@@ -13,3 +13,10 @@ Feature: Battle a monster with hooks
      When I attack it
      Then it should die
       And Fanfare
+
+  @after_hook_error
+  Scenario: [ERROR] Error in steps and after hook
+    Given there is a strong monster
+     When I attack it
+     Then it should die
+      And Fanfare

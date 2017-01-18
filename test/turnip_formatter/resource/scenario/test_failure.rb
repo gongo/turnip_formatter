@@ -39,6 +39,16 @@ module TurnipFormatter::Resource::Scenario
       assert_equal(TurnipFormatter::Resource::Hook, @resource.steps.last.class)
     end
 
+    def test_steps_has_error_in_steps_and_after_hook
+      @resource = Failure.new(scenario_error_step_and_after_hook)
+
+      expect = [:passed, :failed, :unexecute]
+      actual = @resource.steps.map(&:status)
+
+      assert_equal(expect, actual)
+      assert_equal(TurnipFormatter::Resource::Step, @resource.steps.last.class)
+    end
+
     private
 
     def scenario_example
@@ -51,6 +61,10 @@ module TurnipFormatter::Resource::Scenario
 
     def scenario_error_after_hook
       scenario_examples[2]
+    end
+
+    def scenario_error_step_and_after_hook
+      scenario_examples[3]
     end
 
     def scenario_examples
@@ -77,6 +91,13 @@ module TurnipFormatter::Resource::Scenario
           Scenario: Error in after hook
             When I attack it
             Then it should die
+
+          @after_hook_error
+          Scenario: Error in after hook
+            When I attack it
+            Then [ERROR] it should die
+             And I get drop items
+
       EOS
     end
   end
