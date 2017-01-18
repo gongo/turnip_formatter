@@ -10,7 +10,6 @@ branches:
 
 matrix:
   allow_failures:
-    - gemfile: gemfiles/Gemfile-rspec-3.2.x
     - rvm: ruby-head
 
 rvm:
@@ -24,6 +23,5 @@ script:
   - bundle exec rake test
 
 gemfile:
-  - gemfiles/Gemfile-rspec-3.2.x
   - gemfiles/Gemfile-rspec-3.3.x
   - gemfiles/Gemfile-rspec-3.4.x
