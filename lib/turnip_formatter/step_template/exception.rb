@@ -28,7 +28,13 @@ module TurnipFormatter
       # @param  [RSpec::Core::Example]  example
       #
       def build_failed(example)
-        build(example.exception.to_s, formatted_backtrace(example))
+        exception = example.exception
+
+        if example.exception.is_a?(RSpec::Core::MultipleExceptionError)
+          exception = example.exception.all_exceptions.first
+        end
+
+        build(exception.to_s, formatted_backtrace(example, exception))
       end
 
       #
@@ -40,13 +46,13 @@ module TurnipFormatter
 
       private
 
-        def build(message, backtrace)
-          template_step_exception.render(Object.new, { message: message, backtrace: backtrace })
-        end
+      def build(message, backtrace)
+        template_step_exception.render(Object.new, { message: message, backtrace: backtrace })
+      end
 
-        def template_step_exception
-          @template_step_exception ||= Slim::Template.new(File.dirname(__FILE__) + "/exception.slim")
-        end
+      def template_step_exception
+        @template_step_exception ||= Slim::Template.new(File.dirname(__FILE__) + "/exception.slim")
+      end
     end
   end
 end

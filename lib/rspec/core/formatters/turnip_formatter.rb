@@ -15,9 +15,10 @@ module RSpec
 
         Formatters.register self, :example_passed, :example_pending, :example_failed, :dump_summary
 
-        def self.formatted_backtrace(example)
+        def self.formatted_backtrace(example, exception = nil)
+          exception = example.exception if exception.nil?
           formatter = RSpec.configuration.backtrace_formatter
-          formatter.format_backtrace(example.exception.backtrace, example.metadata)
+          formatter.format_backtrace(exception.backtrace, example.metadata)
         end
 
         def initialize(output)
