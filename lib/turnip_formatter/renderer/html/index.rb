@@ -1,5 +1,6 @@
 require 'turnip_formatter'
 require 'turnip_formatter/renderer/html/scenario'
+require 'turnip_formatter/renderer/html/runtime_error'
 require 'turnip_formatter/renderer/html/statistics_feature'
 require 'turnip_formatter/renderer/html/statistics_tag'
 require 'turnip_formatter/renderer/html/statistics_speed'
