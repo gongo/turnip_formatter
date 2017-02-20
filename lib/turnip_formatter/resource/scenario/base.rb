@@ -1,5 +1,6 @@
 require 'forwardable'
-require 'turnip_formatter/resource/step'
+require 'turnip_formatter/resource/step/pass'
+require 'turnip_formatter/resource/step/unexecute'
 
 module TurnipFormatter
   module Resource
@@ -19,7 +20,7 @@ module TurnipFormatter
 
         def steps
           @steps ||= (backgrounds.map(&:steps).flatten + raw.steps).map do |step|
-            TurnipFormatter::Resource::Step.new(example, step)
+            TurnipFormatter::Resource::Pass::Step.new(example, step)
           end
         end
 
@@ -56,6 +57,10 @@ module TurnipFormatter
 
         def feature
           example.metadata[:turnip_formatter][:feature]
+        end
+
+        def raw_steps
+          backgrounds.map(&:steps).flatten + raw.steps
         end
 
         private
