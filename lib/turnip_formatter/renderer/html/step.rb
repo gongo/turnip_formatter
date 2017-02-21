@@ -28,7 +28,7 @@ module TurnipFormatter
 
         def extra_information
           extra_information_templates.map do |template, method|
-            template.send(method, @resource.example)
+            template.send(method, @resource)
           end.join("\n")
         end
 
