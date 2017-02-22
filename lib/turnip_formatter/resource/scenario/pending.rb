@@ -1,4 +1,5 @@
 require 'turnip_formatter/resource/scenario/base'
+require 'turnip_formatter/resource/step/pending'
 
 module TurnipFormatter
   module Resource
@@ -14,21 +15,25 @@ module TurnipFormatter
         #    And baz  <= pending line
         #   Then piyo
         #
-        #   #<Step 'foo'>.status = :passed
-        #   #<Step 'bar'>.status = :passed
-        #   #<Step 'baz'>.status = :pending
-        #   #<Step 'piyo'>.status = :unexecute
+        #   # => [
+        #   #   <Step::Pass 'foo'>
+        #   #   <Step::Pass 'bar'>
+        #   #   <Step::Pending 'baz'>
+        #   #   <Step::Unexecute 'piyo'>
+        #   # ]
         #
         def steps
-          steps = super
+          raw_steps.map do |rs|
+            if rs.line < pending_line_number
+              klass = TurnipFormatter::Resource::Step::Pass
+            elsif rs.line == pending_line_number
+              klass = TurnipFormatter::Resource::Step::Pending
+            else
+              klass = TurnipFormatter::Resource::Step::Unexecute
+            end
 
-          arys = steps.group_by { |s| (s.line <=> pending_line_number).to_s }
-
-          arys['-1'].each { |s| s.status = :passed    } unless arys['-1'].nil?
-          arys['0'].each  { |s| s.status = :pending   } unless arys['0'].nil?
-          arys['1'].each  { |s| s.status = :unexecute } unless arys['1'].nil?
-
-          steps
+            klass.new(example, rs)
+          end
         end
 
         private

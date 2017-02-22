@@ -65,10 +65,16 @@ module TurnipFormatter
       end
 
       #
-      # @param  [RSpec::Core::Example]  example
+      # @param  [TurnipFormatter::Resource::Step::Pending]  step
       #
-      def build_pending(example)
-        build(example.execution_result.pending_message, [example.location])
+      def build_pending(step)
+        datas = [{
+                   code: nil,
+                   message: step.pending_message,
+                   backtrace: [step.pending_location]
+                 }]
+
+        render(exceptions: datas)
       end
 
       private

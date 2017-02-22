@@ -4,17 +4,16 @@ module TurnipFormatter
   module Resource
     module Step
       class Pending < Base
-        attr_reader :pending_exception
-
         def status
           :pending
         end
 
-        #
-        # @param  [Exception]  exception
-        #
-        def set_pending_exception(exception)
-          @pending_exception = exception
+        def pending_message
+          example.execution_result.pending_message
+        end
+
+        def pending_location
+          example.location
         end
       end
     end

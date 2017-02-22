@@ -15,5 +15,7 @@
       </dd>
     </dl>
   </div>
-  <pre class="source"><code class="ruby"><%= e[:code] %></code></pre>
+  <% unless e[:code].nil? %>
+    <pre class="source"><code class="ruby"><%= e[:code] %></code></pre>
+  <% end %>
 <% end %>
