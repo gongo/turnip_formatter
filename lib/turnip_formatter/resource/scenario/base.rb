@@ -18,12 +18,6 @@ module TurnipFormatter
           @example = example
         end
 
-        def steps
-          @steps ||= (backgrounds.map(&:steps).flatten + raw.steps).map do |step|
-            TurnipFormatter::Resource::Pass::Step.new(example, step)
-          end
-        end
-
         def id
           'scenario_' + object_id.to_s
         end
