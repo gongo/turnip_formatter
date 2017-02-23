@@ -1,6 +1,6 @@
 require 'turnip_formatter/resource/scenario/base'
 require 'turnip_formatter/resource/step/failure'
-require 'turnip_formatter/resource/hook'
+require 'turnip_formatter/resource/step/hook'
 require 'rspec/core/formatters/exception_presenter'
 
 module TurnipFormatter
@@ -27,11 +27,14 @@ module TurnipFormatter
         def steps
           exceptions = all_exception_group_by_line_number
 
-          return steps_with_error_in_before_hook if error_in_before_hook?(exceptions)
+          if exceptions.has_key?(:before)
+            return steps_with_error_in_before_hook(exceptions[:before])
+          end
 
           steps = steps_with_error(exceptions)
-          if error_in_after_hook?(exceptions)
-            steps + [TurnipFormatter::Resource::Hook.new(example, 'AfterHook', :failed)]
+
+          if exceptions.has_key?(:after)
+            return steps_with_error_in_after_hook(steps, exceptions[:after])
           end
 
           steps
@@ -59,8 +62,10 @@ module TurnipFormatter
           end
         end
 
-        def steps_with_error_in_before_hook
-          before_step = TurnipFormatter::Resource::Hook.new(example, 'BeforeHook', :failed)
+        def steps_with_error_in_before_hook(exceptions)
+          before_step = TurnipFormatter::Resource::Step::BeforeHook.new(example)
+          before_step.set_exceptions(exceptions)
+
           after_steps = raw_steps.map do |rs|
             TurnipFormatter::Resource::Step::Unexecute.new(example, rs)
           end
@@ -68,26 +73,33 @@ module TurnipFormatter
           [before_step] + after_steps
         end
 
-        def error_in_before_hook?(exceptions)
-          extra_exceptions = exceptions[nil]
-          return false if extra_exceptions.nil?
+        def steps_with_error_in_after_hook(steps, exceptions)
+          after_step = TurnipFormatter::Resource::Step::AfterHook.new(example)
+          after_step.set_exceptions(exceptions)
 
-          extra_exceptions.first.backtrace.any? do |backtrace|
-            backtrace.match(/run_before_example/)
-          end
+          steps + [after_step]
+        end
+
+        def error_in_before_hook?(exceptions)
+          exceptions.has_key?(:before)
         end
 
         def error_in_after_hook?(exceptions)
-          extra_exceptions = exceptions[nil]
-          return false if extra_exceptions.nil?
-
-          extra_exceptions.last.backtrace.any? do |backtrace|
-            backtrace.match(/run_after_example/)
-          end
+          exceptions.has_key?(:after)
         end
 
         def all_exception_group_by_line_number
-          all_exception(example.exception).group_by { |e| failed_line_number(e) }
+          all_exception(example.exception).group_by do |e|
+            line = failed_line_number(e)
+            next line unless line.nil?
+
+            case
+            when occurred_in_before_hook?(e)
+              :before
+            when occurred_in_after_hook?(e)
+              :after
+            end
+          end
         end
 
         def all_exception(exception)
@@ -107,6 +119,18 @@ module TurnipFormatter
           end
 
           Regexp.last_match[1].to_i if line
+        end
+
+        def occurred_in_before_hook?(exception)
+          exception.backtrace.any? do |backtrace|
+            backtrace.match(/run_before_example/)
+          end
+        end
+
+        def occurred_in_after_hook?(exception)
+          exception.backtrace.any? do |backtrace|
+            backtrace.match(/run_after_example/)
+          end
         end
       end
     end
