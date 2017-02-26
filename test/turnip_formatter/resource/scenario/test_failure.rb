@@ -26,7 +26,7 @@ module TurnipFormatter::Resource::Scenario
       actual = @resource.steps.map(&:status)
 
       assert_equal(expect, actual)
-      assert_equal(TurnipFormatter::Resource::Hook, @resource.steps.first.class)
+      assert_equal(TurnipFormatter::Resource::Step::BeforeHook, @resource.steps.first.class)
     end
 
     def test_steps_has_error_in_after_hook
@@ -36,7 +36,7 @@ module TurnipFormatter::Resource::Scenario
       actual = @resource.steps.map(&:status)
 
       assert_equal(expect, actual)
-      assert_equal(TurnipFormatter::Resource::Hook, @resource.steps.last.class)
+      assert_equal(TurnipFormatter::Resource::Step::AfterHook, @resource.steps.last.class)
     end
 
     def test_steps_has_error_in_steps_and_after_hook
@@ -46,7 +46,7 @@ module TurnipFormatter::Resource::Scenario
       actual = @resource.steps.map(&:status)
 
       assert_equal(expect, actual)
-      assert_equal(TurnipFormatter::Resource::Step, @resource.steps.last.class)
+      assert_equal(TurnipFormatter::Resource::Step::Pass, @resource.steps.last.class)
     end
 
     private
