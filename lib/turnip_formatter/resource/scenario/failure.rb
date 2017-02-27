@@ -114,8 +114,15 @@ module TurnipFormatter
 
         def failed_line_number(exception)
           filepath = File.basename(feature_file_path)
+          method = if RUBY_PLATFORM == 'java'
+                     'block in (eval)'
+                   else
+                     'run_step'
+                   end
+          method = Regexp.escape(method)
+
           line = exception.backtrace.find do |backtrace|
-            backtrace.match(/#{filepath}:(\d+):in `run_step'/)
+            backtrace.match(/#{filepath}:(\d+):in `#{method}'/)
           end
 
           Regexp.last_match[1].to_i if line
