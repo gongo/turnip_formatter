@@ -115,7 +115,7 @@ module TurnipFormatter
         def failed_line_number(exception)
           filepath = File.basename(feature_file_path)
           method = if RUBY_PLATFORM == 'java'
-                     'block in (eval)'
+                     '<eval>'
                    else
                      'run_step'
                    end
