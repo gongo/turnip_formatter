@@ -29,10 +29,6 @@ module TurnipFormatter
           ''
         end
       end
-
-      def formatted_backtrace(example, exception = nil)
-        RSpec::Core::Formatters::TurnipFormatter.formatted_backtrace(example, exception)
-      end
     end
   end
 end

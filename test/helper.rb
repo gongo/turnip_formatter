@@ -72,7 +72,17 @@ module TurnipFormatter
       rspec_context.include(ExecuteWrapper)
 
       rspec_context.before(:example, before_hook_error: true) do
-        undefined_method # NameError
+        #
+        # Workaround for JRuby <= 9.1.7.0
+        #
+        # https://github.com/jruby/jruby/issues/4467
+        # https://github.com/rspec/rspec-core/pull/2381
+        #
+        begin
+          undefined_method # NameError
+        rescue => e
+          raise e
+        end
       end
 
       rspec_context.after(:example, after_hook_error: true) do

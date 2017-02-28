@@ -1,12 +1,12 @@
 require 'turnip_formatter/resource/scenario/base'
-require 'turnip_formatter/resource/hook'
+require 'turnip_formatter/resource/step/failure'
+require 'turnip_formatter/resource/step/hook'
+require 'rspec/core/formatters/exception_presenter'
 
 module TurnipFormatter
   module Resource
     module Scenario
       class Failure < Base
-        alias :super_steps :steps
-
         #
         # Return steps
         #
@@ -17,99 +17,127 @@ module TurnipFormatter
         #    And baz  <= failed line
         #   Then piyo
         #
-        #   #<Step 'foo'>.status = :passed
-        #   #<Step 'bar'>.status = :passed
-        #   #<Step 'baz'>.status = :failed
-        #   #<Step 'piyo'>.status = :unexecute
-        #
-        # @TODO Correspond to multiple errors.
-        #
-        # example:
-        #
-        #   # foo.feature
-        #   @after_hook
-        #   When foo
-        #    And bar  <= failed line
-        #   Then baz
-        #
-        #   # spec_helper.rb
-        #   RSpec.configure do |config|
-        #     config.after(:example, after_hook: true) do
-        #       raise RuntimeError
-        #     end
-        #   end
-        #
-        # Currently, display only first error (`And bar`).
+        #   # => [
+        #   #   <Step::Pass 'foo'>
+        #   #   <Step::Pass 'bar'>
+        #   #   <Step::Failure 'baz'>
+        #   #   <Step::Unexecute 'piyo'>
+        #   # ]
         #
         def steps
-          case
-          when error_in_steps?
-            steps_with_error
-          when error_in_before_hook?
-            steps_with_error_in_before_hook
-          when error_in_after_hook?
-            steps_with_error_in_after_hook
+          exceptions = all_exception_group_by_line_number
+
+          if exceptions.has_key?(:before)
+            return steps_with_error_in_before_hook(exceptions[:before])
           end
-        end
 
-        private
+          steps = steps_with_error(exceptions)
 
-        def steps_with_error
-          steps = super_steps
-
-          arys = steps.group_by { |s| (s.line <=> failed_line_number).to_s }
-          arys['-1'].each { |s| s.status = :passed    } unless arys['-1'].nil?
-          arys['0'].each  { |s| s.status = :failed    } unless arys['0'].nil?
-          arys['1'].each  { |s| s.status = :unexecute } unless arys['1'].nil?
+          if exceptions.has_key?(:after)
+            return steps_with_error_in_after_hook(steps, exceptions[:after])
+          end
 
           steps
         end
 
-        def steps_with_error_in_before_hook
-          steps = super_steps
+        private
 
-          steps.each { |s| s.status = :unexecute }
-          [TurnipFormatter::Resource::Hook.new(example, 'BeforeHook', :failed)] + steps
+        def steps_with_error(exceptions)
+          step_klass = TurnipFormatter::Resource::Step::Pass
+
+          raw_steps.map do |rs|
+            ex = exceptions[rs.line]
+            next step_klass.new(example, rs) unless ex
+
+            # The status of step after error step is determined by `aggregate_failures` option
+            if example.metadata[:aggregate_failures]
+              step_klass = TurnipFormatter::Resource::Step::Pass
+            else
+              step_klass = TurnipFormatter::Resource::Step::Unexecute
+            end
+
+            TurnipFormatter::Resource::Step::Failure.new(example, rs).tap do |step|
+              step.set_exceptions(ex)
+            end
+          end
         end
 
-        def steps_with_error_in_after_hook
-          super_steps + [TurnipFormatter::Resource::Hook.new(example, 'AfterHook', :failed)]
+        def steps_with_error_in_before_hook(exceptions)
+          before_step = TurnipFormatter::Resource::Step::BeforeHook.new(example)
+          before_step.set_exceptions(exceptions)
+
+          after_steps = raw_steps.map do |rs|
+            TurnipFormatter::Resource::Step::Unexecute.new(example, rs)
+          end
+
+          [before_step] + after_steps
         end
 
-        def error_in_steps?
-          !failed_line_number.nil?
+        def steps_with_error_in_after_hook(steps, exceptions)
+          after_step = TurnipFormatter::Resource::Step::AfterHook.new(example)
+          after_step.set_exceptions(exceptions)
+
+          steps + [after_step]
         end
 
-        def error_in_before_hook?
+        def error_in_before_hook?(exceptions)
+          exceptions.has_key?(:before)
+        end
+
+        def error_in_after_hook?(exceptions)
+          exceptions.has_key?(:after)
+        end
+
+        def all_exception_group_by_line_number
+          all_exception(example.exception).group_by do |e|
+            line = failed_line_number(e)
+            next line unless line.nil?
+
+            case
+            when occurred_in_before_hook?(e)
+              :before
+            when occurred_in_after_hook?(e)
+              :after
+            end
+          end
+        end
+
+        def all_exception(exception)
+          unless exception.class.include?(RSpec::Core::MultipleExceptionError::InterfaceTag)
+            return [exception]
+          end
+
+          exception.all_exceptions.flat_map do |e|
+            all_exception(e)
+          end
+        end
+
+        def failed_line_number(exception)
+          filepath = File.basename(feature_file_path)
+          method = if RUBY_PLATFORM == 'java'
+                     '<eval>'
+                   else
+                     'run_step'
+                   end
+          method = Regexp.escape(method)
+
+          line = exception.backtrace.find do |backtrace|
+            backtrace.match(/#{filepath}:(\d+):in `#{method}'/)
+          end
+
+          Regexp.last_match[1].to_i if line
+        end
+
+        def occurred_in_before_hook?(exception)
           exception.backtrace.any? do |backtrace|
             backtrace.match(/run_before_example/)
           end
         end
 
-        def error_in_after_hook?
+        def occurred_in_after_hook?(exception)
           exception.backtrace.any? do |backtrace|
             backtrace.match(/run_after_example/)
           end
-        end
-
-        def failed_line_number
-          @failed_line_number ||= (
-            filepath = File.basename(feature_file_path)
-            line = exception.backtrace.find do |backtrace|
-              backtrace.match(/#{filepath}:(\d+)/)
-            end
-            Regexp.last_match[1].to_i if line
-          )
-        end
-
-        def exception
-          @exception ||= (
-            if example.exception.is_a?(RSpec::Core::MultipleExceptionError)
-              example.exception.all_exceptions.first
-            else
-              example.exception
-            end
-          )
         end
       end
     end
