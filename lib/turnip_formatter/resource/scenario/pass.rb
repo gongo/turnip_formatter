@@ -4,9 +4,9 @@ module TurnipFormatter
   module Resource
     module Scenario
       class Pass < Base
-        def steps
-          raw_steps.map do |rs|
-            TurnipFormatter::Resource::Step::Pass.new(example, rs)
+        def mark_status
+          @steps.each do |step|
+            step.mark_as_executed
           end
         end
       end

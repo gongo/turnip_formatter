@@ -1,38 +1,35 @@
 require 'turnip_formatter/resource/scenario/base'
-require 'turnip_formatter/resource/step/pending'
 
 module TurnipFormatter
   module Resource
     module Scenario
       class Pending < Base
         #
-        # Return steps
+        # Mark status for each step
         #
         # example:
         #
         #   When foo
-        #    And bar
-        #    And baz  <= pending line
-        #   Then piyo
+        #    And bar <= pending line
+        #   Then baz
         #
-        #   # => [
-        #   #   <Step::Pass 'foo'>
-        #   #   <Step::Pass 'bar'>
-        #   #   <Step::Pending 'baz'>
-        #   #   <Step::Unexecute 'piyo'>
+        #   # @steps => [
+        #   #   <Step::Step 'foo'>  # .status => :passed
+        #   #   <Step::Step 'bar'>  # .status => :pending
+        #   #   <Step::Step 'baz'>  # .status => :unexecute
         #   # ]
         #
-        def steps
-          raw_steps.map do |rs|
-            if rs.line < pending_line_number
-              klass = TurnipFormatter::Resource::Step::Pass
-            elsif rs.line == pending_line_number
-              klass = TurnipFormatter::Resource::Step::Pending
-            else
-              klass = TurnipFormatter::Resource::Step::Unexecute
-            end
+        def mark_status
+          @steps.each do |step|
+            step.mark_as_executed
 
-            klass.new(example, rs)
+            if pending_line_number == step.line
+              step.set_pending(
+                example.execution_result.pending_message,
+                example.location
+              )
+              break
+            end
           end
         end
 

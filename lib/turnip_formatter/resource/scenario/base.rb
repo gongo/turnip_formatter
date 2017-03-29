@@ -1,6 +1,6 @@
 require 'forwardable'
-require 'turnip_formatter/resource/step/pass'
-require 'turnip_formatter/resource/step/unexecute'
+require 'turnip_formatter/resource/step/step'
+require 'turnip_formatter/resource/step/hook'
 
 module TurnipFormatter
   module Resource
@@ -53,14 +53,30 @@ module TurnipFormatter
           example.metadata[:turnip_formatter][:feature]
         end
 
-        def raw_steps
-          backgrounds.map(&:steps).flatten + raw.steps
+        def steps
+          return @steps if @steps
+
+          @steps = raw_steps.map do |step|
+            TurnipFormatter::Resource::Step::Step.new(example, step)
+          end
+
+          mark_status
+
+          @steps
+        end
+
+        def mark_status
+          raise NotImplementedError
         end
 
         private
 
         def raw
           @raw = example.metadata[:turnip_formatter][:scenario]
+        end
+
+        def raw_steps
+          backgrounds.map(&:steps).flatten + raw.steps
         end
 
         def feature_file_path

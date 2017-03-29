@@ -7,7 +7,8 @@ module TurnipFormatter::Renderer::Html
 
     sub_test_case 'step without argument' do
       def setup
-        resource = TurnipFormatter::Resource::Step::Pass.new(nil, sample_step)
+        resource = TurnipFormatter::Resource::Step::Step.new(nil, sample_step)
+        resource.mark_as_executed
         @renderer = Step.new(resource)
       end
 
@@ -22,7 +23,8 @@ module TurnipFormatter::Renderer::Html
 
     sub_test_case 'step with argument' do
       def setup
-        resource = TurnipFormatter::Resource::Step::Pass.new(nil, sample_step_with_docstring)
+        resource = TurnipFormatter::Resource::Step::Step.new(nil, sample_step_with_docstring)
+        resource.mark_as_executed
         @renderer = Step.new(resource)
       end
 
@@ -36,7 +38,8 @@ module TurnipFormatter::Renderer::Html
 
     sub_test_case 'step should be escaped html style' do
       def setup
-        resource = TurnipFormatter::Resource::Step::Pass.new(nil, sample_step_should_escaping)
+        resource = TurnipFormatter::Resource::Step::Step.new(nil, sample_step_should_escaping)
+        resource.mark_as_executed
         @renderer = Step.new(resource)
       end
 
