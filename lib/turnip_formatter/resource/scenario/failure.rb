@@ -5,8 +5,6 @@ module TurnipFormatter
   module Resource
     module Scenario
       class Failure < Base
-        alias :super_steps :steps
-
         #
         # Mark status for each step
         #
