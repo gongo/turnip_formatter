@@ -1,21 +1,35 @@
+require 'forwardable'
 require 'turnip_formatter/resource/step/failure_result'
 require 'turnip_formatter/resource/step/pending_result'
 
 module TurnipFormatter
   module Resource
     module Step
-      class Hook
+      class Step
         include ::TurnipFormatter::Resource::Step::FailureResult
         include ::TurnipFormatter::Resource::Step::PendingResult
+
+        extend Forwardable
+        def_delegators :@raw, :keyword, :text, :line, :argument
 
         attr_reader :example
 
         #
         # @param  [RSpec::Core::Example]  example
+        # @param  [Turnip::Node::Step]    raw
         #
-        def initialize(example)
+        def initialize(example, raw)
           @example = example
-          @exceptions = []
+          @raw = raw
+          @executed = false
+        end
+
+        def mark_as_executed
+          @executed = true
+        end
+
+        def executed?
+          @executed
         end
 
         def status
@@ -24,33 +38,11 @@ module TurnipFormatter
             :failed
           when pending?
             :pending
-          else
+          when executed?
             :passed
+          else
+            :unexecute
           end
-        end
-
-        def text
-          ''
-        end
-
-        def line
-          -1
-        end
-
-        def argument
-          nil
-        end
-      end
-
-      class BeforeHook < Hook
-        def keyword
-          'BeforeHook'
-        end
-      end
-
-      class AfterHook < Hook
-        def keyword
-          'AfterHook'
         end
       end
     end

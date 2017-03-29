@@ -1,6 +1,4 @@
 require 'turnip_formatter/resource/scenario/base'
-require 'turnip_formatter/resource/step/failure'
-require 'turnip_formatter/resource/step/hook'
 require 'rspec/core/formatters/exception_presenter'
 
 module TurnipFormatter
@@ -8,77 +6,74 @@ module TurnipFormatter
     module Scenario
       class Failure < Base
         #
-        # Return steps
+        # Mark status for each step
         #
         # example:
         #
         #   When foo
-        #    And bar
-        #    And baz  <= failed line
-        #   Then piyo
+        #    And bar <= failed line
+        #   Then baz
         #
-        #   # => [
-        #   #   <Step::Pass 'foo'>
-        #   #   <Step::Pass 'bar'>
-        #   #   <Step::Failure 'baz'>
-        #   #   <Step::Unexecute 'piyo'>
+        #   # @steps => [
+        #   #   <Step::Step 'foo'>  # .status => :passed
+        #   #   <Step::Step 'bar'>  # .status => :failed
+        #   #   <Step::Step 'baz'>  # .status => :unexecute
         #   # ]
         #
-        def steps
+        # example: aggregate_failures = true
+        #
+        #   # @steps => [
+        #   #   <Step::Step 'foo'>  # .status => :passed
+        #   #   <Step::Step 'bar'>  # .status => :failed
+        #   #   <Step::Step 'baz'>  # .status => :passed
+        #   # ]
+        #
+        # example: Occurs error in RSpec before hook
+        #
+        #   # @steps => [
+        #   #   <Step::BeforeHook ''> # .status => :failed
+        #   #   <Step::Step 'foo'>    # .status => :unexecute
+        #   #   <Step::Step 'bar'>    # .status => :unexecute
+        #   #   <Step::Step 'baz'>    # .status => :unexecute
+        #   # ]
+        #
+        # example: Occurs error in RSpec after hook
+        #
+        #   # @steps => [
+        #   #   <Step::Step 'foo'>    # .status => :passed
+        #   #   <Step::Step 'bar'>    # .status => :failed
+        #   #   <Step::Step 'baz'>    # .status => :unexecute
+        #   #   <Step::AfterHook ''>  # .status => :failed
+        #   # ]
+        #
+        def mark_status
           exceptions = all_exception_group_by_line_number
 
           if exceptions.has_key?(:before)
-            return steps_with_error_in_before_hook(exceptions[:before])
+            before_step = TurnipFormatter::Resource::Step::BeforeHook.new(example)
+            before_step.set_exceptions(exceptions[:before])
+            @steps.unshift(before_step)
+            return
           end
 
-          steps = steps_with_error(exceptions)
+          @steps.each do |step|
+            step.mark_as_executed
+            exs = exceptions[step.line]
+
+            next unless exs
+            step.set_exceptions(exs)
+
+            break if !example.metadata[:aggregate_failures]
+          end
 
           if exceptions.has_key?(:after)
-            return steps_with_error_in_after_hook(steps, exceptions[:after])
+            after_step = TurnipFormatter::Resource::Step::AfterHook.new(example)
+            after_step.set_exceptions(exceptions[:after])
+            @steps.push(after_step)
           end
-
-          steps
         end
 
         private
-
-        def steps_with_error(exceptions)
-          step_klass = TurnipFormatter::Resource::Step::Pass
-
-          raw_steps.map do |rs|
-            ex = exceptions[rs.line]
-            next step_klass.new(example, rs) unless ex
-
-            # The status of step after error step is determined by `aggregate_failures` option
-            if example.metadata[:aggregate_failures]
-              step_klass = TurnipFormatter::Resource::Step::Pass
-            else
-              step_klass = TurnipFormatter::Resource::Step::Unexecute
-            end
-
-            TurnipFormatter::Resource::Step::Failure.new(example, rs).tap do |step|
-              step.set_exceptions(ex)
-            end
-          end
-        end
-
-        def steps_with_error_in_before_hook(exceptions)
-          before_step = TurnipFormatter::Resource::Step::BeforeHook.new(example)
-          before_step.set_exceptions(exceptions)
-
-          after_steps = raw_steps.map do |rs|
-            TurnipFormatter::Resource::Step::Unexecute.new(example, rs)
-          end
-
-          [before_step] + after_steps
-        end
-
-        def steps_with_error_in_after_hook(steps, exceptions)
-          after_step = TurnipFormatter::Resource::Step::AfterHook.new(example)
-          after_step.set_exceptions(exceptions)
-
-          steps + [after_step]
-        end
 
         def error_in_before_hook?(exceptions)
           exceptions.has_key?(:before)
