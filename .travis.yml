@@ -6,10 +6,10 @@ cache: bundler
 branches:
   only:
     - master
+    - 0.6.0
 
 matrix:
   allow_failures:
-    - gemfile: gemfiles/Gemfile-rspec-3.2.x
     - rvm: ruby-head
 
 rvm:
@@ -17,11 +17,11 @@ rvm:
   - 2.2
   - 2.3.0
   - ruby-head
-  - jruby-9.0.0.0
+  - jruby-9.0.5.0
 
-script: bundle exec rspec
+script:
+  - bundle exec rake test
 
 gemfile:
-  - gemfiles/Gemfile-rspec-3.2.x
   - gemfiles/Gemfile-rspec-3.3.x
   - gemfiles/Gemfile-rspec-3.4.x

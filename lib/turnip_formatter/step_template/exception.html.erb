@@ -1,0 +1,21 @@
+<% exceptions.each do |e| %>
+  <div class="step_exception">
+    <dl>
+      <dt>Failure:</dt>
+      <dd>
+        <pre><%= ERB::Util.h(e[:message]) %></pre>
+      </dd>
+      <dt>Backtrace:</dt>
+      <dd>
+        <ol>
+          <% e[:backtrace].each do |line| %>
+            <li><%= ERB::Util.h(line) %></li>
+          <% end %>
+        </ol>
+      </dd>
+    </dl>
+  </div>
+  <% unless e[:code].nil? %>
+    <pre class="source"><code class="ruby"><%= e[:code] %></code></pre>
+  <% end %>
+<% end %>

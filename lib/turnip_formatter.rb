@@ -1,5 +1,6 @@
 require 'turnip_formatter/version'
 require 'turnip'
+require 'turnip_formatter/renderer/html'
 
 module TurnipFormatter
   class << self
@@ -21,7 +22,7 @@ module TurnipFormatter
       stylesheets = [stylesheets] if stylesheets.is_a? String
 
       stylesheets.each do |s|
-        TurnipFormatter::Template.add_stylesheet(s)
+        TurnipFormatter::Renderer::Html.add_stylesheet(s)
       end
     end
 
@@ -29,7 +30,7 @@ module TurnipFormatter
       scripts = [scripts] if scripts.is_a? String
 
       scripts.each do |s|
-        TurnipFormatter::Template.add_javascript(s)
+        TurnipFormatter::Renderer::Html.add_javascript(s)
       end
     end
 
@@ -43,15 +44,17 @@ module TurnipFormatter
   end
 
   require 'rspec/core/formatters/turnip_formatter'
-  require 'turnip_formatter/template'
   require 'turnip_formatter/step_template/exception'
-  require 'turnip_formatter/step_template/source'
   require 'turnip_formatter/ext/turnip/rspec'
-  require 'turnip_formatter/printer/index'
 end
 
 RSpecTurnipFormatter = RSpec::Core::Formatters::TurnipFormatter
 
 TurnipFormatter.configure do |config|
   config.title = 'Turnip'
+end
+
+(File.dirname(__FILE__) + '/turnip_formatter/renderer/html/assets').tap do |dirname|
+  TurnipFormatter::Renderer::Html.add_stylesheet(dirname + '/turnip_formatter.css')
+  TurnipFormatter::Renderer::Html.add_javascript(dirname + '/turnip_formatter.js')
 end

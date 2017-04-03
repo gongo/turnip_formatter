@@ -1,0 +1,24 @@
+<table>
+  <thead>
+    <tr>
+      <th>Feature</th>
+      <th>Scenario</th>
+      <th>Duration</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% results.each do |info| %>
+      <tr>
+        <td>
+          <span><%= ERB::Util.h(info.feature_name) %></span>
+        </td>
+        <td>
+          <a href="#<%= info.id %>"><%= ERB::Util.h(info.name) %></a>
+        </td>
+        <td>
+          <span><%= info.run_time %> sec</span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

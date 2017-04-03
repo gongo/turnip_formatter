@@ -1,0 +1,23 @@
+<section class="scenario <%= status %>" id="<%= id %>">
+  <div class="scenario-title">
+    <span class="permalink">
+      <a href="#<%= id %>">&para;</a>
+    </span>
+
+    <span data-toggle="collapse" data-target="#<%= id %>_body">
+      "Scenario: <%= ERB::Util.h(name) %> Feature <%= feature_info %> at <%= run_time %> sec"
+    </span>
+  </div>
+
+  <div class="panel-collapse collapse" id="<%= id %>_body">
+    <div class="panel-body">
+      <ul class="tags">
+        <% tags.each do |tag| %>
+          <li>@<%= ERB::Util.h(tag) %></li>
+        <% end %>
+      </ul>
+
+      <div class="steps"><%= steps_html %></div>
+    </div>
+  </div>
+</section>
