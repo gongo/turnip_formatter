@@ -2,6 +2,8 @@ require 'test/unit'
 require 'oga'
 require 'tempfile'
 require 'turnip_formatter/ext/turnip/rspec'
+require 'turnip_formatter/resource/scenario/failure'
+require 'turnip_formatter/resource/scenario/pending'
 
 def html_parse(str)
   Oga.parse_xml(str)
@@ -13,6 +15,29 @@ module TurnipFormatter
       def method_missing(name, *args, &block)
         # nooooooop
       end
+    end
+
+    def dummy_failed_step
+      feature = feature_build(<<-EOS)
+        Feature: feature
+          Scenario: Failed
+            When [ERROR]
+      EOS
+
+      TurnipFormatter::Resource::Scenario::Failure.new(
+        run_feature(feature, '/path/to/test.feature').first
+      ).steps[0]
+    end
+
+    def dummy_pending_step
+      feature = feature_build(<<-EOS)
+        Feature: feature
+          Scenario: Pending
+            When [PENDING]
+      EOS
+      TurnipFormatter::Resource::Scenario::Pending.new(
+        run_feature(feature, '/path/to/test.feature').first
+      ).steps[0]
     end
 
     #
@@ -47,8 +72,7 @@ module TurnipFormatter
     # Emulate Turnip::RSpec#run_feature
     #
     # @param  feature [Turnip::Node::Feature]
-    # @param  failed_at [Array<Interger>] Line numbers to assume that test fails
-    # @param  feature_file_path [String]
+    # @param  filename [String]
     #
     # @return [Array<RSpec::Core::Example>] Array of example for scenarios.
     #
