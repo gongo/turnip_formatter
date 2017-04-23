@@ -19,7 +19,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_dependency 'turnip', '~> 3.0.0'
-  spec.add_dependency 'rspec', [">=3.3", "<3.5"]
+  spec.add_dependency 'rspec', [">=3.3", "<4.0"]
 
   # For ruby >= 2.1
   spec.add_dependency 'activesupport', '~> 4.2.7'
