@@ -29,7 +29,7 @@
         <div class="page-header">
           <h1><%= ERB::Util.h(title) %></h1>
         </div>
-        <div style="border-bottom: 2px solid white;" >Фильтры отображения
+        <div style="border-bottom: 2px solid grey;" >Фильтры отображения:
         <section id="status_display_switch">
           <label for="passed_check">
             <input id="passed_check" type="checkbox" /> Пройденные
@@ -45,7 +45,7 @@
 
         <section id="result">
           <p><%= result_status %></p>
-          <p>Общее время прогона автотестов<%= total_time %> sec</p>
+          <p>Общее время прогона автотестов: <%= total_time %> сек</p>
         </section>
       </div>
     </header>
