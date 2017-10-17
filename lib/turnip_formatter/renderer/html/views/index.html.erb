@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html>
   <head>
+  <style>
+ body {
+  background-image: url(img/ruby.png); /* Путь к фоновому изображению */
+  background-repeat: no-repeat;
+  background-position: 90% 10%;
+ }
+</style>
     <meta charset="UTF-8" />
     <title><%= ERB::Util.h(title) %></title>
 
@@ -16,6 +23,7 @@
   </head>
 
   <body>
+
     <header id="report">
       <div class="container">
         <div class="page-header">
@@ -24,19 +32,19 @@
 
         <section id="status_display_switch">
           <label for="passed_check">
-            <input id="passed_check" type="checkbox" /> Passed
+            <input id="passed_check" type="checkbox" /> Пройденные
           </label>
           <label for="failed_check">
-            <input id="failed_check" type="checkbox" checked="checked" /> Failed
+            <input id="failed_check" type="checkbox" checked="checked" /> Упавшие
           </label>
           <label for="pending_check">
-            <input id="pending_check" type="checkbox" /> Pending
+            <input id="pending_check" type="checkbox" /> Ожидаемые
           </label>
         </section>
 
         <section id="result">
           <p><%= result_status %></p>
-          <p>Finished in <%= total_time %> sec</p>
+          <p>Общее время прогона автотестов<%= total_time %> sec</p>
         </section>
       </div>
     </header>
@@ -44,16 +52,16 @@
     <div id="main" class="container" role="main">
       <ul id="statistics" class="nav nav-tabs">
         <li class="active">
-          <a data-toggle="tab" href="#steps-statistics">Steps</a>
+          <a data-toggle="tab" href="#steps-statistics">Шаги</a>
         </li>
         <li>
-          <a data-toggle="tab" href="#speed-statistics">Speed Statistics</a>
+          <a data-toggle="tab" href="#speed-statistics">Статистика по скорости</a>
         </li>
         <li>
-          <a data-toggle="tab" href="#feature-statistics">Feature Sttistics</a>
+          <a data-toggle="tab" href="#feature-statistics">Статистика по фичам</a>
         </li>
         <li>
-          <a data-toggle="tab" href="#tag-statistics">Tag Statistics</a>
+          <a data-toggle="tab" href="#tag-statistics">Статистика по тэгам</a>
         </li>
       </ul>
 
@@ -61,22 +69,22 @@
         <div id="steps-statistics" class="tab-pane active">
           <div class="checkbox">
             <label>
-              <input id="scenario_display_check" type="checkbox" checked="checked" /> Folding
+              <input id="scenario_display_check" type="checkbox" checked="checked" /> Развернуть/Свернуть
             </label>
           </div>
 
           <div id="scenarios" class="panel-group"><%= scenarios_html %></div>
         </div>
         <div id="feature-statistics" class="tab-pane">
-          <h4>The results for the feature:</h4>
+          <h4>Статистика результатов по фичам:</h4>
           <%= statistics_feature_html %>
         </div>
         <div id="tag-statistics" class="tab-pane">
-          <h4>The results for the tab:</h4>
+          <h4>Статистика результатов по тэгам:</h4>
           <%= statistics_tag_html %>
         </div>
         <div id="speed-statistics" class="tab-pane">
-          <h4>Ranking of running time of each <strong>successfully</strong> scenario:</h4>
+          <h4>Затраченное время на прохождение каждого <strong>успешного</strong> сценария:</h4>
           <%= statistics_speed_html %>
         </div>
       </div>
