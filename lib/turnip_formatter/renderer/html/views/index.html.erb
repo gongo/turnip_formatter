@@ -31,7 +31,7 @@
           <h1><%= ERB::Util.h(title) %></h1>
         </div>
         <div style="border-bottom: 1px solid #eee ; border-top: 1px solid #eee ;">
-        <div style="font-size: x-large; font-weight: bold;" >Фильтры отображения:
+        <div style="font-size: large; font-weight: bold;" >Фильтры отображения:
         </div>
         <section id="status_display_switch" >
           <label for="passed_check">
@@ -46,7 +46,10 @@
         </section>
         </div>
 
-        <section id="result">
+        <section id="result" >
+          <div style="font-size: large; font-weight: bold;">
+            Мини статистика:
+          </div>
           <p><%= result_status %></p>
           <p>Общее время прогона автотестов: <%= total_time %> сек</p>
         </section>
