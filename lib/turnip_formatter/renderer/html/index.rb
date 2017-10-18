@@ -60,8 +60,8 @@ module TurnipFormatter
         end
 
         def result_status
-          str = "#{scenarios.size} Сценариев "
-          str += "(#{@resource[:failed_count]} упавших #{@resource[:pending_count]} в ожидании)"
+          str = "Всего #{scenarios.size} сценариев"
+          str += "(пройденных: #{@resource[:passed_count]} упавших: #{@resource[:failed_count]}| в ожидании : #{@resource[:pending_count]}| )"
           str
         end
 
