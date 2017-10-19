@@ -59,9 +59,18 @@ module TurnipFormatter
           StatisticsSpeed.new(scenarios).render
         end
 
-        def result_status
-          str = "Всего сценариев: #{scenarios.size} "
-          str += " из них упавших: #{@resource[:failed_count]} и в ожидании : #{@resource[:pending_count]} "
+        def result_status_all
+          str = "#{scenarios.size} "
+          str
+        end
+
+        def result_status_failed
+          str += "#{@resource[:failed_count]}"
+          str
+        end
+        
+        def result_status_pending
+          str += "#{@resource[:pending_count]}"
           str
         end
 
