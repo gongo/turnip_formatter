@@ -50,21 +50,21 @@
           <div style="font-size: large; font-weight: bold;">
             Мини статистика:
           </div>
-            <table>
+            <table  style="border: 1px solid #eee ;">
               <tr>
-                <th>Всего сценариев</th>
-                <th>Упавших</th>
-                <th>В ожидании</th>
+                <th style="border-bottom: 1px solid #eee ;">Всего сценариев</th>
+                <th style="border-left: 1px solid #eee ; border-bottom: 1px solid #eee ;">Упавших</th>
+                <th style="border-left: 1px solid #eee ; border-bottom: 1px solid #eee ;">В ожидании</th>
               </tr>
               <tr>
                 <td><%=result_status_all %></td>
-                <td><%=result_status_failed %></td>
-                <td><%=result_status_pending %></td>
+                <td style="border-left: 1px solid #eee ;"><%=result_status_failed %></td>
+                <td style="border-left: 1px solid #eee ;"><%=result_status_pending %></td>
                 </tr>
               </table>
-              <table>
+              <table style="border: 1px solid #eee ;">
                 <tr>
-                  <th>Общее время прогона автотестов</th>
+                  <th style="border-bottom: 1px solid #eee ;">Общее время прогона автотестов</th>
                 </tr>
                 <tr>
                   <td><%= total_time %>сек</td>
