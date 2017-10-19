@@ -65,12 +65,12 @@ module TurnipFormatter
         end
 
         def result_status_failed
-          str += "#{@resource[:failed_count]}"
+          str = "#{@resource[:failed_count]}"
           str
         end
-        
+
         def result_status_pending
-          str += "#{@resource[:pending_count]}"
+          str = "#{@resource[:pending_count]}"
           str
         end
 
