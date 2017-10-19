@@ -48,17 +48,17 @@
 
         <section id="result" >
           <div style="font-size: large; font-weight: bold;">
-            Мини статистика
+            Статистика по статусу прогона
           </div>
             <table>
-                <tr><th>Всего сценариев: </th><td style="text-indent: 5px;"><%=result_status_all %></td></tr>
-                <tr><th>Пройденных: </th><td style="text-indent: 5px;"><%=result_status_passed %></td></tr>
-                <tr><th>Упавших: </th><td style="text-indent: 5px;"><%=result_status_failed %></td></tr>
-                <tr><th>В ожидании: </th><td style="text-indent: 5px;"><%=result_status_pending %></td></tr>
+                <tr><th>Всего сценариев: </th><td style="text-indent: 10px;"><%=result_status_all %></td></tr>
+                <tr><th>Пройденных: </th><td style="text-indent: 10px;"><%=result_status_passed %></td></tr>
+                <tr><th>Упавших: </th><td style="text-indent: 10px;"><%=result_status_failed %></td></tr>
+                <tr><th>В ожидании: </th><td style="text-indent: 10px;"><%=result_status_pending %></td></tr>
             </table>
             <div style="border-top: 1px solid #eee ;">
             <table>
-                <tr><th>Общее время прогона автотестов:</th><td style="text-indent: 5px;"> <%= total_time %> секунд</td></tr>
+                <tr><th>Общее время прогона автотестов:</th><td style="text-indent: 10px;"> <%= total_time %> секунд</td></tr>
             </table>
           </div>
         </section>
