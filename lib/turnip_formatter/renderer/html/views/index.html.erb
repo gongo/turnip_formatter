@@ -34,13 +34,13 @@
         <div style="font-size: large; font-weight: bold;" >Фильтры отображения:
         </div>
         <section id="status_display_switch" >
-          <label for="passed_check">
-            <input id="passed_check" type="checkbox" /> Пройденные
+          <label for="passed_check" style="color: #4fcf3c">
+            <input id="passed_check" type="checkbox"  /> Пройденные
           </label>
-          <label for="failed_check">
+          <label for="failed_check" style="color: #fa0000">
             <input id="failed_check" type="checkbox" checked="checked" /> Упавшие
           </label>
-          <label for="pending_check">
+          <label for="pending_check" style="color: #ff8c1a">
             <input id="pending_check" type="checkbox" /> В ожидании
           </label>
         </section>
@@ -52,9 +52,9 @@
           </div>
             <table>
                 <tr><th>Всего сценариев: </th><td style="text-indent: 10px;"><%=result_status_all %></td></tr>
-                <tr><th>Пройденных: </th><td style="text-indent: 10px;"><%=result_status_passed %></td></tr>
-                <tr><th>Упавших: </th><td style="text-indent: 10px;"><%=result_status_failed %></td></tr>
-                <tr><th>В ожидании: </th><td style="text-indent: 10px;"><%=result_status_pending %></td></tr>
+                <tr><th style="color: #4fcf3c">Пройденных: </th><td style="text-indent: 10px;"><%=result_status_passed %></td></tr>
+                <tr><th style="color: #fa0000">Упавших: </th><td style="text-indent: 10px;"><%=result_status_failed %></td></tr>
+                <tr><th style="color: #ff8c1a">В ожидании: </th><td style="text-indent: 10px;"><%=result_status_pending %></td></tr>
             </table>
             <div style="border-top: 1px solid #eee ;">
             <table>
