@@ -48,29 +48,19 @@
 
         <section id="result" >
           <div style="font-size: large; font-weight: bold;">
-            Мини статистика:
+            Мини статистика
           </div>
-            <table  style="border:1px solid #808080 ;">
-              <tr>
-                <th style="border-bottom: 1px solid #808080 ; text-indent: 15px;">Всего сценариев</th>
-                <th style="border-left: 1px solid #808080 ; border-bottom: 1px solid #808080 ;">Упавших</th>
-                <th style="border-left: 1px solid #808080 ; border-bottom: 1px solid #808080 ;">В ожидании</th>
-              </tr>
-              <tr>
-                <td style="text-indent: 1px;"><%=result_status_all %></td>
-                <td style="border-left: 1px solid #808080 ;"><%=result_status_failed %></td>
-                <td style="border-left: 1px solid #808080 ;"><%=result_status_pending %></td>
-                </tr>
-              </table>
-              <table style="border: 1px solid #808080 ;position: relative; top: 5px;">
-                <tr>
-                  <th style="border-bottom: 1px solid #808080 ;text-indent: 15px;">Общее время прогона автотестов</th>
-                </tr>
-                <tr>
-                  <td><%= total_time %> секунд</td>
-                </tr>
-              </table>
-          <!-- <p>Общее время прогона автотестов: <%= total_time %> сек</p> -->
+            <table>
+                <tr><th>Всего сценариев: </th><td style="text-indent: 5px;"><%=result_status_all %></td></tr>
+                <tr><th>Пройденных: </th><td style="text-indent: 5px;"><%=result_status_passed %></td></tr>
+                <tr><th>Упавших: </th><td style="text-indent: 5px;"><%=result_status_failed %></td></tr>
+                <tr><th>В ожидании: </th><td style="text-indent: 5px;"><%=result_status_pending %></td></tr>
+            </table>
+            <div style="border-top: 1px solid #eee ;">
+            <table>
+                <tr><th>Общее время прогона автотестов:</th><td style="text-indent: 5px;"> <%= total_time %> секунд</td></tr>
+            </table>
+          </div>
         </section>
       </div>
     </header>

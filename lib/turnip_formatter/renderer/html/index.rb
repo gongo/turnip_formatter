@@ -64,6 +64,11 @@ module TurnipFormatter
           str
         end
 
+        def result_status_passed
+          str = result_status_all.to_i - result_status_failed.to_i - result_status_pending.to_i
+          str.to_s
+        end
+
         def result_status_failed
           str = "#{@resource[:failed_count]}"
           str
