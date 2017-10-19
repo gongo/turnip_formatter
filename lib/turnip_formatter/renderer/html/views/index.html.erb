@@ -50,27 +50,26 @@
           <div style="font-size: large; font-weight: bold;">
             Мини статистика:
           </div>
-            <table  style="border: 1px solid #eee ;">
+            <table  style="border:3px solid #808080 ;background-color: #d9d9d9;">
               <tr>
-                <th style="border-bottom: 1px solid #eee ;">Всего сценариев</th>
-                <th style="border-left: 1px solid #eee ; border-bottom: 1px solid #eee ;">Упавших</th>
-                <th style="border-left: 1px solid #eee ; border-bottom: 1px solid #eee ;">В ожидании</th>
+                <th style="border-bottom: 3px solid #808080 ;background-color: #d9d9d9;">Всего сценариев</th>
+                <th style="border-left: 3px solid #808080 ; border-bottom: 3px solid #808080 ;background-color: #d9d9d9;">Упавших</th>
+                <th style="border-left: 3px solid #808080 ; border-bottom: 3px solid #808080 ;background-color: #d9d9d9;">В ожидании</th>
               </tr>
               <tr>
-                <td><%=result_status_all %></td>
-                <td style="border-left: 1px solid #eee ;"><%=result_status_failed %></td>
-                <td style="border-left: 1px solid #eee ;"><%=result_status_pending %></td>
+                <td style="background-color: #d9d9d9;"><%=result_status_all %></td>
+                <td style="border-left: 3px solid #808080 ;background-color: #d9d9d9;"><%=result_status_failed %></td>
+                <td style="border-left: 3px solid #808080 ;background-color: #d9d9d9;"><%=result_status_pending %></td>
                 </tr>
               </table>
-              <table style="border: 1px solid #eee ;">
+              <table style="border: 3px solid #808080 ;background-color: #d9d9d9;">
                 <tr>
-                  <th style="border-bottom: 1px solid #eee ;">Общее время прогона автотестов</th>
+                  <th style="border-bottom: 3px solid #808080 ;background-color: #d9d9d9;">Общее время прогона автотестов</th>
                 </tr>
                 <tr>
                   <td><%= total_time %>сек</td>
                 </tr>
               </table>
-          <!-- <p>Общее время прогона автотестов: <%= total_time %> сек</p> -->
         </section>
       </div>
     </header>
