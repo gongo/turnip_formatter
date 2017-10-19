@@ -52,22 +52,22 @@
           </div>
             <table  style="border:1px solid #808080 ;">
               <tr>
-                <th style="border-bottom: 1px solid #808080 ;">  Всего сценариев  </th>
-                <th style="border-left: 1px solid #808080 ; border-bottom: 1px solid #808080 ;">  Упавших  </th>
-                <th style="border-left: 1px solid #808080 ; border-bottom: 1px solid #808080 ;">  В ожидании  </th>
+                <th style="border-bottom: 1px solid #808080 ; text-indent: 1px;">Всего сценариев</th>
+                <th style="border-left: 1px solid #808080 ; border-bottom: 1px solid #808080 ;">Упавших</th>
+                <th style="border-left: 1px solid #808080 ; border-bottom: 1px solid #808080 ;">В ожидании</th>
               </tr>
               <tr>
-                <td><%=result_status_all %></td>
-                <td style="border-left: 1px solid #808080 ;">  <%=result_status_failed %>  </td>
-                <td style="border-left: 1px solid #808080 ;">  <%=result_status_pending %>  </td>
+                <td style="text-indent: 1px;"><%=result_status_all %></td>
+                <td style="border-left: 1px solid #808080 ;"><%=result_status_failed %></td>
+                <td style="border-left: 1px solid #808080 ;"><%=result_status_pending %></td>
                 </tr>
               </table>
               <table style="border: 1px solid #808080 ;position: relative; top: 5px;">
                 <tr>
-                  <th style="border-bottom: 1px solid #808080 ;">  Общее время прогона автотестов  </th>
+                  <th style="border-bottom: 1px solid #808080 ;text-indent: 1px;">Общее время прогона автотестов</th>
                 </tr>
                 <tr>
-                  <td>  <%= total_time %> секунд  </td>
+                  <td><%= total_time %> секунд</td>
                 </tr>
               </table>
           <!-- <p>Общее время прогона автотестов: <%= total_time %> сек</p> -->
