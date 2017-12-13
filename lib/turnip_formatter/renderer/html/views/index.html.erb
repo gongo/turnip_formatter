@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+
     <meta charset="UTF-8" />
     <title><%= ERB::Util.h(title) %></title>
 
@@ -16,44 +17,68 @@
   </head>
 
   <body>
+  <style>
+ body {
+  background-image: url('https://github.com/ArtemMikhalev89/turnip_formatter/blob/master/lib/turnip_formatter/renderer/html/views/img/ruby.png?raw=true'); /* Путь к фоновому изображению */
+  background-repeat: no-repeat;
+  background-position: 95% 0%;
+ }
+</style>
+
     <header id="report">
       <div class="container">
         <div class="page-header">
-          <h1><%= ERB::Util.h(title) %></h1>
+          <h1 style=" font-weight: bold;"><%= ERB::Util.h(title) %></h1>
         </div>
-
-        <section id="status_display_switch">
-          <label for="passed_check">
-            <input id="passed_check" type="checkbox" /> Passed
+        <div style="font-size: large; font-weight: bold;">Дата и время прогона: <%= date_create %></div>
+        <div style="border-bottom: 1px solid #eee ; border-top: 1px solid #eee ;">
+        <div style="font-size: large; font-weight: bold;" >Фильтры отображения:
+        </div>
+        <section id="status_display_switch" >
+          <label for="passed_check" style="color: #4fcf3c">
+            <input id="passed_check" type="checkbox"  /> Пройденные
           </label>
-          <label for="failed_check">
-            <input id="failed_check" type="checkbox" checked="checked" /> Failed
+          <label for="failed_check" style="color: #fa0000">
+            <input id="failed_check" type="checkbox" checked="checked" /> Упавшие
           </label>
-          <label for="pending_check">
-            <input id="pending_check" type="checkbox" /> Pending
+          <label for="pending_check" style="color: #ff8c1a">
+            <input id="pending_check" type="checkbox" /> В ожидании
           </label>
         </section>
+        </div>
 
-        <section id="result">
-          <p><%= result_status %></p>
-          <p>Finished in <%= total_time %> sec</p>
+        <section id="result" >
+          <div style="font-size: large; font-weight: bold;">
+            Статистика по статусу прогона
+          </div>
+            <table>
+                <tr><th>Всего сценариев: </th><td style="text-indent: 10px;"><%=result_status_all %></td></tr>
+                <tr><th style="color: #4fcf3c">Пройденных: </th><td style="text-indent: 10px;"><%=result_status_passed %></td></tr>
+                <tr><th style="color: #fa0000">Упавших: </th><td style="text-indent: 10px;"><%=result_status_failed %></td></tr>
+                <tr><th style="color: #ff8c1a">В ожидании: </th><td style="text-indent: 10px;"><%=result_status_pending %></td></tr>
+            </table>
+            <div style="border-top: 1px solid #eee ;">
+            <table>
+                <tr><th>Общее время прогона автотестов:</th><td style="text-indent: 10px;"> <%= total_time %> минут</td></tr>
+            </table>
+          </div>
         </section>
       </div>
     </header>
 
-    <div id="main" class="container" role="main">
+    <div id="main" class="container" role="main" style="position: relative; top: 15px;">
       <ul id="statistics" class="nav nav-tabs">
         <li class="active">
-          <a data-toggle="tab" href="#steps-statistics">Steps</a>
+          <a data-toggle="tab" href="#steps-statistics">Шаги</a>
         </li>
         <li>
-          <a data-toggle="tab" href="#speed-statistics">Speed Statistics</a>
+          <a data-toggle="tab" href="#speed-statistics">Статистика по скорости</a>
         </li>
         <li>
-          <a data-toggle="tab" href="#feature-statistics">Feature Sttistics</a>
+          <a data-toggle="tab" href="#feature-statistics">Статистика по фичам</a>
         </li>
         <li>
-          <a data-toggle="tab" href="#tag-statistics">Tag Statistics</a>
+          <a data-toggle="tab" href="#tag-statistics">Статистика по тэгам</a>
         </li>
       </ul>
 
@@ -61,22 +86,22 @@
         <div id="steps-statistics" class="tab-pane active">
           <div class="checkbox">
             <label>
-              <input id="scenario_display_check" type="checkbox" checked="checked" /> Folding
+              <input id="scenario_display_check" type="checkbox" checked="checked" /> Развернуть/Свернуть
             </label>
           </div>
 
           <div id="scenarios" class="panel-group"><%= scenarios_html %></div>
         </div>
         <div id="feature-statistics" class="tab-pane">
-          <h4>The results for the feature:</h4>
+          <h4>Статистика результатов по фичам:</h4>
           <%= statistics_feature_html %>
         </div>
         <div id="tag-statistics" class="tab-pane">
-          <h4>The results for the tab:</h4>
+          <h4>Статистика результатов по тэгам:</h4>
           <%= statistics_tag_html %>
         </div>
         <div id="speed-statistics" class="tab-pane">
-          <h4>Ranking of running time of each <strong>successfully</strong> scenario:</h4>
+          <h4>Затраченное время на прохождение каждого <strong>успешного</strong> сценария:</h4>
           <%= statistics_speed_html %>
         </div>
       </div>

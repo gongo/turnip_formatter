@@ -59,14 +59,34 @@ module TurnipFormatter
           StatisticsSpeed.new(scenarios).render
         end
 
-        def result_status
-          str = "#{scenarios.size} Scenario "
-          str += "(#{@resource[:failed_count]} failed #{@resource[:pending_count]} pending)"
+        def result_status_all
+          str = "#{scenarios.size} "
+          str
+        end
+
+        def result_status_passed
+          str = result_status_all.to_i - result_status_failed.to_i - result_status_pending.to_i
+          str.to_s
+        end
+
+        def result_status_failed
+          str = "#{@resource[:failed_count]}"
+          str
+        end
+
+        def result_status_pending
+          str = "#{@resource[:pending_count]}"
           str
         end
 
         def total_time
-          @resource[:total_time].to_s
+          t_t = @resource[:total_time] / 60
+          t_t.to_s[0..4]
+        end
+
+        def date_create
+          t = Time.now
+          t.strftime("%F %H:%M")
         end
 
         def turnip_version
