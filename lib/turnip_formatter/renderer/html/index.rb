@@ -84,6 +84,11 @@ module TurnipFormatter
           t_t.to_s
         end
 
+        def date_create
+          t = Time.now
+          t.strftime("%F %H:%M")
+        end
+
         def turnip_version
           Turnip::VERSION
         end
