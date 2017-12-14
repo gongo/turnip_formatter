@@ -81,7 +81,7 @@ module TurnipFormatter
 
         def total_time
           t_t = @resource[:total_time] / 60
-          t_t.to_s[0..4]
+          t_t.to_s.match(/.+\..{0,2}/)[0]
         end
 
         def date_create
