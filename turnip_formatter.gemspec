@@ -18,7 +18,7 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^test/})
   spec.require_paths = ['lib']
 
-  spec.add_dependency 'turnip', '~> 3.0.0'
+  spec.add_dependency 'turnip', '~> 3.1.0'
   spec.add_dependency 'rspec', [">=3.3", "<4.0"]
 
   # For ruby >= 2.1
