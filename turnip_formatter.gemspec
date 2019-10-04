@@ -22,11 +22,11 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'rspec', [">=3.3", "<4.0"]
 
   # For ruby >= 2.1
-  spec.add_dependency 'activesupport', '>= 4.2.7', '< 6.0'
+  spec.add_dependency 'activesupport', '>= 4.2.7', '< 7.0'
 
   spec.add_development_dependency 'test-unit'
   spec.add_development_dependency 'test-unit-rr'
-  spec.add_development_dependency 'bundler', '~> 1.3'
+  spec.add_development_dependency 'bundler'
   spec.add_development_dependency 'rake'
   spec.add_development_dependency 'coveralls'
   spec.add_development_dependency 'sass'
