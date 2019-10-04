@@ -7,6 +7,10 @@ branches:
   only:
     - master
 
+matrix:
+  allow_failures:
+  - rvm: jruby-9.2.8.0
+
 rvm:
   - 2.3.6
   - 2.4.3
