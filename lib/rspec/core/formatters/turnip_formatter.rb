@@ -29,7 +29,6 @@ module RSpec
         end
 
         def dump_summary(summary)
-          debugger
           print_params = {
             scenarios:      scenarios,
             failed_count:   failure_count,
