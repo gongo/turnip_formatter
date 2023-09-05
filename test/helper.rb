@@ -5,6 +5,11 @@ require 'turnip_formatter/ext/turnip/rspec'
 require 'turnip_formatter/resource/scenario/failure'
 require 'turnip_formatter/resource/scenario/pending'
 
+if ENV['COVERALLS_REPO_TOKEN']
+  require 'coveralls'
+  Coveralls.wear!('test_frameworks')
+end
+
 def html_parse(str)
   Oga.parse_xml(str)
 end

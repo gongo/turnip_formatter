@@ -28,7 +28,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'test-unit-rr'
   spec.add_development_dependency 'bundler'
   spec.add_development_dependency 'rake'
-  spec.add_development_dependency 'coveralls'
+  spec.add_development_dependency 'coveralls_reborn'
   spec.add_development_dependency 'sass'
   spec.add_development_dependency 'bootstrap-sass'
   spec.add_development_dependency 'oga'

@@ -28,4 +28,6 @@ jobs:
       - name: Install dependencies
         run: bundle install --gemfile=gemfiles/Gemfile-rspec-${{ matrix.rspec-version }}.x
       - name: Run tests
+        env:
+          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
         run: bundle exec rake test
