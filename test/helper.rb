@@ -113,7 +113,7 @@ module TurnipFormatter
         expect(true).to be false # RSpec Matcher Error
       end
 
-      Turnip::RSpec.__send__(:run_feature, rspec_context, feature, filename)
+      Turnip::RSpec.__send__(:run_scenario_group, rspec_context, feature, filename)
       rspec_context.run(NoopObject.new)
       Turnip::RSpec.update_metadata(feature, rspec_context)
 
