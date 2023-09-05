@@ -1,4 +1,4 @@
 source 'http://rubygems.org'
 
 gemspec :path => '..'
-gem 'rspec', '~> 3.8.0'
+gem 'rspec', '~> 3.12.0'
