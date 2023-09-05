@@ -30,4 +30,8 @@ jobs:
       - name: Run tests
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+          CI_NAME: GitHub Actions
+          CI_BUILD_NUMBER: ${{ github.run_number }}
+          CI_BRANCH: ${{ github.ref }}
+          CI_PULL_REQUEST: ${{ github.event.pull_request.html_url }}
         run: bundle exec rake test
